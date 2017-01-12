@@ -14,14 +14,14 @@ Object.assign(styles, jumbotron, container, buttons)
 @observer
 class App extends React.Component {
 	render() {
-		const {guestStore} = this.props.route
+		const {offerStore} = this.props.route
 		return (
 			<div className={styles.container}>
 				<DevTool/>
 				<NavigationBar/>
 				<div className={styles.appHeading}>
 					<h1>An App</h1>
-					<p>You have a total of {guestStore.guestCount} guests.</p>
+					<p>You have a total of {offerStore.offerCount} guests.</p>
 					{this.props.children}
 				</div>
 
