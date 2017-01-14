@@ -1,35 +1,65 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
-import ViewStore from '../../stores/viewStore';
 import CSSModules from 'react-css-modules'
+import autobind from 'autobind-decorator'
 import cn from 'classnames';
 
 import style from './style.scss';
 Object.assign(style)
 
-const ESCAPE_KEY = 27;
-const ENTER_KEY = 13;
-
 
 @observer
 class Offer extends React.Component {
-    @observable
-    editText = "";
-    viewStore;
 
-    @observable
+   @observable
     state = {
+		offer : {},
         itemBeingEdited: false
+
     }
 
-    componentWillMount() {
+    componentWillMount(){
+		const {offer} = this.props;
+		this.state.offer = offer;
+	}
 
-        this.viewStore = new ViewStore();
-    }
+	updateProperty (key, value) {
+		const {offer} = this.state;
+		offer[key] = value;
+	}
 
-    render() {
-        const {offer} = this.props;
+	@autobind
+	onChange (event) {
+		this.updateProperty(event.target.name, event.target.value)
+	}
+
+
+	@autobind
+	handleSubmit() {
+		// val = this.editText.trim();
+		if (val) {
+
+			//this.props.offer.updateOffer(val);
+
+		}
+	};
+	//
+	//
+	// handleDestroy = () => {
+	//
+	// 	//implement delete
+	// 	this.props.state.itemBeingEdited = null;
+	// };
+
+	@autobind
+	handleEdit()  {
+		 this.state.itemBeingEdited = true;
+	};
+
+
+	render() {
+        const {offer} = this.state;
 
         const viewStore = this.viewStore;
         return (
@@ -39,55 +69,49 @@ class Offer extends React.Component {
                         {offer.title}
                     </div>
                     <div className={cn(style.cell, style.button_cell)}>
-                    <button className="button edit" onClick={this.handleEdit.bind(this)}>{this.state.itemBeingEdited ? 'save' : 'edit'}</button>
-                    {/*<button*/}
-                        {/*ref="editField"*/}
-                        {/*className="button edit"*/}
-                        {/*value={this.editText}*/}
-                        {/*onBlur={this.handleSubmit}*/}
-                        {/*onChange={this.handleChange}*/}
-                        {/*onKeyDown={this.handleKeyDown}*/}
-                    {/*>edit*/}
-                    {/*</button>*/}
+					{!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
+                    <button className="button save" onClick={this.handleSubmit}>save</button>}
+
                     </div>
                 </div>
                 {this.state.itemBeingEdited ?
                     <div className={style.edit_form}>
                         <div className={style.cell}>
                             <label>Title</label>
-                            <input type="text" defaultValue={offer.title}/>
+							<input type="text" name="title" value={offer.title} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Description</label>
-                            <input type="text" defaultValue={offer.description}/>
+							<input type="text" name="description" value={offer.description} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Message to Client:</label>
-                            <input type="text" defaultValue={offer.pre_message}/>
+							<input type="text" name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Terms</label>
-                            <input type="text" defaultValue={offer.terms}/>
+							<input type="text" name="terms" value={offer.terms} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Friend Gift</label>
-                            <input type="text" defaultValue={offer.offer_gift}/>
+							<input type="text" name="offerGift" value={offer.offerGift} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Client Gift</label>
-                            <input type="text" defaultValue={offer.client_gift}/>
+							<input type="text" name="clientGift" value={offer.clientGift} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Date created</label>
-                            <input type="date" defaultValue={offer.date_created} disabled/>
+							<input type="text" name="dateCreated" value={offer.dateCreated} />
                         </div>
                         <div className={style.cell}>
                             <label>Ending Date</label>
-                            <input type="date" defaultValue={offer.ending_date}/>
+							<input type="text" name="endingDate" value={offer.endingDate} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Code</label>
-                            <input type="text" defaultValue={offer.code}/>
+							<input type="text" name="code" value={offer.code} onChange={this.onChange}/>
+
                         </div>
                         <div className={style.urls}>
                             {offer.urls && offer.urls.map((url) =>
@@ -104,41 +128,7 @@ class Offer extends React.Component {
         );
     }
 
-    handleSubmit = (event) => {
-        const val = this.editText.trim();
-        if (val) {
-            this.props.offer.setTitle(val);
-            this.editText = val;
-        }
-        this.state.itemBeingEdited = null;
-    };
 
-    handleDestroy = () => {
-        this.props.offer.destroy();
-        this.props.viewStore.itemBeingEdited = null;
-    };
-
-
-    handleEdit = () => {
-        !this.state.itemBeingEdited ? this.state.itemBeingEdited = true : this.handleSubmit();
-    };
-
-    handleKeyDown = (event) => {
-        if (event.which === ESCAPE_KEY) {
-            this.editText = this.props.offer.title;
-            this.props.viewStore.itemBeingEdited = null;
-        } else if (event.which === ENTER_KEY) {
-            this.handleSubmit(event);
-        }
-    };
-
-    handleChange = (event) => {
-        this.editText = event.target.value;
-    };
-
-    handleToggle = () => {
-        this.props.offer.toggle();
-    };
 
 }
 
