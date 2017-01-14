@@ -1,0 +1,58 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body,html {
+  font-size: $base-font-size;
+  font-family: $font-body;
+  margin: 0;
+  padding: 0;
+  background: $grey-bg;
+}
+
+
+input[type="text"], input[type="date"], input[type="text"], textarea {
+  border: 1px solid $grey-light;
+  padding: 7px 10px;
+  border-radius: 5px;
+  min-width: 210px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.05);
+}
+
+
+:global {
+  .button {
+    border:0;
+    color: #fff;
+    background: $secondary2;
+    border-radius: 30px;
+    display: inline-block;
+    padding: 7px 20px;
+  }
+
+
+  .card {
+    @include card();
+  }
+
+
+  .form-inline {
+    display: flex;
+    @include font-size(16px);
+    label {
+      padding-right: 15px;
+    }
+    .input-name {
+      display: inline-block;
+      padding-right: 15px;
+    }
+
+    textarea {
+      width: 300px;
+      height: 36px;
+    }
+  }
+
+}
+
