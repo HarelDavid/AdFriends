@@ -17,6 +17,7 @@ class App extends React.Component {
         return (
             <div className={styles.container}>
                 {/*<DevTool/>*/}
+                <div className={styles.top_nav}></div>
                 <NavigationBar/>
                 <div className={styles.content_wrapper}>
                     <div></div>
