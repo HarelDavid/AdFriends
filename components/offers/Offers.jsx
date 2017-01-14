@@ -1,28 +1,38 @@
+import CSSModules from 'react-css-modules'
 import React from 'react';
 import {observer} from 'mobx-react';
 import Offer from './Offer'
 import OfferEntry from './OfferEntry'
 
+import style from './style.scss';
+Object.assign(style)
+
+
 @observer
-export default class Offers extends React.Component {
+class Offers extends React.Component {
 
 	render() {
 
 		const {offerStore} = this.props.route;
 
 		return (
+			<div className={style.wrapper}>
+				<h1>Your Offers:</h1>
 
-
-			<div>
-				<div>The Offers :</div>
+				<div className={style.entry}>
+					<OfferEntry offerStore={offerStore}/>
+				</div>
+				<div className={style.list}>
 				{offerStore.offers.map((offer) => (
-						<Offer key={offer.title} offer={offer}/>
+						<Offer className={style.item} key={offer.title} offer={offer}/>
 					)
 				)}
-				<OfferEntry offerStore={offerStore}/>
+				</div>
 			</div>
 
 
 		)
 	}
 }
+
+export default CSSModules(Offers, style);

@@ -1,0 +1,48 @@
+@import '../../styles/globals.scss';
+
+.wrapper {
+
+}
+
+.entry {
+  @include card();
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.list {
+  @include card();
+  width: 100%;
+  list-style-type: none;
+  .item {
+    padding: 12px 25px;
+    border-bottom: 1px solid $grey-light;
+      .cell {
+        margin-bottom: 10px;
+        &.image_cell {
+          img { max-width: 100px; }
+        }
+        &.button_cell {
+          align-self: flex-end;
+        }
+      label {
+        display: block;
+        color: $grey-dark;
+      }
+    }
+  }
+
+  .preview {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .edit_form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    > div {
+      flex: 1;
+    }
+  }
+}
