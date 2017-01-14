@@ -68,16 +68,15 @@ export default class OfferEntry extends React.Component {
 		}
 
 		return (
-			<form >
+			<form className="form-inline">
 				<label>
-					Name:
-
+					<span className="input-name">Name:</span>
 					<input type="text" value={this.state.title} onChange={this.handleTitleChange}   placeholder="offer title"/>
 
 				</label>
 
 				<label>
-					description:
+					<span className="input-name">description:</span>
 					<textarea value={this.state.description} onChange={this.handleDescriptionChange} placeholder="offer description"/>
 				</label>
 
