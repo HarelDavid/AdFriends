@@ -69,7 +69,8 @@ class Offer extends React.Component {
                         {offer.title}
                     </div>
                     <div className={cn(style.cell, style.button_cell)}>
-					{!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
+					{!this.state.itemBeingEdited ?
+                        <button className="button edit" onClick={this.handleEdit}>edit</button>:
                     <button className="button save" onClick={this.handleSubmit}>save</button>}
 
                     </div>
