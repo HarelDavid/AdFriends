@@ -5,6 +5,8 @@ import { Router, hashHistory } from 'react-router'
 import routes from './Routes'
 import OfferStore from './stores/OfferStore'
 import ClientStore from './stores/ClientStore'
+import AuthStore from './stores/AuthStore'
+import BuisnessStore from './stores/BusinessStore'
 
 import * as firebase from 'firebase';
 
@@ -27,10 +29,17 @@ const initialState = window.initialState || {
 
 var offerStore = OfferStore.fromJS(initialState.offers);
 var clientStore = ClientStore.fromJS(initialState.clients);
+var authStore = new AuthStore();
+var businessStore = new BuisnessStore();
 
 var stores = {};
 stores.offerStore = offerStore;
 stores.clientStore = clientStore;
+stores.authStore = authStore;
+stores.businessStore = businessStore;
+
+console.log(stores)
+
 
 
 

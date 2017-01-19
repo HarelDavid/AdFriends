@@ -28,14 +28,12 @@ export default class OfferStore {
 	}
 
 	add(title, description, imageUrl) {
-
-		var offer = new OfferModel(this, Utils.uuid(), title, description, imageUrl);
+		var offerId = Utils.uuid();
+		var offer = new OfferModel(this, offerId, title, description, imageUrl);
 		this.offers.push(offer);
 		var database = firebase.database();
 		var offerRef = database.ref('/offers');
-		var newkey = offerRef.push().key;
-		offer.key = newkey;
-		firebase.database().ref('/offers').child(offer.key).set(offer);//{
+		firebase.database().ref('/offers').child(offerId).set(offer);
 
 	}
 
