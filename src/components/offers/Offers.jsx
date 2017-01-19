@@ -13,11 +13,12 @@ class Offers extends React.Component {
 
 	render() {
 
-		const {offerStore} = this.props.route;
+		const {offerStore, businessStore} = this.props.route;
 
 		return (
+
 			<div className={style.wrapper}>
-				<h1>Your Offers:</h1>
+				<h1>{businessStore.business && businessStore.business.title} Your Offers:</h1>
 
 				<div className={style.entry}>
 					<OfferEntry offerStore={offerStore}/>

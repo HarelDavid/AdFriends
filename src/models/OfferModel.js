@@ -5,29 +5,29 @@ export default class OfferModel {
 	id;
 	@observable title;
 	@observable description;
-	@observable preMessage;
-	@observable terms;
-	@observable offerGift;
-	@observable clientGift;
-	@observable endingDate;
-	@observable code;
 	@observable imageUrl;
-	@observable key;
+	//@observable preMessage;
+	// @observable terms;
+	// @observable offerGift;
+	// @observable clientGift;
+	// @observable endingDate;
+	// @observable code;
+	// @observable key;
 
-	constructor(store, id, title, description,preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated,imageUrl,key) {
+	constructor(store, id, title, description,imageUrl,preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
 		this.store = store;
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.preMessage = preMessage;
-		this.terms = terms;
-		this.offerGift = offerGift;
-		this.clientGift = clientGift;
-		this.endingDate = endingDate;
-		this.code = code;
-		this.dateCreated = dateCreated;
 		this.imageUrl = imageUrl;
-		this.key = key ;
+		// this.preMessage = preMessage;
+		// this.terms = terms;
+		// this.offerGift = offerGift;
+		// this.clientGift = clientGift;
+		// this.endingDate = endingDate;
+		// this.code = code;
+		// this.dateCreated = dateCreated;
+		//this.key = key ;
 
 
 	}

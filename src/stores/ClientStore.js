@@ -26,14 +26,12 @@ export default class ClientStore {
 	}
 
 	add(title, description, imageUrl) {
-
+		var clientId =  Utils.uuid();
 		var client = new ClientModel(this, Utils.uuid(), title, description, imageUrl);
 		this.clients.push(client);
 		var database = firebase.database();
 		var clientRef = database.ref('/clients');
-		var newkey = clientRef.push().key;
-		client.key = newkey;
-		firebase.database().ref('/clients').child(client.key).set(client);//{
+		firebase.database().ref('/clients').child(clientId).set(client);//{
 
 	}
 
