@@ -35,15 +35,23 @@ class Offer extends React.Component {
 	}
 
 
-	@autobind
-	handleSubmit() {
-		// val = this.editText.trim();
-		if (val) {
+    @autobind
+    handleSubmit(e) {
+        var {offer} = this.state;
 
-			//this.props.offer.updateOffer(val);
+        e.preventDefault();
 
-		}
-	};
+        // this.props.offerStore.update(offer.title,
+        //     offer.description,
+        //     offer.preMessage,
+        //     offer.terms,
+        //     offer.offerGift,
+        //     offer.clientGift,
+        //     offer.endingDate,
+        //     offer.code,
+        //     offer.imageUrl);
+    }
+
 	//
 	//
 	// handleDestroy = () => {
@@ -62,6 +70,8 @@ class Offer extends React.Component {
         const {offer} = this.state;
 
         const viewStore = this.viewStore;
+
+
         return (
             <li className={this.state.itemBeingEdited ? style.item + " edit" : style.item}>
                 <div className={style.preview}>
@@ -71,7 +81,7 @@ class Offer extends React.Component {
                     <div className={cn(style.cell, style.button_cell)}>
 					{!this.state.itemBeingEdited ?
                         <button className="button edit" onClick={this.handleEdit}>edit</button>:
-                    <button className="button save" onClick={this.handleSubmit}>save</button>}
+                    	<button className="button save" onClick={this.handleSubmit}>save</button>}
 
                     </div>
                 </div>
@@ -83,11 +93,11 @@ class Offer extends React.Component {
                         </div>
                         <div className={style.cell}>
                             <label>Description</label>
-							<input type="text" name="description" value={offer.description} onChange={this.onChange}/>
+							<textarea name="description" value={offer.description} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Message to Client:</label>
-							<input type="text" name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
+							<textarea name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Terms</label>
@@ -103,11 +113,11 @@ class Offer extends React.Component {
                         </div>
                         <div className={style.cell}>
                             <label>Date created</label>
-							<input type="text" name="dateCreated" value={offer.dateCreated} />
+							<input type="date" name="dateCreated" value={offer.dateCreated} disabled />
                         </div>
                         <div className={style.cell}>
                             <label>Ending Date</label>
-							<input type="text" name="endingDate" value={offer.endingDate} onChange={this.onChange}/>
+							<input type="date" name="endingDate" value={offer.endingDate} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Code</label>

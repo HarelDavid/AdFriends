@@ -24,7 +24,7 @@ class Offers extends React.Component {
 				</div>
 				<div className={style.list}>
 				{offerStore.offers.map((offer) => (
-						<Offer className={style.item} key={offer.title} offer={offer}/>
+						<Offer className={style.item} key={offer.id} offer={offer}/>
 					)
 				)}
 				</div>
