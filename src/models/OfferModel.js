@@ -14,12 +14,13 @@ export default class OfferModel {
 	// @observable code;
 	// @observable key;
 
-	constructor(store, id, title, description,imageUrl,preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
-		this.store = store;
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.imageUrl = imageUrl;
+	constructor(title, description,imageUrl,store){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
+
+		title ? this.title = title : "";
+		description  ? this.description = description : "";
+		imageUrl ? this.imageUrl = imageUrl : "";
+		store ? this.store = store : "";
+
 		// this.preMessage = preMessage;
 		// this.terms = terms;
 		// this.offerGift = offerGift;
@@ -27,13 +28,32 @@ export default class OfferModel {
 		// this.endingDate = endingDate;
 		// this.code = code;
 		// this.dateCreated = dateCreated;
-		//this.key = key ;
+	}
 
+	converFromDB(offerDB) {
+		this.title = offerDB.title;
+		this.description = offerDB.description;
+		this.imageUrl = offerDB.imageUrl;
+		this.id = offerDB.id;
 
 	}
 
+	converToDB(offerDB) {
+		var offerDB = {}
+		offerDB.title = this.title || "";
+		offerDB.description = this.description || "";
+		offerDB.imageUrl = this.imageUrl || "";
+		offerDB.id = this.id || "";
+		return offerDB;
+	}
+
+
+	save(){
+		this.store.save(this);
+	}
+
 	destroy() {
-		this.store.remove(this);//.offers.remove(this);
+		this.store.remove(this);
 	}
 
 	toJS() {

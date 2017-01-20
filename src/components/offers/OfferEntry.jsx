@@ -1,9 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 import {observer} from 'mobx-react';
 import autobind from 'autobind-decorator'
 import ImageUploader from'react-firebase-image-uploader';
 import * as firebase from 'firebase';
+import OfferModel from '../../models/OfferModel'
+
 
 
 const ENTER_KEY = 13;
@@ -27,7 +28,8 @@ export default class OfferEntry extends React.Component {
 	handleNewOfferKeyDown(){
 
 		var {title, description, imageUrl} = this.state;
-		this.props.offerStore.add(title, description, imageUrl);
+		var offer = new OfferModel(title, description, imageUrl,this.props.offerStore);
+		offer.save();
 		this.clearForm();
 
 	};

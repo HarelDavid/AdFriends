@@ -25,7 +25,7 @@ class Offer extends React.Component {
 	}
 
 	updateProperty (key, value) {
-		const {offer} = this.state;
+		var  {offer} = this.state;
 		offer[key] = value;
 	}
 
@@ -37,20 +37,19 @@ class Offer extends React.Component {
 
 	@autobind
 	handleSubmit() {
-		// val = this.editText.trim();
-		if (val) {
-
-			//this.props.offer.updateOffer(val);
-
+		var  {offer} = this.state;
+		if (offer) {
+			offer.save();
 		}
 	};
-	//
-	//
-	// handleDestroy = () => {
-	//
-	// 	//implement delete
-	// 	this.props.state.itemBeingEdited = null;
-	// };
+
+	@autobind
+	handleDestroy() {
+		var  {offer} = this.state;
+		if (offer) {
+			offer.remove();
+		}
+	};
 
 	@autobind
 	handleEdit()  {
@@ -61,7 +60,7 @@ class Offer extends React.Component {
 	render() {
         const {offer} = this.state;
 
-        const viewStore = this.viewStore;
+
         return (
             <li className={this.state.itemBeingEdited ? style.item + " edit" : style.item}>
                 <div className={style.preview}>
