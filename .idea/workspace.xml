@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8237daeb-7073-481a-9416-5cfe7e20c909" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Routes.jsx" afterPath="$PROJECT_DIR$/src/Routes.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/App.jsx" afterPath="$PROJECT_DIR$/src/components/App.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Login.jsx" afterPath="$PROJECT_DIR$/src/components/Login.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/NavigationBar.jsx" afterPath="$PROJECT_DIR$/src/components/NavigationBar.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/models/BusinessModel.js" afterPath="$PROJECT_DIR$/src/models/BusinessModel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/stores/BusinessStore.js" afterPath="$PROJECT_DIR$/src/stores/BusinessStore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/stores/OfferStore.js" afterPath="$PROJECT_DIR$/src/stores/OfferStore.js" />
-    </list>
+    <list default="true" id="8237daeb-7073-481a-9416-5cfe7e20c909" name="Default" comment="" />
     <ignored path="react-routing-mobx-bootstrap-boilerplate.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -112,8 +104,8 @@
       <file leaf-file-name="OfferStore.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/stores/OfferStore.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+            <state relative-caret-position="307">
+              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -888,7 +880,7 @@
       <workItem from="1484770936916" duration="69000" />
       <workItem from="1484809990578" duration="894000" />
       <workItem from="1484811381177" duration="13000" />
-      <workItem from="1484908998043" duration="9837000" />
+      <workItem from="1484908998043" duration="9924000" />
     </task>
     <task id="LOCAL-00001" summary="ss">
       <created>1484408347941</created>
@@ -901,7 +893,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56608000" />
+    <option name="totallyTimeSpent" value="56695000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -1336,8 +1328,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/stores/OfferStore.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="29" column="44" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+        <state relative-caret-position="307">
+          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
