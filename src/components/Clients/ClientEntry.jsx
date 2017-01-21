@@ -1,101 +1,107 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
 import autobind from 'autobind-decorator'
 import ImageUploader from'react-firebase-image-uploader';
 import * as firebase from 'firebase';
+import ClientModel from '../../models/ClientModel'
+import {observable} from 'mobx';
 
+import style from './style.scss';
+Object.assign(style)
 
 const ENTER_KEY = 13;
 
 @observer
-export default class ClientEntry extends React.Component {
+class ClientEntry extends React.Component {
 
-	state = {title: '', description:'', imageUrl: '' };
+    @observable
+    state = {
+        client : {},
+        itemBeingEdited: false
 
-	@autobind
-	handleTitleChange(event){
-		this.setState({title: event.target.value});
-	}
+    }
 
-	@autobind
-	handleDescriptionChange(event){
-		this.setState({description: event.target.value});
-	}
+    updateProperty (key, value) {
+        var  {client} = this.state;
+        client[key] = value;
+    }
 
-	@autobind
-	handleNewOfferKeyDown(){
-
-		var {title, description, imageUrl} = this.state;
-		this.props.clientStore.add(title, description, imageUrl);
-		this.clearForm();
-
-	};
-
-	clearForm() {
-		this.setState({description: ""});
-		this.setState({title: ""});
-	}
+    @autobind
+    onChange (event) {
+        this.updateProperty(event.target.name, event.target.value)
+    }
 
 
-	@autobind
-	handleUploadStart() {
-		this.setState({isUploading: true, progress: 0});
-	}
+    @autobind
+    handleSubmit() {
+        var  {client} = this.state;
+        if (client) {
+            client.save();
+        }
+    };
 
-	@autobind
-	handleProgress(progress){
-		this.setState({progress});
-	}
+    @autobind
+    handleNewSubmit() {
 
-	@autobind
-	handleUploadError(error) {
-		this.setState({isUploading: false});
-		console.error(error);
-	}
+        var {client} = this.state;
+        var client = new ClientModel(title, description, imageUrl, this.props.clientStore);
+        client.save();
+        this.clearForm();
 
-	@autobind
-	handleUploadSuccess (filename) {
-		this.setState({avatar: filename, progress: 100, isUploading: false});
-		var imagesRef = firebase.storage().ref('images').child(filename);
-		firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageUrl: url}));
-	};
+    };
+
+    clearForm() {
+        this.setState({description: ""});
+        this.setState({title: ""});
+    }
 
 
-	render() {
-		if(!firebase.storage){
-			return null;
-		}
+    @autobind
+    handleUploadStart() {
+        this.setState({isUploading: true, progress: 0});
+    }
 
-		return (
-			<form >
-				<label>
-					Name:
+    @autobind
+    handleProgress(progress) {
+        this.setState({progress});
+    }
 
-					<input type="text" value={this.state.title} onChange={this.handleTitleChange}   placeholder="client title"/>
+    @autobind
+    handleUploadError(error) {
+        this.setState({isUploading: false});
+        console.error(error);
+    }
 
-				</label>
+    @autobind
+    handleUploadSuccess(filename) {
+        this.setState({avatar: filename, progress: 100, isUploading: false});
+        var imagesRef = firebase.storage().ref('images').child(filename);
+        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageUrl: url}));
+    };
 
-				<label>
-					description:
-					<textarea value={this.state.description} onChange={this.handleDescriptionChange} placeholder="client description"/>
-				</label>
 
-				<label>
-					<ImageUploader
-						name="avatar"
-						storageRef={firebase.storage().ref('images')}
-						onUploadStart={this.handleUploadStart}
-						onUploadError={this.handleUploadError}
-						onUploadSuccess={this.handleUploadSuccess}
-						onProgress={this.handleProgress}
-					/>
-				</label>
+    render() {
+        var {client} = this.state;
 
-				<div value="Submit" onClick={this.handleNewOfferKeyDown}>submit</div>
+        if (!firebase.storage) {
+            return null;
+        }
+
+        return (
+			<form className="addItemForm">
+
+				<div className={style.cell}>
+					<label>Name</label>
+					<input type="text" name="name" value={client.name} onChange={this.onChange}/>
+				</div>
+
+				<button className="button save" onClick={this.handleNewSubmit}>submit</button>
 
 
 			</form>
-		)
-	}
+        )
+    }
 }
+
+export default CSSModules(ClientEntry, style);

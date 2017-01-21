@@ -13,6 +13,8 @@
   position: relative;
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.05);
   min-height: 100vh;
+  position: relative;
+  z-index: 2;
   .container {
     display: flex;
     flex-direction: column;
@@ -56,6 +58,10 @@
 .header {
 }
 
+.name {
+  @include font-size(16px);
+  color: #fff;
+}
 .menu_list {
   width: 100%;
   //padding: 0 25px;
