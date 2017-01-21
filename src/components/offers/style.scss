@@ -11,13 +11,15 @@
 }
 
 .list {
-  @include card();
   width: 100%;
   list-style-type: none;
   .item {
-    padding: 12px 25px;
-    border-bottom: 1px solid $grey-light;
-      .cell {
+    padding: 25px;
+    @include card();
+    margin-bottom: 20px;
+    @include font-size(16px);
+
+    .cell {
         margin-bottom: 10px;
         input, textarea {
           min-width: 300px;
@@ -39,6 +41,10 @@
   .preview {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    .offer_title {
+      font-weight: bold;
+    }
   }
 
   .edit_form {
