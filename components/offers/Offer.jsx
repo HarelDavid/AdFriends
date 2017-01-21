@@ -25,7 +25,7 @@ class Offer extends React.Component {
 	}
 
 	updateProperty (key, value) {
-		const {offer} = this.state;
+		var  {offer} = this.state;
 		offer[key] = value;
 	}
 
@@ -35,30 +35,21 @@ class Offer extends React.Component {
 	}
 
 
-    @autobind
-    handleSubmit(e) {
-        var {offer} = this.state;
+	@autobind
+	handleSubmit() {
+		var  {offer} = this.state;
+		if (offer) {
+			offer.save();
+		}
+	};
 
-        e.preventDefault();
-
-        // this.props.offerStore.update(offer.title,
-        //     offer.description,
-        //     offer.preMessage,
-        //     offer.terms,
-        //     offer.offerGift,
-        //     offer.clientGift,
-        //     offer.endingDate,
-        //     offer.code,
-        //     offer.imageUrl);
-    }
-
-	//
-	//
-	// handleDestroy = () => {
-	//
-	// 	//implement delete
-	// 	this.props.state.itemBeingEdited = null;
-	// };
+	@autobind
+	handleDestroy() {
+		var  {offer} = this.state;
+		if (offer) {
+			offer.remove();
+		}
+	};
 
 	@autobind
 	handleEdit()  {
@@ -69,19 +60,16 @@ class Offer extends React.Component {
 	render() {
         const {offer} = this.state;
 
-        const viewStore = this.viewStore;
-
 
         return (
             <li className={this.state.itemBeingEdited ? style.item + " edit" : style.item}>
                 <div className={style.preview}>
-                    <div className={cn(style.cell, style.offer_title)}>
+                    <div className={style.cell}>
                         {offer.title}
                     </div>
                     <div className={cn(style.cell, style.button_cell)}>
-					{!this.state.itemBeingEdited ?
-                        <button className="button edit" onClick={this.handleEdit}>edit</button>:
-                    	<button className="button save" onClick={this.handleSubmit}>save</button>}
+					{!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
+                    <button className="button save" onClick={this.handleSubmit}>save</button>}
 
                     </div>
                 </div>
@@ -93,11 +81,11 @@ class Offer extends React.Component {
                         </div>
                         <div className={style.cell}>
                             <label>Description</label>
-							<textarea name="description" value={offer.description} onChange={this.onChange}/>
+							<input type="text" name="description" value={offer.description} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Message to Client:</label>
-							<textarea name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
+							<input type="text" name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Terms</label>
