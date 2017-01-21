@@ -2,15 +2,19 @@
 
 
 .nav {
-  width: 260px;
-  background-color: darken($primary,10%);
-  background-image: linear-gradient(90deg, rgba(91, 76, 133,.07) 50%, transparent 50%),
-  linear-gradient(90deg, rgba(91, 76, 133,.13) 50%, transparent 50%),
-  linear-gradient(90deg, transparent 50%, rgba(91, 76, 133,.17) 50%),
-  linear-gradient(90deg, transparent 50%, rgba(91, 76, 133,.19) 50%);
-  background-size: 13px, 29px, 37px, 53px;
-  box-shadow: 0 0 3px 1px darken($primary,10%);
+  width: 120px;
+  //background-color: $primary-dark;
+  //background-image: linear-gradient(90deg, rgba(91, 76, 133,.07) 50%, transparent 50%),
+  //linear-gradient(90deg, rgba(91, 76, 133,.13) 50%, transparent 50%),
+  //linear-gradient(90deg, transparent 50%, rgba(91, 76, 133,.17) 50%),
+  //linear-gradient(90deg, transparent 50%, rgba(91, 76, 133,.19) 50%);
+  //background-size: 13px, 29px, 37px, 53px;
+  background-image: linear-gradient(to bottom, $primary, lighten($primary, 10%));
+  position: relative;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.05);
   min-height: 100vh;
+  position: relative;
+  z-index: 2;
   .container {
     display: flex;
     flex-direction: column;
@@ -20,19 +24,19 @@
 
   .header {
     text-align: center;
-    margin: 60px 0;
+    margin: 30px 0 60px;
     padding: 20px 0;
-    background: darken($primary,10%);
-    width: 100%;
+    background: $primary-dark;
     position: relative;
-    right: -10px;
+    right: 0;
+    width: 140px;
     &:after {
       content: "";
       width: 0;
       height: 0;
       border-style: solid;
       border-width: 0px 0px 10px 10px;
-      border-color: transparent transparent transparent black;
+      border-color: transparent transparent transparent $primary;
       position: absolute;
       right: 0;
       bottom: -10px;
@@ -42,7 +46,6 @@
       width: 100px;
       height: 100px;
       border-radius: 100%;
-      background: $primary;
     }
   }
 
@@ -55,6 +58,10 @@
 .header {
 }
 
+.name {
+  @include font-size(16px);
+  color: #fff;
+}
 .menu_list {
   width: 100%;
   //padding: 0 25px;
@@ -68,7 +75,7 @@
         padding: 10px 20px;
         display: block;
         @include font-size(20px);
-        color: $grey-super-light;
+        color: $grey-light;
         text-decoration: none;
         //background-color: $primary;
         //border-radius: 30px;

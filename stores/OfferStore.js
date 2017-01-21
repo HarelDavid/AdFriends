@@ -16,7 +16,6 @@ export default class OfferStore {
 	}
 
 	init(bussines){
-		var _this = this;
 		this.business = bussines;
 		this.offersRef = firebase.database().ref(`business/${this.business.id}/offers`);
 		var offersArr = bussines.offers ? Object.keys(bussines.offers).map(function(offer) { return bussines.offers[offer] }): [];

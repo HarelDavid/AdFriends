@@ -7,20 +7,29 @@ import styles from './NavigationBar.scss'
 
 @observer
 class NavigationBar extends React.Component {
+
+
 	render() {
 
 		var {businessStore} = this.props;
+
+		if(!businessStore) {
+			return null;
+		}
+
 		return (
 			<nav className={styles.nav}>
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<a className={styles.brand} href="#">
-							<div className={styles.user}></div>
+							<div className={styles.user}> </div>
 						</a>
 					</div>
 					<div className={styles.menu_list}>
+						<div className={styles.name}>Hello, {businessStore.business && businessStore.business.title}</div>
+
 						<ul className={styles.nav_list}>
-							<NavItem to='/' index={true} >Home {businessStore.isLoggedIn}</NavItem>
+                            {!businessStore.isLoggedIn &&<NavItem to='/' index={true} >Login {businessStore.isLoggedIn}</NavItem>}
 							{businessStore.isLoggedIn && <NavItem to='/offers'>Offers</NavItem>}
 							{businessStore.isLoggedIn && <NavItem to='/clients'>Clients</NavItem>}
 						</ul>

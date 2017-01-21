@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
-import cn from 'classnames';
+import classname from 'classnames';
 
 import style from './style.scss';
 Object.assign(style)
@@ -67,7 +67,7 @@ class Offer extends React.Component {
                     <div className={style.cell}>
                         {offer.title}
                     </div>
-                    <div className={cn(style.cell, style.button_cell)}>
+                    <div className={classname(style.cell, style.button_cell)}>
 					{!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
                     <button className="button save" onClick={this.handleSubmit}>save</button>}
 
@@ -101,11 +101,11 @@ class Offer extends React.Component {
                         </div>
                         <div className={style.cell}>
                             <label>Date created</label>
-							<input type="text" name="dateCreated" value={offer.dateCreated} />
+							<input type="date" name="dateCreated" value={offer.dateCreated} disabled />
                         </div>
                         <div className={style.cell}>
                             <label>Ending Date</label>
-							<input type="text" name="endingDate" value={offer.endingDate} onChange={this.onChange}/>
+							<input type="date" name="endingDate" value={offer.endingDate} onChange={this.onChange}/>
                         </div>
                         <div className={style.cell}>
                             <label>Code</label>
@@ -118,7 +118,7 @@ class Offer extends React.Component {
                             )}
                         </div>
 
-                        <div className={cn(style.cell, style.image_cell)}>
+                        <div className={classname(style.cell, style.image_cell)}>
                             <img src={offer.imageUrl}/>
                         </div>
                     </div> : null }

@@ -1,125 +1,152 @@
 import React from 'react';
+import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
-import {observable} from 'mobx'
 import autobind from 'autobind-decorator'
 import ImageUploader from'react-firebase-image-uploader';
 import * as firebase from 'firebase';
 import OfferModel from '../../models/OfferModel'
+import {observable} from 'mobx';
 
-
+import style from './style.scss';
+Object.assign(style)
 
 const ENTER_KEY = 13;
 
 @observer
-export default class OfferEntry extends React.Component {
+class OfferEntry extends React.Component {
 
-	@observable
-	state = {
-		title: '', description:'', imageUrl: '' ,isUploading: true, progress:''
-	};
+    @observable
+    state = {
+        offer : new OfferModel({store:this.props.offerStore}),
+        itemBeingEdited: false
 
-	@autobind
-	handleTitleChange(event){
-		this.setState({title: event.target.value});
-	}
+    }
 
-	@autobind
-	handleDescriptionChange(event){
-		this.setState({description: event.target.value});
-	}
+    updateProperty (key, value) {
+        var  {offer} = this.state;
+        offer[key] = value;
+    }
 
-	@autobind
-	handleNewOfferKeyDown(){
-
-		var {title, description, imageUrl} = this.state;
-		var offer = new OfferModel(title, description, imageUrl,this.props.offerStore);
-		offer.save();
-		this.clearForm();
-
-	};
-
-	clearForm() {
-		this.setState({description: ""});
-		this.setState({title: ""});
-	}
+    @autobind
+    onChange (event) {
+        this.updateProperty(event.target.name, event.target.value)
+    }
 
 
-	@autobind
-	handleUploadStart() {
-		this.setState({isUploading: true, progress: 0});
-	}
+    @autobind
+    handleSubmit() {
+        var  {offer} = this.state;
+        if (offer) {
+            offer.save();
+        }
+    };
 
-	@autobind
-	handleProgress(progress){
-		this.setState({progress});
-	}
+    @autobind
+    handleNewOfferKeyDown() {
 
-	@autobind
-	handleUploadError(error) {
-		this.setState({isUploading: false});
-		console.error(error);
-	}
+        var {offer} = this.state;
+       // var offer = new OfferModel({title:offer.title, description:description, imageUrl:imageUrl, store:this.props.offerStore});
+        offer.save();
+        this.clearForm();
 
+    };
 
-	handleUploadStart(){
-
-		this.setState({isUploading: true, progress: 0})
-	}
-
-	handleProgress(){
-
-		this.setState({progress});
-	}
-
-	handleUploadError(){
-		this.setState({isUploading: false});
-		console.error(error);
-	}
+    clearForm() {
+        this.setState({description: ""});
+        this.setState({title: ""});
+    }
 
 
-	@autobind
-	handleUploadSuccess (filename) {
+    @autobind
+    handleUploadStart() {
+        this.setState({isUploading: true, progress: 0});
+    }
 
-		this.setState({avatar: filename, progress: 100, isUploading: false});
-		var imagesRef = firebase.storage().ref('images').child(filename);
-		firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageUrl: url}));
+    @autobind
+    handleProgress(progress) {
+        this.setState({progress});
+    }
 
-	};
+    @autobind
+    handleUploadError(error) {
+        this.setState({isUploading: false});
+        console.error(error);
+    }
 
-
-	render() {
-		if(!firebase.storage){
-			return null;
-		}
-
-		return (
-			<form className="form-inline">
-				<label>
-					<span className="input-name">Name:</span>
-					<input type="text" value={this.state.title} onChange={this.handleTitleChange}   placeholder="offer title"/>
-
-				</label>
-
-				<label>
-					<span className="input-name">description:</span>
-					<textarea value={this.state.description} onChange={this.handleDescriptionChange} placeholder="offer description"/>
-				</label>
-
-				<label>
-					<ImageUploader
-						name="avatar"
-						storageRef={firebase.storage().ref('images')}
-						onUploadStart={this.handleUploadStart}
-						onUploadError={this.handleUploadError}
-						onUploadSuccess={this.handleUploadSuccess}
-						onProgress={this.handleProgress}
-					/>
-				</label>
-
-				<div value="Submit" onClick={this.handleNewOfferKeyDown}>submit</div>
+    @autobind
+    handleUploadSuccess(filename) {
+        this.setState({avatar: filename, progress: 100, isUploading: false});
+        var imagesRef = firebase.storage().ref('images').child(filename);
+        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageUrl: url}));
+    };
 
 
-			</form>
-		)
-	}
+    render() {
+        var {offer} = this.state;
+
+        if (!firebase.storage) {
+            return null;
+        }
+
+        return (
+            <form className="addItemForm">
+                <div className={style.cell}>
+                    <label>Title</label>
+                    <input type="text" name="title" value={offer.title} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Description</label>
+                    <textarea name="description" value={offer.description} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Message to Client:</label>
+                    <textarea type="text" name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Terms</label>
+                    <input type="text" name="terms" value={offer.terms} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Friend Gift</label>
+                    <input type="text" name="offerGift" value={offer.offerGift} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Client Gift</label>
+                    <input type="text" name="clientGift" value={offer.clientGift} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Ending Date</label>
+                    <input type="date" name="endingDate" value={offer.endingDate} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Code</label>
+                    <input type="text" name="code" value={offer.code} onChange={this.onChange}/>
+
+                </div>
+                <div className={style.urls}>
+                    {offer.urls && offer.urls.map((url) =>
+                        <div>{url}</div>
+                    )}
+                </div>
+
+                <label>
+                    <ImageUploader
+                        name="avatar"
+                        storageRef={firebase.storage().ref('images')}
+                        onUploadStart={this.handleUploadStart}
+                        onUploadError={this.handleUploadError}
+                        onUploadSuccess={this.handleUploadSuccess}
+                        onProgress={this.handleProgress}
+                    />
+                </label>
+
+
+                <div className="button save" onClick={this.handleNewOfferKeyDown}>submit</div>
+
+
+            </form>
+        )
+    }
 }
+
+export default CSSModules(OfferEntry, style);

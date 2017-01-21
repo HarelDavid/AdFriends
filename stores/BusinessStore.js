@@ -1,21 +1,27 @@
 import {observable, computed} from 'mobx'
 import BusinessModel from '../models/BusinessModel'
 import OfferStore from '../stores/OfferStore'
-import * as Utils from '../utils';
+import ClientStore from '../stores/ClientStore'
 import * as firebase from 'firebase';
+
+
+
 
 export default class BuisnessStore {
 	@observable business = null;
 	offerStore = null;
+	clientStore = null;
 
 	constructor() {
 		this.offerStore = new OfferStore();
+		this.clientStore = new ClientStore();
 		this.startObserve();
 	}
 
 	init(business){
 		this.business = business;
 		this.offerStore.init(this.business);
+		this.clientStore.init(this.business);
 	}
 
 
