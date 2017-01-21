@@ -1,93 +1,101 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
+import CSSModules from 'react-css-modules'
+import autobind from 'autobind-decorator'
+import classname from 'classnames';
 
-
-
-
-const ESCAPE_KEY = 27;
-const ENTER_KEY = 13;
-
+import style from './style.scss';
+Object.assign(style)
 
 
 @observer
-export default class Client extends React.Component {
-	// @observable editText = "";
-	// viewStore;
-	//
-	// componentWillMount(){
-	//
-	//
-	// }
-	// render() {
-	// 	const { client} = this.props;
-	//
-	//
-	// 	return (
-	// 		<li className={[
-	// 			client.completed ? "completed": "",
-	// 			expr(() => client === .ItemBeingEdited ? "editing" : "")
-	// 		].join(" ")}>
-	// 			<div className="view">
-	// 				<label onDoubleClick={this.handleEdit}>
-	// 					{client.title}
-	// 				</label>
-	// 				<button className="destroy" onClick={this.handleDestroy} />
-	// 			</div>
-	//
-	// 			<div className="view">
-	// 				<img src={client.imageUrl}/>
-	// 			</div>
-	//
-	// 			<input
-	// 				ref="editField"
-	// 				className="edit"
-	// 				value={this.editText}
-	// 				onBlur={this.handleSubmit}
-	// 				onChange={this.handleChange}
-	// 				onKeyDown={this.handleKeyDown}
-	// 			/>
-	// 		</li>
-	// 	);
-	// }
-	//
-	// handleSubmit = (event) => {
-	// 	const val = this.editText.trim();
-	// 	if (val) {
-	// 		this.props.client.setTitle(val);
-	// 		this.editText = val;
-	// 	} else {
-	// 		this.handleDestroy();
-	// 	}
-	// 	this.props.viewStore.itemBeingEdited = null;
-	// };
-	//
-	// handleDestroy = () => {
-	// 	this.props.client.destroy();
-	// 	this.props.viewStore.itemBeingEdited = null;
-	// };
-	//
-	// handleEdit = () => {
-	// 	const client = this.props.client;
-	// 	this.props.viewStore.itemBeingEdited = client;
-	// 	this.editText = client.title;
-	// };
-	//
-	// handleKeyDown = (event) => {
-	// 	if (event.which === ESCAPE_KEY) {
-	// 		this.editText = this.props.client.title;
-	// 		this.props.viewStore.itemBeingEdited = null;
-	// 	} else if (event.which === ENTER_KEY) {
-	// 		this.handleSubmit(event);
-	// 	}
-	// };
-	//
-	// handleChange = (event) => {
-	// 	this.editText = event.target.value;
-	// };
-	//
-	// handleToggle = () => {
-	// 	this.props.client.toggle();
-	// };
+class Client extends React.Component {
+
+    @observable
+    state = {
+        client : {},
+        itemBeingEdited: false
+    }
+
+    componentWillMount(){
+        const {client} = this.props;
+        this.state.client = client;
+    }
+
+    updateProperty (key, value) {
+        var  {client} = this.state;
+        client[key] = value;
+    }
+
+    @autobind
+    onChange (event) {
+        this.updateProperty(event.target.name, event.target.value)
+    }
+
+
+    @autobind
+    handleSubmit() {
+        var  {client} = this.state;
+        if (client) {
+            client.save();
+        }
+    };
+
+    @autobind
+    handleDestroy() {
+        var  {client} = this.state;
+        if (client) {
+            client.remove();
+        }
+    };
+
+    @autobind
+    handleEdit()  {
+        this.state.itemBeingEdited = true;
+    };
+
+
+    render() {
+        const {client} = this.state;
+
+
+        return (
+            <li className={this.state.itemBeingEdited ? style.item + " edit" : style.item}>
+                <div className={style.preview}>
+                    <div className={style.cell}>
+                        {client.title}
+                    </div>
+                    <div className={classname(style.cell, style.button_cell)}>
+                        {!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
+                            <button className="button save" onClick={this.handleSubmit}>save</button>}
+
+                    </div>
+                </div>
+                {this.state.itemBeingEdited ?
+                    <div className={style.edit_form}>
+                        <div className={style.cell}>
+                            <label>Name</label>
+                            <input type="text" name="name" value={client.name} onChange={this.onChange}/>
+                        </div>
+                        {/*<div className={style.cell}>*/}
+                            {/*<label>Date created</label>*/}
+                            {/*<input type="date" name="dateCreated" value={client.dateCreated} disabled />*/}
+                        {/*</div>*/}
+                        <div className={style.urls}>
+                            {client.offers && client.offers.map((url) =>
+                                <div>{url}</div>
+                            )}
+                        </div>
+
+                    </div> : null }
+
+            </li>
+        );
+    }
+
+
 
 }
+
+export default CSSModules(Client, style);

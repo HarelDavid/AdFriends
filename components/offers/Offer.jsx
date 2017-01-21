@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
-import cn from 'classnames';
+import classname from 'classnames';
 
 import style from './style.scss';
 Object.assign(style)
@@ -67,7 +67,7 @@ class Offer extends React.Component {
                     <div className={style.cell}>
                         {offer.title}
                     </div>
-                    <div className={cn(style.cell, style.button_cell)}>
+                    <div className={classname(style.cell, style.button_cell)}>
 					{!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
                     <button className="button save" onClick={this.handleSubmit}>save</button>}
 

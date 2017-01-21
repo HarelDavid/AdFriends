@@ -6,12 +6,11 @@ export default class ClientModel {
 	@observable title;
 	@observable description;
 
-	constructor(store, id, title, description, imageUrl,key) {
+	constructor(store, id, name, offers, key) {
 		this.store = store;
 		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.imageUrl = imageUrl;
+		this.name = name;
+		this.offers = offers
 		this.key = key ;
 
 
@@ -24,9 +23,8 @@ export default class ClientModel {
 	toJS() {
 		return {
 			id: this.id,
-			title: this.title,
-			description: this.description,
-			imageUrl: this.imageUrl,
+			name: this.name,
+			offers: this.offers,
 			key: this.key
 		};
 	}
