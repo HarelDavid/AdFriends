@@ -27,18 +27,26 @@ export default class BuisnessStore {
 
 	}
 
+	@computed get isLoggedIn(){
+		return !!this.business
+	}
+
 	login(currentUser){
 		//get business
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
 				if(business){
 				  this.business  = business;
+					return  this.business;
 				}
 				else{
 
-					this.add(currentUser)
-				}
+					return this.add(currentUser).then((bussines) => {
+						this.business = business;
+						return this.business;
 
+					})
+				}
 
 			})
 	}
@@ -66,8 +74,9 @@ export default class BuisnessStore {
 
 		var business = new BusinessModel(this, currentUser.uid, currentUser.displayName);
 		var database = firebase.database();
-		var offerRef = database.ref('/business');
-		firebase.database().ref('/business').child(currentUser.uid).set(business);
+		firebase.database().ref('/business').child(currentUser.uid).set(business).then((business) => {
+			return business;
+		})
 
 	}
 

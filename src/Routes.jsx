@@ -8,8 +8,8 @@ import Clients from './components/Clients/Clients'
 
 export default(stores) => {
 	return (
-		<Route path="/" component={App} offerStore={stores.offerStore}>
-			<IndexRoute component={Login} businessStore={stores.businessStore} authStore={stores.authStore}/>
+		<Route path="/" component={App} businessStore={stores.businessStore}>
+			<IndexRoute component={Login} businessStore={stores.businessStore}  offerStore={stores.offerStore}  authStore={stores.authStore}/>
 			<Route path="offers" component={Offers} offerStore={stores.offerStore} businessStore={stores.businessStore}/>
 			<Route path="clients" component={Clients} clientStore={stores.clientStore}/>
 		</Route>
