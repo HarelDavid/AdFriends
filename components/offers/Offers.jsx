@@ -13,7 +13,8 @@ class Offers extends React.Component {
 
 	render() {
 
-		const {offerStore, businessStore} = this.props.route;
+		var  {businessStore} = this.props.route;
+		var offerStore = businessStore.offerStore;
 
 		return (
 

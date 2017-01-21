@@ -1,5 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
+import {observable} from 'mobx'
 import autobind from 'autobind-decorator'
 import ImageUploader from'react-firebase-image-uploader';
 import * as firebase from 'firebase';
@@ -12,7 +13,10 @@ const ENTER_KEY = 13;
 @observer
 export default class OfferEntry extends React.Component {
 
-	state = {title: '', description:'', imageUrl: '' };
+	@observable
+	state = {
+		title: '', description:'', imageUrl: '' ,isUploading: true, progress:''
+	};
 
 	@autobind
 	handleTitleChange(event){
@@ -56,11 +60,30 @@ export default class OfferEntry extends React.Component {
 		console.error(error);
 	}
 
+
+	handleUploadStart(){
+
+		this.setState({isUploading: true, progress: 0})
+	}
+
+	handleProgress(){
+
+		this.setState({progress});
+	}
+
+	handleUploadError(){
+		this.setState({isUploading: false});
+		console.error(error);
+	}
+
+
 	@autobind
 	handleUploadSuccess (filename) {
+
 		this.setState({avatar: filename, progress: 100, isUploading: false});
 		var imagesRef = firebase.storage().ref('images').child(filename);
 		firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageUrl: url}));
+
 	};
 
 
