@@ -13,12 +13,15 @@ Object.assign(styles)
 @observer
 class App extends React.Component {
     render() {
-        const {offerStore} = this.props.route
+        console.log("this.props.route;",this.props.route)
+        var  {businessStore} = this.props.route;
+        console.log("businessStore",businessStore)
         return (
             <div className={styles.container}>
                 {/*<DevTool/>*/}
                 <div className={styles.top_nav}></div>
                 <NavigationBar/>
+                <NavigationBar businessStore={businessStore}/>
                 <div className={styles.content_wrapper}>
                     <div></div>
                     <div className={styles.content}>

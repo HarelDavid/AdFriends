@@ -14,16 +14,23 @@ export default class Login extends Component {
 	componentDidMount () {
 		var self = this;
 
-		var {businessStore, authStore} = this.props.route;
+		var {businessStore, authStore, OfferStore, ClientStore} = this.props.route;
 		var uiConfig = this.getConfig(businessStore);
 		authStore.authUi.start('.firebaseui-auth', uiConfig);
+	}
+
+	initStores(bussines){
+		var {offerStore} = this.props.route;
+
+		offerStore.init(bussines);
+		//this.props.clientStore.init(bussines);
 	}
 
 
 
 	@autobind
 	reset(){
-
+		var {authStore} = this.props.route;
 		var uiConfig = this.getConfig();
 		authStore.authUi.reset();
 		authStore.authUi.start('.firebaseui-auth', uiConfig);
@@ -33,7 +40,7 @@ export default class Login extends Component {
 	getConfig(businessStore){
 
 
-
+		var _this = this;
 		var uiConfig = {
 			signInFlow:  'popup',
 			queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
@@ -42,7 +49,11 @@ export default class Login extends Component {
 			'callbacks': {
 				'signInSuccess': function(currentUser,credential) {
 					if(currentUser){
-						businessStore.login(currentUser);
+						return businessStore.login(currentUser)
+							.then((business) => {
+								_this.initStores(business);
+								//return false;
+							})
 
 					}
 					return false;
