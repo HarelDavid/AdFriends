@@ -13,9 +13,7 @@ Object.assign(styles)
 @observer
 class App extends React.Component {
     render() {
-        console.log("this.props.route;",this.props.route)
         var  {businessStore} = this.props.route;
-        console.log("businessStore",businessStore)
         return (
             <div className={styles.container}>
                 {/*<DevTool/>*/}
