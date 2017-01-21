@@ -25,12 +25,12 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
   .button {
     border:0;
     color: #fff;
-    background: $highlight;
-    border-radius: 30px;
+    background: $secondary;
+    border-radius: 3px;
     display: inline-block;
-    padding: 7px 20px;
+    padding: 7px 30px;
     &.save {
-      background: $highlight2;
+      background: $secondary2;
     }
   }
 

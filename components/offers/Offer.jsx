@@ -75,7 +75,7 @@ class Offer extends React.Component {
         return (
             <li className={this.state.itemBeingEdited ? style.item + " edit" : style.item}>
                 <div className={style.preview}>
-                    <div className={style.cell}>
+                    <div className={cn(style.cell, style.offer_title)}>
                         {offer.title}
                     </div>
                     <div className={cn(style.cell, style.button_cell)}>

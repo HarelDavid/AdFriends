@@ -9,7 +9,7 @@
   //linear-gradient(90deg, transparent 50%, rgba(91, 76, 133,.17) 50%),
   //linear-gradient(90deg, transparent 50%, rgba(91, 76, 133,.19) 50%);
   //background-size: 13px, 29px, 37px, 53px;
-  background-image: linear-gradient(to bottom, $primary, $secondary-light);
+  background-image: linear-gradient(to bottom, $primary, lighten($primary, 10%));
   position: relative;
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.05);
   min-height: 100vh;
@@ -24,7 +24,7 @@
     text-align: center;
     margin: 30px 0 60px;
     padding: 20px 0;
-    background: #3c6187;
+    background: $primary-dark;
     position: relative;
     right: 0;
     width: 140px;
