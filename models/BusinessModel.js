@@ -11,8 +11,6 @@ export default class BusinessModel {
 		this.id = id;
 		this.title = title;
 
-
-
 	}
 
 	destroy() {

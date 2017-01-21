@@ -7,12 +7,18 @@ import * as firebase from 'firebase';
 
 export default class OfferStore {
 	@observable offers = [];
+	business;
 	offersRef;
 
 
 	constructor() {
+
+	}
+
+	init(bussines){
 		var _this = this;
-		this.offersRef = firebase.database().ref('/offers');
+		this.business = bussines;
+		this.offersRef = firebase.database().ref(`business/${this.business.id}/offers`);
 		this.offersRef.on('value', (snap) => {
 			snap.forEach((child) => {
 				var item = child.val();
