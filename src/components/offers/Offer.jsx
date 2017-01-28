@@ -118,7 +118,7 @@ class Offer extends React.Component {
                             )}
                         </div>
 
-                        <div className={cn(style.cell, style.image_cell)}>
+                        <div className={classname(style.cell, style.image_cell)}>
                             <img src={offer.imageUrl}/>
                         </div>
                     </div> : null }

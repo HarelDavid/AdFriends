@@ -6,28 +6,28 @@ export default class OfferModel {
 	@observable title;
 	@observable description;
 	@observable imageUrl;
-	//@observable preMessage;
-	// @observable terms;
-	// @observable offerGift;
-	// @observable clientGift;
-	// @observable endingDate;
-	// @observable code;
-	// @observable key;
+	@observable preMessage;
+	@observable terms;
+	@observable offerGift;
+	@observable clientGift;
+	@observable endingDate;
+	@observable code;
+	@observable key;
 
-	constructor(title, description,imageUrl,store){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
+	constructor(title, description,imageUrl,store, preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
 
 		title ? this.title = title : "";
 		description  ? this.description = description : "";
 		imageUrl ? this.imageUrl = imageUrl : "";
 		store ? this.store = store : "";
 
-		// this.preMessage = preMessage;
-		// this.terms = terms;
-		// this.offerGift = offerGift;
-		// this.clientGift = clientGift;
-		// this.endingDate = endingDate;
-		// this.code = code;
-		// this.dateCreated = dateCreated;
+		this.preMessage = preMessage;
+		this.terms = terms;
+		this.offerGift = offerGift;
+		this.clientGift = clientGift;
+		this.endingDate = endingDate;
+		this.code = code;
+		this.dateCreated = dateCreated;
 	}
 
 	converFromDB(offerDB) {
