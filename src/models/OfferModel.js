@@ -30,7 +30,8 @@ export default class OfferModel {
 			this.clientLinks = data.clientLinks || [];
 		}
 
-	}
+
+
 
 	converFromDB(offerDB) {
 		this.title = offerDB.title;
