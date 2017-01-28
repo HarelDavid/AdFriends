@@ -32,6 +32,7 @@ class NavigationBar extends React.Component {
                             {!businessStore.isLoggedIn &&<NavItem to='/' index={true} >Login {businessStore.isLoggedIn}</NavItem>}
 							{businessStore.isLoggedIn && <NavItem to='/offers'>Offers</NavItem>}
 							{businessStore.isLoggedIn && <NavItem to='/clients'>Clients</NavItem>}
+                            {businessStore.isLoggedIn && <NavItem to='/Friends'>Friends</NavItem>}
 						</ul>
 					</div>
 				</div>

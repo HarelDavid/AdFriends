@@ -55,15 +55,15 @@ export default class OfferModel {
 		var offerDB = {}
 		offerDB.title = this.title || "";
 		offerDB.description = this.description || "";
-		offerDB.imageUrl = data.imageUrl || "";
-		offerDB.store = data.store || "";
-		offerDB.preMessage = data.preMessage || "";
-		offerDB.terms = data.terms || "";
-		offerDB.offerGift = data.offerGift || "";
-		offerDB.clientGift = data.clientGift || "";
-		offerDB.endingDate = data.endingDate || "";
-		offerDB.code = data.code || "";
-		offerDB.dateCreated = data.dateCreated || "";
+		offerDB.imageUrl = this.imageUrl || "";
+		offerDB.store = this.store || "";
+		offerDB.preMessage = this.preMessage || "";
+		offerDB.terms = this.terms || "";
+		offerDB.offerGift = this.offerGift || "";
+		offerDB.clientGift = this.clientGift || "";
+		offerDB.endingDate = this.endingDate || "";
+		offerDB.code = this.code || "";
+		offerDB.dateCreated = this.dateCreated || "";
 		return offerDB;
 	}
 
