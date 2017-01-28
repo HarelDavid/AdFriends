@@ -12,31 +12,38 @@ export default class OfferModel {
 	@observable clientGift;
 	@observable endingDate;
 	@observable code;
-	@observable key;
 
-	//constructor(title, description,imageUrl,store, preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
+
 	constructor(data){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
 		if(data) {
 			this.title = data.title || "";
 			this.description = data.description || "";
 			this.imageUrl = data.imageUrl || "";
 			this.store = data.store || "";
+			this.preMessage = data.preMessage || "";
+			this.terms = data.terms || "";
+			this.offerGift = data.offerGift || "";
+			this.clientGift = data.clientGift || "";
+			this.endingDate = data.endingDate || "";
+			this.code = data.code || "";
+			this.dateCreated = data.dateCreated || "";
+			this.clientLinks = data.clientLinks || [];
 		}
 
 
-		this.preMessage = preMessage;
-		this.terms = terms;
-		this.offerGift = offerGift;
-		this.clientGift = clientGift;
-		this.endingDate = endingDate;
-		this.code = code;
-		this.dateCreated = dateCreated;
-	}
+
 
 	converFromDB(offerDB) {
 		this.title = offerDB.title;
 		this.description = offerDB.description;
 		this.imageUrl = offerDB.imageUrl;
+		this.preMessage = offerDB.preMessage;
+		this.terms = offerDB.terms;
+		this.offerGift = offerDB.offerGift;
+		this.clientGift = offerDB.clientGift;
+		this.endingDate = offerDB.endingDate;
+		this.code = offerDB.code;
+		this.dateCreated = offerDB.dateCreated;
 		this.id = offerDB.id;
 
 	}
@@ -45,9 +52,23 @@ export default class OfferModel {
 		var offerDB = {}
 		offerDB.title = this.title || "";
 		offerDB.description = this.description || "";
-		offerDB.imageUrl = this.imageUrl || "";
-		offerDB.id = this.id || "";
+		offerDB.imageUrl = data.imageUrl || "";
+		offerDB.store = data.store || "";
+		offerDB.preMessage = data.preMessage || "";
+		offerDB.terms = data.terms || "";
+		offerDB.offerGift = data.offerGift || "";
+		offerDB.clientGift = data.clientGift || "";
+		offerDB.endingDate = data.endingDate || "";
+		offerDB.code = data.code || "";
+		offerDB.dateCreated = data.dateCreated || "";
 		return offerDB;
+	}
+
+	createLinks(clientsArray) {
+		clientsArray.forEach((client) => {
+			var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
+			this.clientLinks.push(offerClientLink);
+		})
 	}
 
 
