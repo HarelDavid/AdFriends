@@ -52,21 +52,20 @@ export default class OfferModel {
 
 	}
 
-	converToDB() {
+	converToDB(offerDB) {
 		var offerDB = {}
-		this.id ? offerDB.id = this.id : "";
-		this.title ? offerDB.title = this.title : "";
-		this.description ? offerDB.description = this.description : "";
-		this.description ? offerDB.description = this.description : "";
-		this.imageUrl ? offerDB.imageUrl = this.imageUrl : "";
-		this.preMessage ? offerDB.preMessage = this.preMessage : "";
-		this.terms ? offerDB.terms = this.terms : "";
-		this.offerGift ? offerDB.offerGift = this.offerGift : "";
-		this.clientGift ? offerDB.clientGift = this.clientGift : "";
-		this.endingDate ? offerDB.endingDate = this.endingDate : "";
-		this.code ? offerDB.code = this.code : "";
-		this.dateCreated ? offerDB.dateCreated = this.dateCreated : "";
-		this.clientLinks ? offerDB.clientLinks = this.clientLinks : "";
+		offerDB.title = this.title || "";
+		offerDB.description = this.description || "";
+		offerDB.imageUrl = data.imageUrl || "";
+		offerDB.store = data.store || "";
+		offerDB.preMessage = data.preMessage || "";
+		offerDB.terms = data.terms || "";
+		offerDB.offerGift = data.offerGift || "";
+		offerDB.clientGift = data.clientGift || "";
+		offerDB.endingDate = data.endingDate || "";
+		offerDB.code = data.code || "";
+		offerDB.dateCreated = data.dateCreated || "";
+		offerDB.clientLinks = data.clientLinks || "";
 
 		return offerDB;
 	}
