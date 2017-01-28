@@ -39,8 +39,8 @@ class Offers extends React.Component {
 
     render() {
 
-		var  {businessStore} = this.props.route;
-		var offerStore = businessStore.offerStore;
+        var {businessStore} = this.props.route;
+        var offerStore = businessStore.offerStore;
         const {showOverlay} = this.props;
 
         return (
@@ -48,23 +48,27 @@ class Offers extends React.Component {
             <div className={style.wrapper}>
                 <h1>Your Offers:</h1>
 
-                <div className={style.top}>
-                    <a className={classname(style.new, 'button')} onClick={(e) => this.openOfferEntry(e)}>+ Add New
-                        Offer</a>
-                    {this.state.offerEntryOpened ?
-                        <Modal title="New Offer">
-                            <div className="close" onClick={()=> this.closeModal()}>X</div>
-                            <OfferEntry offerStore={offerStore}/>
-                        </Modal>
-                        : null
-                    }
-                </div>
-                <div className={style.list}>
+                <ul className={style.list}>
+                    <li className={style.top}>
+                        <div className={style.new_item} onClick={(e) => this.openOfferEntry(e)}>
+                            <div className={style.new}>
+                                <span className={style.plus}>+</span>
+                                Add New Offer
+                            </div>
+                        </div>
+                        {this.state.offerEntryOpened ?
+                            <Modal title="New Offer">
+                                <div className="close" onClick={() => this.closeModal()}>X</div>
+                                <OfferEntry offerStore={offerStore}/>
+                            </Modal>
+                            : null
+                        }
+                    </li>
                     {offerStore.offers.map((offer) => (
                             <Offer className={style.item} key={offer.id} offer={offer}/>
                         )
                     )}
-                </div>
+                </ul>
             </div>
 
 
