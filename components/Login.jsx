@@ -21,9 +21,7 @@ export default class Login extends Component {
 
 	initStores(bussines){
 		var {offerStore} = this.props.route;
-
 		offerStore.init(bussines);
-		//this.props.clientStore.init(bussines);
 	}
 
 
@@ -42,18 +40,16 @@ export default class Login extends Component {
 
 		var _this = this;
 		var uiConfig = {
+
 			signInFlow:  'popup',
+			signInSuccessUrl: window.location.href,
 			credentialHelper:firebaseui.auth.CredentialHelper.NONE,
 
 			'callbacks': {
 				'signInSuccess': function(currentUser,credential) {
 					if(currentUser){
-						return businessStore.login(currentUser, credential)
-							.then((business) => {
-								_this.initStores(business);
-								//return false;
-							})
-
+						 businessStore.login(currentUser, credential);
+						return false;
 					}
 					return false;
 
@@ -78,9 +74,19 @@ export default class Login extends Component {
 		return uiConfig;
 	}
 
+	// componentDidMount(){
+	// 	// document.getElementsByClassName("input")[1].innerHTML="This message was written via JS script! "; // Fills the text box message
+	// 	// var input = document.getElementsByClassName("icon btn-icon icon-send");//Grabs the send button
+	// 	// input[0].click();// Clicks the send button
+	// }
+
 	render() {
+
+
+
 		return (
 			<div>
+				<input/>
 				<div onClick={() =>this.reset()}>back</div>
 				<div className="firebaseui-auth"  ></div>
 			</div>
