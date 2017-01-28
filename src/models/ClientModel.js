@@ -6,30 +6,17 @@ export default class ClientModel {
 	@observable title;
 	@observable description;
 	@observable imageUrl;
-	//@observable preMessage;
-	// @observable terms;
-	// @observable clientGift;
-	// @observable clientGift;
-	// @observable endingDate;
-	// @observable code;
-	// @observable key;
+	@observable friends;
 
-	constructor(data){//preMessage,terms,clientGift,clientGift,endingDate,code, dateCreated) {
+	constructor(data){
 		if(data) {
 			this.title = data.title || "";
 			this.description = data.description || "";
 			this.imageUrl = data.imageUrl || "";
+			this.friends = data.friends || [];
 			this.store = data.store || "";
 		}
 
-
-		// this.preMessage = preMessage;
-		// this.terms = terms;
-		// this.clientGift = clientGift;
-		// this.clientGift = clientGift;
-		// this.endingDate = endingDate;
-		// this.code = code;
-		// this.dateCreated = dateCreated;
 	}
 
 	converFromDB(clientDB) {
@@ -47,6 +34,11 @@ export default class ClientModel {
 		clientDB.imageUrl = this.imageUrl || "";
 		clientDB.id = this.id || "";
 		return clientDB;
+	}
+
+	addFriend(friend){
+		this.friends.push(friend);
+		this.save();
 	}
 
 
