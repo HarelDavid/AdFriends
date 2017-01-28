@@ -17,7 +17,7 @@ class ClientEntry extends React.Component {
 
     @observable
     state = {
-        client : {},
+        client : new ClientModel({store:this.props.clientStore}),
         itemBeingEdited: false
 
     }
@@ -42,10 +42,9 @@ class ClientEntry extends React.Component {
     };
 
     @autobind
-    handleNewSubmit() {
+    handleNewClientKeyDown() {
 
         var {client} = this.state;
-        var client = new ClientModel(title, description, imageUrl, this.props.clientStore);
         client.save();
         this.clearForm();
 
@@ -89,17 +88,62 @@ class ClientEntry extends React.Component {
         }
 
         return (
-			<form className="addItemForm">
+            <form className="addItemForm">
+                <div className={style.cell}>
+                    <label>Title</label>
+                    <input type="text" name="title" value={client.title} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Description</label>
+                    <textarea name="description" value={client.description} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Message to Client:</label>
+                    <textarea type="text" name="preMessage" value={client.preMessage} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Terms</label>
+                    <input type="text" name="terms" value={client.terms} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Friend Gift</label>
+                    <input type="text" name="clientGift" value={client.clientGift} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Client Gift</label>
+                    <input type="text" name="clientGift" value={client.clientGift} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Ending Date</label>
+                    <input type="date" name="endingDate" value={client.endingDate} onChange={this.onChange}/>
+                </div>
+                <div className={style.cell}>
+                    <label>Code</label>
+                    <input type="text" name="code" value={client.code} onChange={this.onChange}/>
 
-				<div className={style.cell}>
-					<label>Name</label>
-					<input type="text" name="name" value={client.name} onChange={this.onChange}/>
-				</div>
+                </div>
+                <div className={style.urls}>
+                    {client.urls && client.urls.map((url) =>
+                        <div>{url}</div>
+                    )}
+                </div>
 
-				<button className="button save" onClick={this.handleNewSubmit}>submit</button>
+                <label>
+                    <ImageUploader
+                        name="avatar"
+                        storageRef={firebase.storage().ref('images')}
+                        onUploadStart={this.handleUploadStart}
+                        onUploadError={this.handleUploadError}
+                        onUploadSuccess={this.handleUploadSuccess}
+                        onProgress={this.handleProgress}
+                    />
+                </label>
 
 
-			</form>
+                <div className="button save" onClick={this.handleNewClientKeyDown}>submit</div>
+
+
+            </form>
         )
     }
 }

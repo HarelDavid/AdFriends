@@ -43,13 +43,12 @@ export default class Login extends Component {
 		var _this = this;
 		var uiConfig = {
 			signInFlow:  'popup',
-			queryParameterForSignInSuccessUrl: 'signInSuccessUrl',
 			credentialHelper:firebaseui.auth.CredentialHelper.NONE,
 
 			'callbacks': {
 				'signInSuccess': function(currentUser,credential) {
 					if(currentUser){
-						return businessStore.login(currentUser)
+						return businessStore.login(currentUser, credential)
 							.then((business) => {
 								_this.initStores(business);
 								//return false;

@@ -1,7 +1,7 @@
 import CSSModules from 'react-css-modules'
 import React, {PropTypes} from 'react';
 import {observer} from 'mobx-react';
-import Client from './Clients'
+import Client from './Client'
 import ClientEntry from './ClientEntry'
 import {observable} from 'mobx';
 import classname from 'classnames';
@@ -15,34 +15,36 @@ Object.assign(style)
 @observer
 class Clients extends React.Component {
 
-    @observable
-    state = {
-        clientEntryOpened: false
-    }
+	@observable
+	state = {
+		clientEntryOpened: false
+	}
 
-    static propTypes = {
-        showOverlay: PropTypes.func
-    }
+	static propTypes = {
+		showOverlay: PropTypes.func
+	}
 
-    @autobind
-    openClientEntry(e) {
-        e.preventDefault();
-        this.state.clientEntryOpened = true;
-    }
+	@autobind
+	openClientEntry(e) {
+		console.log("dd")
+		e.preventDefault();
+		this.state.clientEntryOpened = true;
+	}
 
-    @autobind
-    closeModal() {
-        this.state.clientEntryOpened = false;
+	@autobind
+	closeModal() {
+		this.state.clientEntryOpened = false;
 
-    }
+	}
 
 
-    render() {
+	render() {
 
-        const {clientStore, businessStore} = this.props.route;
-        const {showOverlay} = this.props;
+		var  {businessStore} = this.props.route;
+		var clientStore = businessStore.clientStore;
+		const {showOverlay} = this.props;
 
-        return (
+		return (
 
 			<div className={style.wrapper}>
 				<h1>Your Clients:</h1>
@@ -52,25 +54,25 @@ class Clients extends React.Component {
 				<div className={style.top}>
 					<a className={classname(style.new, 'button')} onClick={(e) => this.openClientEntry(e)}>+ Add New
 						Client</a>
-                    {this.state.clientEntryOpened ?
+					{this.state.clientEntryOpened ?
 						<Modal title="New Client">
 							<div className="close" onClick={()=> this.closeModal()}>X</div>
 							<ClientEntry clientStore={clientStore}/>
 						</Modal>
-                        : null
-                    }
+						: null
+					}
 				</div>
 				<div className={style.list}>
-                    {clientStore.clients.map((client) => (
+					{clientStore.clients.map((client) => (
 							<Client className={style.item} key={client.id} client={client}/>
-                        )
-                    )}
+						)
+					)}
 				</div>
 			</div>
 
 
-        )
-    }
+		)
+	}
 }
 
 export default CSSModules(Clients, style);

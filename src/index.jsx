@@ -27,18 +27,12 @@ const initialState = window.initialState || {
 		clients:[]
 }
 
-var offerStore = OfferStore.fromJS(initialState.offers);
-var clientStore = ClientStore.fromJS(initialState.clients);
 var authStore = new AuthStore();
 var businessStore = new BuisnessStore();
 
 var stores = {};
-stores.offerStore = offerStore;
-stores.clientStore = clientStore;
 stores.authStore = authStore;
 stores.businessStore = businessStore;
-
-console.log(stores)
 
 
 

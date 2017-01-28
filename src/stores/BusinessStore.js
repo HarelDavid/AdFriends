@@ -1,15 +1,29 @@
 import {observable, computed} from 'mobx'
 import BusinessModel from '../models/BusinessModel'
-import * as Utils from '../utils';
+import OfferStore from '../stores/OfferStore'
+import ClientStore from '../stores/ClientStore'
 import * as firebase from 'firebase';
+
+
+
 
 export default class BuisnessStore {
 	@observable business = null;
+	offerStore = null;
+	clientStore = null;
 
 	constructor() {
-
+		this.offerStore = new OfferStore();
+		this.clientStore = new ClientStore();
 		this.startObserve();
 	}
+
+	init(business){
+		this.business = business;
+		this.offerStore.init(this.business);
+		this.clientStore.init(this.business);
+	}
+
 
 
 
@@ -36,14 +50,14 @@ export default class BuisnessStore {
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
 				if(business){
-				  this.business  = business;
-					return  this.business;
+
+					this.init(business)
+					//return  this.business;
 				}
 				else{
 
 					return this.add(currentUser).then((bussines) => {
-						this.business = business;
-						return this.business;
+						this.init(business)
 
 					})
 				}
@@ -72,8 +86,7 @@ export default class BuisnessStore {
 
 	add(currentUser) {
 
-		var business = new BusinessModel(this, currentUser.uid, currentUser.displayName);
-		var database = firebase.database();
+		var business = new BusinessModel(currentUser.uid, currentUser.displayName);
 		firebase.database().ref('/business').child(currentUser.uid).set(business).then((business) => {
 			return business;
 		})

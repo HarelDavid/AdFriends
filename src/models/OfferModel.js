@@ -14,12 +14,15 @@ export default class OfferModel {
 	@observable code;
 	@observable key;
 
-	constructor(title, description,imageUrl,store, preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
+	//constructor(title, description,imageUrl,store, preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
+	constructor(data){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
+		if(data) {
+			this.title = data.title || "";
+			this.description = data.description || "";
+			this.imageUrl = data.imageUrl || "";
+			this.store = data.store || "";
+		}
 
-		title ? this.title = title : "";
-		description  ? this.description = description : "";
-		imageUrl ? this.imageUrl = imageUrl : "";
-		store ? this.store = store : "";
 
 		this.preMessage = preMessage;
 		this.terms = terms;
@@ -67,6 +70,6 @@ export default class OfferModel {
 	}
 
 	static fromJS(store, object) {
-		return new OfferModel(store, object.id, object.title, object.description,object.imageUrl, object.key);
+		return new OfferModel({store:store, id:object.id, title:object.title, description:object.description,imageUrl:object.imageUrl});
 	}
 }

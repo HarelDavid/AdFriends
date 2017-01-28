@@ -17,13 +17,9 @@ class OfferEntry extends React.Component {
 
     @observable
     state = {
-        offer : {},
+        offer : new OfferModel({store:this.props.offerStore}),
         itemBeingEdited: false
 
-    }
-
-    componentDidMount(){
-        console.log(this.props);
     }
 
     updateProperty (key, value) {
@@ -49,7 +45,7 @@ class OfferEntry extends React.Component {
     handleNewOfferKeyDown(e) {
         e.preventDefault();
         var {offer} = this.state;
-        var offer = new OfferModel({offer});
+       // var offer = new OfferModel({title:offer.title, description:description, imageUrl:imageUrl, store:this.props.offerStore});
         offer.save();
         this.clearForm();
 
