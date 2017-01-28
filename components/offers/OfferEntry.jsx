@@ -22,6 +22,10 @@ class OfferEntry extends React.Component {
 
     }
 
+    componentDidMount(){
+        console.log(this.props);
+    }
+
     updateProperty (key, value) {
         var  {offer} = this.state;
         offer[key] = value;
@@ -42,10 +46,10 @@ class OfferEntry extends React.Component {
     };
 
     @autobind
-    handleNewOfferKeyDown() {
-
+    handleNewOfferKeyDown(e) {
+        e.preventDefault();
         var {offer} = this.state;
-        var offer = new OfferModel(title, description, imageUrl, this.props.offerStore);
+        var offer = new OfferModel({offer});
         offer.save();
         this.clearForm();
 
@@ -141,7 +145,7 @@ class OfferEntry extends React.Component {
                 </label>
 
 
-                <button className="button save" onClick={this.handleNewOfferKeyDown}>submit</button>
+                <button className="button save" onClick={(e) => this.handleNewOfferKeyDown(e)}>submit</button>
 
 
             </form>

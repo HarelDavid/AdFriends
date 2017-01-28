@@ -47,6 +47,8 @@ class Clients extends React.Component {
 			<div className={style.wrapper}>
 				<h1>Your Clients:</h1>
 
+                <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share">Share via Whatsapp</a>
+
 				<div className={style.top}>
 					<a className={classname(style.new, 'button')} onClick={(e) => this.openClientEntry(e)}>+ Add New
 						Client</a>
