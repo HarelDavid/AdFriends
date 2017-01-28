@@ -42,8 +42,8 @@ class OfferEntry extends React.Component {
     };
 
     @autobind
-    handleNewOfferKeyDown() {
-
+    handleNewOfferKeyDown(e) {
+        e.preventDefault();
         var {offer} = this.state;
        // var offer = new OfferModel({title:offer.title, description:description, imageUrl:imageUrl, store:this.props.offerStore});
         offer.save();
@@ -141,7 +141,7 @@ class OfferEntry extends React.Component {
                 </label>
 
 
-                <div className="button save" onClick={this.handleNewOfferKeyDown}>submit</div>
+                <button className="button save" onClick={(e) => this.handleNewOfferKeyDown(e)}>submit</button>
 
 
             </form>
