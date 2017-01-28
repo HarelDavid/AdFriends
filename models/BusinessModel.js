@@ -6,11 +6,9 @@ export default class BusinessModel {
 	@observable title;
 
 
-	constructor(store, id, title) {
-		this.store = store;
+	constructor(id, title) {
 		this.id = id;
 		this.title = title;
-
 	}
 
 	destroy() {

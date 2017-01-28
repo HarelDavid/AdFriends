@@ -16,6 +16,7 @@ class Client extends React.Component {
     state = {
         client : {},
         itemBeingEdited: false
+
     }
 
     componentWillMount(){
@@ -75,19 +76,51 @@ class Client extends React.Component {
                 {this.state.itemBeingEdited ?
                     <div className={style.edit_form}>
                         <div className={style.cell}>
-                            <label>Name</label>
-                            <input type="text" name="name" value={client.name} onChange={this.onChange}/>
+                            <label>Title</label>
+                            <input type="text" name="title" value={client.title} onChange={this.onChange}/>
                         </div>
-                        {/*<div className={style.cell}>*/}
-                            {/*<label>Date created</label>*/}
-                            {/*<input type="date" name="dateCreated" value={client.dateCreated} disabled />*/}
-                        {/*</div>*/}
+                        <div className={style.cell}>
+                            <label>Description</label>
+                            <input type="text" name="description" value={client.description} onChange={this.onChange}/>
+                        </div>
+                        <div className={style.cell}>
+                            <label>Message to Client:</label>
+                            <input type="text" name="preMessage" value={client.preMessage} onChange={this.onChange}/>
+                        </div>
+                        <div className={style.cell}>
+                            <label>Terms</label>
+                            <input type="text" name="terms" value={client.terms} onChange={this.onChange}/>
+                        </div>
+                        <div className={style.cell}>
+                            <label>Friend Gift</label>
+                            <input type="text" name="clientGift" value={client.clientGift} onChange={this.onChange}/>
+                        </div>
+                        <div className={style.cell}>
+                            <label>Client Gift</label>
+                            <input type="text" name="clientGift" value={client.clientGift} onChange={this.onChange}/>
+                        </div>
+                        <div className={style.cell}>
+                            <label>Date created</label>
+                            <input type="date" name="dateCreated" value={client.dateCreated} disabled />
+                        </div>
+                        <div className={style.cell}>
+                            <label>Ending Date</label>
+                            <input type="date" name="endingDate" value={client.endingDate} onChange={this.onChange}/>
+                        </div>
+                        <div className={style.cell}>
+                            <label>Code</label>
+                            <input type="text" name="code" value={client.code} onChange={this.onChange}/>
+
+                        </div>
                         <div className={style.urls}>
-                            {client.offers && client.offers.map((url) =>
+                            {client.urls && client.urls.map((url) =>
                                 <div>{url}</div>
                             )}
                         </div>
 
+                        <div className={classname(style.cell, style.image_cell)}>
+                            <img src={client.imageUrl}/>
+                        </div>
                     </div> : null }
 
             </li>

@@ -16,19 +16,15 @@ export default class OfferStore {
 	}
 
 	init(bussines){
-		var _this = this;
 		this.business = bussines;
 		this.offersRef = firebase.database().ref(`business/${this.business.id}/offers`);
-		this.offersRef.on('value', (snap) => {
-			snap.forEach((child) => {
-				var item = child.val();
-				var offerModel = new OfferModel();
-				offerModel.converFromDB(item);
-				offerModel.store = _this;
-				this.offers.push(offerModel)
-			})
-
-		});
+		var offersArr = bussines.offers ? Object.keys(bussines.offers).map(function(offer) { return bussines.offers[offer] }): [];
+		offersArr.forEach((offer) => {
+			var offerModel = new OfferModel();
+			offerModel.converFromDB(offer);
+			offerModel.store = this;
+			this.offers.push(offerModel)
+		})
 	}
 
 	@computed get offerCount() {
@@ -43,14 +39,14 @@ export default class OfferStore {
 			offer.id = offerId;
 			offer.store = this;
 		}
+		this.offers.push(offer);
 		var offerDB = offer.converToDB();
-		this.offers.push(offerDB);
 		this.offersRef.child(offerDB.id).set(offerDB);
-
 	}
 
 	remove (offer) {
-		offer.destroy();
+		this.offers.push(offer);
+		this.offers = this.offers.filter((offerInstace) => offerInstace.id != offer.id)
 		this.offersRef.child(offer.key).remove();
 	}
 	toJS() {
