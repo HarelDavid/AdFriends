@@ -12,10 +12,12 @@ export default class OfferModel {
 	@observable clientGift;
 	@observable endingDate;
 	@observable code;
+	@observable clientLinks;
 
 
-	constructor(data){//preMessage,terms,offerGift,clientGift,endingDate,code, dateCreated) {
-		if(data) {
+
+	constructor(data) {
+		if (data) {
 			this.title = data.title || "";
 			this.description = data.description || "";
 			this.imageUrl = data.imageUrl || "";
@@ -29,6 +31,7 @@ export default class OfferModel {
 			this.dateCreated = data.dateCreated || "";
 			this.clientLinks = data.clientLinks || [];
 		}
+	}
 
 
 
@@ -69,6 +72,7 @@ export default class OfferModel {
 			var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
 			this.clientLinks.push(offerClientLink);
 		})
+		this.store.save(this);
 	}
 
 
