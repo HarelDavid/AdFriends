@@ -2,14 +2,8 @@
 
 
 .nav {
-  width: 120px;
-  //background-color: $primary-dark;
-  //background-image: linear-gradient(90deg, rgba(91, 76, 133,.07) 50%, transparent 50%),
-  //linear-gradient(90deg, rgba(91, 76, 133,.13) 50%, transparent 50%),
-  //linear-gradient(90deg, transparent 50%, rgba(91, 76, 133,.17) 50%),
-  //linear-gradient(90deg, transparent 50%, rgba(91, 76, 133,.19) 50%);
-  //background-size: 13px, 29px, 37px, 53px;
-  background-image: linear-gradient(to bottom, $primary, lighten($primary, 10%));
+  width: 320px;
+  background-color: $primary;
   position: relative;
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.05);
   min-height: 100vh;
@@ -26,7 +20,6 @@
     text-align: center;
     margin: 30px 0 60px;
     padding: 20px 0;
-    background: $primary-dark;
     position: relative;
     right: 0;
     width: 140px;
@@ -43,9 +36,11 @@
     }
 
     .user {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       border-radius: 100%;
+      background-color: $primary-dark;
+      margin: 0 auto;
     }
   }
 
@@ -64,7 +59,7 @@
 }
 .menu_list {
   width: 100%;
-  //padding: 0 25px;
+  text-align: center;
 
   .nav_list {
     list-style-type: none;
