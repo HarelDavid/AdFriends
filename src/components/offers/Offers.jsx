@@ -47,7 +47,7 @@ class Offers extends React.Component {
 
             <div className={style.wrapper}>
                 <h1>Your Offers:</h1>
-
+                    <t>ניסיון של אורי</t>
                 <ul className={style.list}>
                     <li className={style.top}>
                         <div className={style.new_item} onClick={(e) => this.openOfferEntry(e)}>
