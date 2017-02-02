@@ -49,12 +49,10 @@ class Offers extends React.Component {
                 <h1>Your Offers:</h1>
                     <p>ניסיון של אורי</p>
                 <ul className={style.list}>
-                    <li className={style.top}>
-                        <div className={style.new_item} onClick={(e) => this.openOfferEntry(e)}>
-                            <div className={style.new}>
-                                <span className={style.plus}>+</span>
-                                Add New Offer
-                            </div>
+                    <li className={style.new_item} onClick={(e) => this.openOfferEntry(e)}>
+                        <div className={style.new}>
+                            <span className={style.plus}>+</span>
+                            Add New Offer
                         </div>
                         {this.state.offerEntryOpened ?
                             <Modal title="New Offer">
