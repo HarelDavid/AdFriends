@@ -34,6 +34,19 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     }
   }
 
+  .tooltip {
+    color: #fff;
+    width: 16px;
+    height: 16px;
+    background: #333;
+    border-radius: 100%;
+    display: inline-block;
+    font-size: 9px;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 3px;
+  }
+
 
   .card {
     @include card();
@@ -48,7 +61,7 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     label {
       padding-right: 15px;
       margin-top: 10px;
-      margin-bottom: 3px;
+      margin-bottom: 5px;
       display: block;
     }
     .input-name {
