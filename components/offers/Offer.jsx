@@ -5,7 +5,9 @@ import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import classname from 'classnames';
 import Icon from '../icon';
+import Modal from '../modal';
 import ReactTooltip from 'react-tooltip'
+import ClientList from '../Clients/client-list';
 
 import style from './style.scss';
 Object.assign(style)
@@ -17,8 +19,8 @@ class Offer extends React.Component {
     @observable
     state = {
         offer: {},
-        itemBeingEdited: false
-
+        itemBeingEdited: false,
+        shareModal: true
     }
 
     componentWillMount() {
@@ -58,26 +60,45 @@ class Offer extends React.Component {
         this.state.itemBeingEdited = true;
     };
 
+    @autobind
+    closeModal() {
+        this.state.itemBeingEdited = false;
+        document.body.classList.remove('showOverlay');
+    }
+
+    openShareOffer(){
+        this.state.shareModal = true;
+    }
 
     render() {
-        const {offer} = this.state;
+        const {offer, shareModal, itemBeingEdited} = this.state;
 
 
         return (
-            <li className={this.state.itemBeingEdited ? style.item + " edit" : style.item}>
+            <li className={itemBeingEdited ? style.item + " edit" : style.item}>
                 <div className={style.preview}>
-                    <div className={style.cell}>
+                    <span className="icon-offers_full"></span>
+                    <h3 className={style.cell}>
                         {offer.title}
+                    </h3>
+                    <div className={classname(style.cell, style.button_cell)}>
+                        <button className="button edit" onClick={this.handleEdit}>edit</button>
                     </div>
                     <div className={classname(style.cell, style.button_cell)}>
-                        {!this.state.itemBeingEdited ?
-                            <button className="button edit" onClick={this.handleEdit}>edit</button> :
-                            <button className="button save" onClick={this.handleSubmit}>save</button>}
-
+                        Offer ends: {offer.endingDate}
                     </div>
+                    <span className="share" onClick={()=> this.openShareOffer()}>share</span>
+                    {shareModal &&
+                    <Modal title="Select a client:">
+                        <ClientList/>
+                    </Modal>
+                    }
                 </div>
-                {this.state.itemBeingEdited ?
-                    <div className={style.edit_form}>
+                {itemBeingEdited ?
+
+                    <Modal title="Edit Offer" className={style.edit_form}>
+                        <div className="close" onClick={()=> this.closeModal()}>X</div>
+
                         <div className={style.cell}>
                             <label>Title <span className="tooltip" data-tip data-for="Title">?</span></label>
                             <ReactTooltip id='Title'>
@@ -153,7 +174,8 @@ class Offer extends React.Component {
                         <div className={classname(style.cell, style.image_cell)}>
                             <img src={offer.imageUrl}/>
                         </div>
-                    </div> : null }
+                        <button className="button save" onClick={this.handleSubmit}>save</button>
+                    </Modal> : null }
 
             </li>
         );
