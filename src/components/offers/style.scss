@@ -53,9 +53,7 @@ ul.list {
         &.image_cell {
           img { max-width: 100px; }
         }
-        &.button_cell {
-          align-self: flex-end;
-        }
+
       label {
         display: block;
         margin-bottom: 5px;
@@ -68,6 +66,7 @@ ul.list {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
     .offer_title {
       font-weight: bold;
     }

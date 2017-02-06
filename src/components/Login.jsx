@@ -11,12 +11,14 @@ import firebase from 'firebase';
 export default class Login extends Component {
 
 	authUi;
+
 	componentDidMount () {
 		var self = this;
 
 		var {businessStore, authStore, OfferStore, ClientStore} = this.props.route;
 		var uiConfig = this.getConfig(businessStore);
 		authStore.authUi.start('.firebaseui-auth', uiConfig);
+
 	}
 
 	initStores(bussines){
