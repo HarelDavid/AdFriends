@@ -72,6 +72,9 @@ class Offer extends React.Component {
 
     render() {
         const {offer, shareModal, itemBeingEdited} = this.state;
+        console.log("ssss",this.props)
+
+        const {businessStore} = this.props;
 
 
         return (
@@ -90,7 +93,7 @@ class Offer extends React.Component {
                     <span className="share" onClick={()=> this.openShareOffer()}>share</span>
                     {shareModal &&
                     <Modal title="Select a client:">
-                        <ClientList/>
+                        <ClientList businessStore={businessStore} />
                     </Modal>
                     }
                 </div>
