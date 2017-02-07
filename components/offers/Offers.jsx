@@ -63,7 +63,7 @@ class Offers extends React.Component {
                         }
                     </li>
                     {offerStore.offers.map((offer) => (
-                            <Offer className={style.item} key={offer.id} offer={offer}/>
+                            <Offer  businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
                         )
                     )}
                 </ul>

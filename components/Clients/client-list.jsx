@@ -19,7 +19,7 @@ class ClientList extends React.Component {
 
 	render() {
 
-		var  {businessStore} = this.props.route;
+		var  {businessStore} = this.props;
 		var clientStore = businessStore.clientStore;
 
 		return (
