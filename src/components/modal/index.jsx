@@ -13,44 +13,30 @@ Object.assign(style)
 class Offers extends React.Component {
 
     static propTypes = {
-        title: PropTypes.string
+        title: PropTypes.string,
+        isOpen: PropTypes.bool
     }
 
-    @observable
-    state = {
-        open: true
-    }
 
     componentDidMount(){
-        document.body.classList.add('showOverlay');
-
+        // document.body.classList.add('showOverlay');
     }
 
-    open() {
-        this.setState({open: true});
-        document.body.classList.add('showOverlay');
-    }
 
-    close() {
-        this.setState({open: false});
-        document.body.classList.remove('showOverlay');
-    }
 
     render() {
 
-        var {title, children} = this.props;
-        var {open} = this.state;
+        var {title, children, isOpen} = this.props;
 
+        if(!isOpen)
+            return null;
 
         return (
             <div>
-                {open ?
                     <div className={style.Modal}>
                         <h2>{title}</h2>
-                        <div onClick={()=>this.close()}>X</div>
                         {children}
                     </div>
-                    : null }
             </div>
 
         )
