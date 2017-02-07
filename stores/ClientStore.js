@@ -44,7 +44,7 @@ export default class ClientStore {
 	remove (client) {
 		this.clients.push(client);
 		this.clients = this.clients.filter((clientInstace) => clientInstace.id != client.id)
-		this.clientsRef.child(client.key).remove();
+		this.clientsRef.child(client.id).remove();
 	}
 	toJS() {
 		return this.clients.map(client => client.toJS());

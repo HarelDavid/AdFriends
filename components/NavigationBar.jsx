@@ -1,13 +1,18 @@
 import React from 'react'
 import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
-
+import autobind from 'autobind-decorator'
 import NavItem from './NavigationItem'
 import styles from './NavigationBar.scss'
 
 @observer
 class NavigationBar extends React.Component {
 
+	@autobind
+	logout(){
+		var {businessStore} = this.props;
+		businessStore && businessStore.logout();
+	}
 
 	render() {
 
@@ -22,16 +27,18 @@ class NavigationBar extends React.Component {
 				<div className={styles.container}>
 					<div className={styles.header}>
 						<a className={styles.brand} href="#">
-							<div className={styles.user}> </div>
+							<div className={styles.user}>
+							<img src={businessStore.business && businessStore.business.imageUrl }/>
+							</div>
 						</a>
 					</div>
 					<div className={styles.menu_list}>
 						<div className={styles.name}>Hello, {businessStore.business && businessStore.business.title}</div>
 
 						<ul className={styles.nav_list}>
-                            {!businessStore.isLoggedIn &&<NavItem to='/' index={true} >Login {businessStore.isLoggedIn}</NavItem>}
 							{businessStore.isLoggedIn && <NavItem to='/offers'>Offers</NavItem>}
 							{businessStore.isLoggedIn && <NavItem to='/clients'>Clients</NavItem>}
+							{businessStore.isLoggedIn && <div onClick={this.logout}>logout</div>}
 						</ul>
 					</div>
 				</div>

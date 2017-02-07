@@ -41,6 +41,10 @@
       border-radius: 100%;
       background-color: $primary-dark;
       margin: 0 auto;
+      overflow: hidden;
+      img{
+        width: 100%;
+      }
     }
   }
 

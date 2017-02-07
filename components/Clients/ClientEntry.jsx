@@ -33,19 +33,14 @@ class ClientEntry extends React.Component {
     }
 
 
-    @autobind
-    handleSubmit() {
-        var  {client} = this.state;
-        if (client) {
-            client.save();
-        }
-    };
 
     @autobind
     handleNewClientKeyDown() {
 
         var {client} = this.state;
+        var {onSave} = this.props;
         client.save();
+        onSave();
         this.clearForm();
 
     };

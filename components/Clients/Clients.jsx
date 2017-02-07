@@ -26,7 +26,6 @@ class Clients extends React.Component {
 
 	@autobind
 	openClientEntry(e) {
-		console.log("dd")
 		e.preventDefault();
 		this.state.clientEntryOpened = true;
 	}
@@ -57,7 +56,7 @@ class Clients extends React.Component {
 					{this.state.clientEntryOpened ?
 						<Modal title="New Client">
 							<div className="close" onClick={()=> this.closeModal()}>X</div>
-							<ClientEntry clientStore={clientStore}/>
+							<ClientEntry clientStore={clientStore} onSave={this.closeModal}/>
 						</Modal>
 						: null
 					}

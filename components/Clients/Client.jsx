@@ -41,13 +41,14 @@ class Client extends React.Component {
         if (client) {
             client.save();
         }
+        this.state.itemBeingEdited = false;
     };
 
     @autobind
     handleDestroy() {
         var  {client} = this.state;
         if (client) {
-            client.remove();
+            client.destroy();
         }
     };
 
@@ -70,6 +71,7 @@ class Client extends React.Component {
                     <div className={classname(style.cell, style.button_cell)}>
                         {!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
                             <button className="button save" onClick={this.handleSubmit}>save</button>}
+						<button className="button save" onClick={this.handleDestroy}>delete</button>
 
                     </div>
                 </div>

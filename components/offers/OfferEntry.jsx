@@ -45,8 +45,10 @@ class OfferEntry extends React.Component {
     handleNewOfferKeyDown(e) {
         e.preventDefault();
         var {offer} = this.state;
+        var {onSave} = this.props;
        // var offer = new OfferModel({title:offer.title, description:description, imageUrl:imageUrl, store:this.props.offerStore});
         offer.save();
+        onSave();
         this.clearForm();
 
     };

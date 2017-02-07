@@ -12,7 +12,7 @@ export default class OfferModel {
 	@observable clientGift;
 	@observable endingDate;
 	@observable code;
-	@observable clientLinks;
+	@observable offerLinks;
 
 
 
@@ -74,7 +74,9 @@ export default class OfferModel {
 	createLinks(clientsArray) {
 		clientsArray.forEach((client) => {
 			var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
-			this.clientLinks.push(offerClientLink);
+			this.offerLinks.push(offerClientLink);
+			client.offerLinks.push(offerClientLink);
+			client.save();
 		})
 		this.store.save(this);
 	}

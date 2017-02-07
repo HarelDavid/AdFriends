@@ -54,7 +54,7 @@ class Offers extends React.Component {
                     {this.state.offerEntryOpened ?
                         <Modal title="New Offer">
                             <div className="close" onClick={()=> this.closeModal()}>X</div>
-                            <OfferEntry offerStore={offerStore}/>
+                            <OfferEntry offerStore={offerStore} onSave={this.closeModal}/>
                         </Modal>
                         : null
                     }

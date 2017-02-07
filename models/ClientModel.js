@@ -7,6 +7,8 @@ export default class ClientModel {
 	@observable description;
 	@observable imageUrl;
 	@observable friends;
+	@observable offerLinks;
+
 
 	constructor(data){
 		if(data) {

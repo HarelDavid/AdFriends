@@ -12,9 +12,7 @@ export default class Login extends Component {
 
 	authUi;
 	componentDidMount () {
-		var self = this;
-
-		var {businessStore, authStore, OfferStore, ClientStore} = this.props.route;
+		var {businessStore, authStore} = this.props.route;
 		var uiConfig = this.getConfig(businessStore);
 		authStore.authUi.start('.firebaseui-auth', uiConfig);
 	}
@@ -47,8 +45,15 @@ export default class Login extends Component {
 
 			'callbacks': {
 				'signInSuccess': function(currentUser,credential) {
+					if(credential){
+						return businessStore.getProviderData(credential.accessToken)
+						if(currentUser){
+							businessStore.login(currentUser, credential);
+							return false;
+						}
+					}
 					if(currentUser){
-						 businessStore.login(currentUser, credential);
+						businessStore.login(currentUser, credential);
 						return false;
 					}
 					return false;
@@ -63,10 +68,9 @@ export default class Login extends Component {
 				{
 					provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
 
-					scopes:[
+					scopes: [
 						'public_profile',
-						'email',
-						'user_birthday'
+						'email'
 					]
 				}
 			]
@@ -82,13 +86,12 @@ export default class Login extends Component {
 
 	render() {
 
-
-
 		return (
 			<div>
-				<input/>
-				<div onClick={() =>this.reset()}>back</div>
+			<div>WELCOME , PLEASE LOGIN</div>
+			<div>
 				<div className="firebaseui-auth"  ></div>
+			</div>
 			</div>
 		);
 	}
