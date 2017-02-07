@@ -47,7 +47,7 @@ export default class OfferStore {
 	remove (offer) {
 		this.offers.push(offer);
 		this.offers = this.offers.filter((offerInstace) => offerInstace.id != offer.id)
-		this.offersRef.child(offer.key).remove();
+		this.offersRef.child(offer.id).remove();
 	}
 	toJS() {
 		return this.offers.map(offer => offer.toJS());

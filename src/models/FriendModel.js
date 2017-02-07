@@ -3,80 +3,46 @@ import {observable} from 'mobx';
 export default class OfferModel {
 	store;
 	id;
-	@observable title;
-	@observable description;
-	@observable imageUrl;
-	@observable preMessage;
-	@observable terms;
-	@observable offerGift;
-	@observable clientGift;
-	@observable endingDate;
-	@observable code;
-	@observable clientLinks;
+	@observable name;
+	@observable phoneNumber;
+	@observable dateAdded;
+	@observable offerId;
+
 
 
 
 	constructor(data) {
 		if (data) {
-			this.title = data.title || "";
-			this.description = data.description || "";
-			this.imageUrl = data.imageUrl || "";
-			this.store = data.store || "";
-			this.preMessage = data.preMessage || "";
-			this.terms = data.terms || "";
-			this.offerGift = data.offerGift || "";
-			this.clientGift = data.clientGift || "";
-			this.endingDate = data.endingDate || "";
-			this.code = data.code || "";
-			this.dateCreated = data.dateCreated || "";
-			this.clientLinks = data.clientLinks || [];
+			this.name = data.name || "";
+			this.phoneNumber = data.phoneNumber || "";
+			this.dateAdded = data.dateAdded || "";
+			this.offerId = data.offerId || "";
 		}
 	}
 
 
 
 
-	converFromDB(offerDB) {
-		this.title = offerDB.title;
-		this.description = offerDB.description;
-		this.imageUrl = offerDB.imageUrl;
-		this.preMessage = offerDB.preMessage;
-		this.terms = offerDB.terms;
-		this.offerGift = offerDB.offerGift;
-		this.clientGift = offerDB.clientGift;
-		this.endingDate = offerDB.endingDate;
-		this.code = offerDB.code;
-		this.dateCreated = offerDB.dateCreated;
-		this.clientLinks = offerDB.clientLinks;
-		this.id = offerDB.id;
+	converFromDB(friendDB) {
+		this.name = friendDB.name;
+		this.phoneNumber = friendDB.phoneNumber;
+		this.dateAdded = friendDB.dateAdded;
+		this.offerId = friendDB.offerId;
+		this.id = friendDB.id;
 
 	}
 
-	converToDB(offerDB) {
-		var offerDB = {}
-		offerDB.title = this.title || "";
-		offerDB.description = this.description || "";
-		offerDB.imageUrl = data.imageUrl || "";
-		offerDB.store = data.store || "";
-		offerDB.preMessage = data.preMessage || "";
-		offerDB.terms = data.terms || "";
-		offerDB.offerGift = data.offerGift || "";
-		offerDB.clientGift = data.clientGift || "";
-		offerDB.endingDate = data.endingDate || "";
-		offerDB.code = data.code || "";
-		offerDB.dateCreated = data.dateCreated || "";
-		offerDB.clientLinks = data.clientLinks || "";
-
-		return offerDB;
+	converToDB() {
+		var friendDB = {}
+		friendDB.name = this.name || "";
+		friendDB.phoneNumber = this.phoneNumber || "";
+		friendDB.dateAdded = this.dateAdded || "";
+		friendDB.offerId = this.offerId || "";
+		friendDB.id = this.offerId || "";
+		return friendDB;
 	}
 
-	createLinks(clientsArray) {
-		clientsArray.forEach((client) => {
-			var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
-			this.clientLinks.push(offerClientLink);
-		})
-		this.store.save(this);
-	}
+
 
 
 	save(){

@@ -4,11 +4,14 @@ export default class BusinessModel {
 	store;
 	id;
 	@observable title;
+	@observable imageUrl;
 
 
-	constructor(id, title) {
+	constructor(id, title, photoURL) {
 		this.id = id;
 		this.title = title;
+		this.imageUrl = photoURL;
+
 	}
 
 	destroy() {

@@ -40,6 +40,7 @@ class Offer extends React.Component {
 		var  {offer} = this.state;
 		if (offer) {
 			offer.save();
+			this.state.itemBeingEdited = false;
 		}
 	};
 
@@ -47,7 +48,8 @@ class Offer extends React.Component {
 	handleDestroy() {
 		var  {offer} = this.state;
 		if (offer) {
-			offer.remove();
+			offer.destroy();
+
 		}
 	};
 
@@ -70,6 +72,7 @@ class Offer extends React.Component {
                     <div className={classname(style.cell, style.button_cell)}>
 					{!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
                     <button className="button save" onClick={this.handleSubmit}>save</button>}
+						<button className="button save" onClick={this.handleDestroy}>delete</button>
 
                     </div>
                 </div>
