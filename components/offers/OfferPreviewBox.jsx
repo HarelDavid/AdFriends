@@ -7,15 +7,14 @@ import classname from 'classnames';
 import Icon from '../icon';
 import Modal from '../modal';
 import ReactTooltip from 'react-tooltip'
-import OfferPreviewBox from './OfferPreviewBox';
-import OfferEntry from './OfferEntry';
+import ClientList from '../Clients/client-list';
 
 import style from './style.scss';
 Object.assign(style)
 
 
 @observer
-class Offer extends React.Component {
+class OfferPreviewBox extends React.Component {
 
     @observable
     state = {
@@ -77,19 +76,32 @@ class Offer extends React.Component {
         const {businessStore} = this.props;
 
         return (
-            <li className={itemBeingEdited ? style.item + " edit" : style.item}>
-                <OfferPreviewBox offer={offer} businessStore={businessStore} />
-                {isModalOpen &&
-                <Modal isOpen={isModalOpen} title="Edit Offer" className={style.edit_form}>
-                    <div className="close" onClick={() => this.closeModal()}>X</div>
-                    <OfferEntry businessStore={businessStore} offer={offer} />
-                </Modal>
-                }
-            </li>
+
+
+                <div className={style.preview}>
+                    <span className="icon-offers_full"></span>
+                    <h3 className={style.cell}>
+                        {offer.title}
+                    </h3>
+                    <div className={classname(style.cell, style.button_cell)}>
+                        <button className="button edit" onClick={() => this.openModal("share")}>edit</button>
+                    </div>
+                    <div className={classname(style.cell, style.button_cell)}>
+                        Offer ends: {offer.endingDate}
+                    </div>
+                    <span className="share" onClick={() => this.openModal("share")}>share</span>
+
+                    <Modal isOpen={isModalOpen} ref="share" title="Select a client:">
+                        <div onClick={() => this.closeModal()}>X</div>
+                        <ClientList businessStore={businessStore}/>
+                    </Modal>
+
+                </div>
+
         );
     }
 
 
 }
 
-export default CSSModules(Offer, style);
+export default CSSModules(OfferPreviewBox, style);
