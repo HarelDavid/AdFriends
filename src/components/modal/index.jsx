@@ -13,28 +13,31 @@ Object.assign(style)
 class Offers extends React.Component {
 
     static propTypes = {
-        title: PropTypes.string
+        title: PropTypes.string,
+        isOpen: PropTypes.bool
     }
 
-    componentDidMount() {
-        document.body.classList.add('showOverlay');
+
+    componentDidMount(){
+        // document.body.classList.add('showOverlay');
     }
 
-    componentWillUnmount() {
-        document.body.classList.remove('showOverlay');
-    }
 
-        render() {
 
-        var {title, children} = this.props;
+    render() {
+
+        var {title, children, isOpen} = this.props;
+
+        if(!isOpen)
+            return null;
 
         return (
-
-                <div className={style.Modal}>
-                    <h2>{title}</h2>
-
-                    {children}
-                </div>
+            <div>
+                    <div className={style.Modal}>
+                        <h2>{title}</h2>
+                        {children}
+                    </div>
+            </div>
 
         )
     }
