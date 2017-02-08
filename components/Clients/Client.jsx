@@ -58,71 +58,21 @@ class Client extends React.Component {
 
 
     render() {
-        const {client} = this.state;
+        const {client,itemBeingEdited} = this.state;
 
 
         return (
-            <li className={this.state.itemBeingEdited ? style.item + " edit" : style.item}>
+            <li className={itemBeingEdited ? style.item + " edit" : style.item}>
                 <div className={style.preview}>
                     <div className={style.cell}>
-                        {client.title}
-                    </div>
-                    <div className={classname(style.cell, style.button_cell)}>
-                        {!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
-                            <button className="button save" onClick={this.handleSubmit}>save</button>}
-
+                        <input type="text" name="title" disabled={!itemBeingEdited} value={client.title} onChange={this.onChange}/>
                     </div>
                 </div>
-                {this.state.itemBeingEdited ?
-                    <div className={style.edit_form}>
-                        <div className={style.cell}>
-                            <label>Title</label>
-                            <input type="text" name="title" value={client.title} onChange={this.onChange}/>
-                        </div>
-                        <div className={style.cell}>
-                            <label>Description</label>
-                            <input type="text" name="description" value={client.description} onChange={this.onChange}/>
-                        </div>
-                        <div className={style.cell}>
-                            <label>Message to Client:</label>
-                            <input type="text" name="preMessage" value={client.preMessage} onChange={this.onChange}/>
-                        </div>
-                        <div className={style.cell}>
-                            <label>Terms</label>
-                            <input type="text" name="terms" value={client.terms} onChange={this.onChange}/>
-                        </div>
-                        <div className={style.cell}>
-                            <label>Friend Gift</label>
-                            <input type="text" name="clientGift" value={client.clientGift} onChange={this.onChange}/>
-                        </div>
-                        <div className={style.cell}>
-                            <label>Client Gift</label>
-                            <input type="text" name="clientGift" value={client.clientGift} onChange={this.onChange}/>
-                        </div>
-                        <div className={style.cell}>
-                            <label>Date created</label>
-                            <input type="date" name="dateCreated" value={client.dateCreated} disabled />
-                        </div>
-                        <div className={style.cell}>
-                            <label>Ending Date</label>
-                            <input type="date" name="endingDate" value={client.endingDate} onChange={this.onChange}/>
-                        </div>
-                        <div className={style.cell}>
-                            <label>Code</label>
-                            <input type="text" name="code" value={client.code} onChange={this.onChange}/>
+                <div className={classname(style.cell, style.button_cell)}>
+                    {!this.state.itemBeingEdited ? <button className="button edit" onClick={this.handleEdit}>edit</button>:
+                        <button className="button save" onClick={this.handleSubmit}>save</button>}
 
-                        </div>
-                        <div className={style.urls}>
-                            {client.urls && client.urls.map((url) =>
-                                <div>{url}</div>
-                            )}
-                        </div>
-
-                        <div className={classname(style.cell, style.image_cell)}>
-                            <img src={client.imageUrl}/>
-                        </div>
-                    </div> : null }
-
+                </div>
             </li>
         );
     }

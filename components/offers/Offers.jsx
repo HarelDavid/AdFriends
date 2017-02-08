@@ -17,22 +17,19 @@ class Offers extends React.Component {
 
     @observable
     state = {
-        offerEntryOpened: false
+        isModalOpen: false
     }
 
-    static propTypes = {
-        showOverlay: PropTypes.func
-    }
 
     @autobind
     openOfferEntry(e) {
         e.preventDefault();
-        this.state.offerEntryOpened = true;
+        this.state.isModalOpen = true;
     }
 
     @autobind
     closeModal() {
-        this.state.offerEntryOpened = false;
+        this.state.isModalOpen = false;
 
     }
 
@@ -41,7 +38,7 @@ class Offers extends React.Component {
 
         var {businessStore} = this.props.route;
         var offerStore = businessStore.offerStore;
-        const {showOverlay} = this.props;
+        var {isModalOpen} = this.state;
 
         return (
 
@@ -57,8 +54,8 @@ class Offers extends React.Component {
                             <span className={style.plus}>+</span>
                             Add New Offer
                         </div>
-                        {this.state.offerEntryOpened ?
-                            <Modal title="New Offer">
+                        {isModalOpen ?
+                            <Modal isOpen={isModalOpen} title="New Offer">
                                 <div className="close" onClick={() => this.closeModal()}>X</div>
                                 <OfferEntry offerStore={offerStore}/>
                             </Modal>
@@ -66,7 +63,7 @@ class Offers extends React.Component {
                         }
                     </li>
                     {offerStore.offers.map((offer) => (
-                            <Offer className={style.item} key={offer.id} offer={offer}/>
+                            <Offer businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
                         )
                     )}
                 </ul>
