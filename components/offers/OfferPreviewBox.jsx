@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
 import CSSModules from 'react-css-modules'
@@ -7,7 +7,7 @@ import classname from 'classnames';
 import Icon from '../icon';
 import Modal from '../modal';
 import ReactTooltip from 'react-tooltip'
-import ClientList from '../Clients/client-list';
+import ClientList from '../Clients/Client-list';
 
 import style from './style.scss';
 Object.assign(style)
@@ -15,6 +15,11 @@ Object.assign(style)
 
 @observer
 class OfferPreviewBox extends React.Component {
+
+    static PropTypes = {
+        openEditOffer: PropTypes.func,
+        closeEditOffer: PropTypes.func
+    }
 
     @observable
     state = {
@@ -55,10 +60,6 @@ class OfferPreviewBox extends React.Component {
         }
     };
 
-    @autobind
-    handleEdit() {
-        this.state.itemBeingEdited = true;
-    };
 
     @autobind
     openModal() {
@@ -73,10 +74,9 @@ class OfferPreviewBox extends React.Component {
 
     render() {
         const {offer, isModalOpen, itemBeingEdited} = this.state;
-        const {businessStore} = this.props;
+        const {businessStore, openEditOffer, closeEditOffer} = this.props;
 
         return (
-
 
                 <div className={style.preview}>
                     <span className="icon-offers_full"></span>
@@ -84,12 +84,12 @@ class OfferPreviewBox extends React.Component {
                         {offer.title}
                     </h3>
                     <div className={classname(style.cell, style.button_cell)}>
-                        <button className="button edit" onClick={() => this.openModal("share")}>edit</button>
+                        <button className="button edit" onClick={() => openEditOffer()}>edit</button>
                     </div>
                     <div className={classname(style.cell, style.button_cell)}>
                         Offer ends: {offer.endingDate}
                     </div>
-                    <span className="share" onClick={() => this.openModal("share")}>share</span>
+                    <span className="share" onClick={() => this.openModal()}>share</span>
 
                     <Modal isOpen={isModalOpen} ref="share" title="Select a client:">
                         <div onClick={() => this.closeModal()}>X</div>
