@@ -26,8 +26,12 @@ class ClientList extends React.Component {
 
 			<div className={style.wrapper}>
 				<ul className={style.list}>
+					<ClientEntry/>
 					{clientStore.clients.map((client) => (
-							<Client className={style.item} key={client.id} client={client}/>
+						<div className={style.item} key={client.id}>
+							<div>{client.name}</div>
+							<button>Send offer</button>
+						</div>
 						)
 					)}
 				</ul>

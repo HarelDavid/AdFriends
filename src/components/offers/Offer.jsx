@@ -62,12 +62,12 @@ class Offer extends React.Component {
     };
 
     @autobind
-    openModal() {
+    openEditOffer() {
         this.setState({isModalOpen: true})
     }
 
     @autobind
-    closeModal() {
+    closeEditOffer() {
         this.setState({isModalOpen: false})
     }
 
@@ -78,10 +78,10 @@ class Offer extends React.Component {
 
         return (
             <li className={itemBeingEdited ? style.item + " edit" : style.item}>
-                <OfferPreviewBox offer={offer} businessStore={businessStore} />
+                <OfferPreviewBox offer={offer} businessStore={businessStore} openEditOffer={this.openEditOffer} closeEditOffer={this.closeEditOffer} />
                 {isModalOpen &&
                 <Modal isOpen={isModalOpen} title="Edit Offer" className={style.edit_form}>
-                    <div className="close" onClick={() => this.closeModal()}>X</div>
+                    <div className="close" onClick={() => this.closeEditOffer()}>X</div>
                     <OfferEntry businessStore={businessStore} offer={offer} />
                 </Modal>
                 }
