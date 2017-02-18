@@ -5,6 +5,7 @@ import DevTool from 'mobx-react-devtools'
 import {observer} from 'mobx-react'
 import {observable} from 'mobx';
 import NavigationBar from './NavigationBar'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import styles from './app.scss'
 Object.assign(styles)
@@ -40,30 +41,30 @@ class App extends React.Component {
         return (
             <div className={styles.container}>
                 {/*<DevTool/>*/}
-                <div className={styles.top_nav}></div>
 
-                {businessStore.isLoggedIn && this.isMobile() ?
-                    <div>
-                        <div className={styles.top_nav}>
-                            <div className={menuIconClass} tabIndex="10000"
-                                 onFocus={() => this.handleSideMenuToggle()}
-                                 onBlur={() => this.handleSideMenuToggle()}>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
+                {businessStore.isLoggedIn && this.isMobile() &&
+                <div>
+                    <div className={styles.top_nav}>
+                        <div className={menuIconClass} tabIndex="10000"
+                             onFocus={() => this.handleSideMenuToggle()}
+                             onBlur={() => this.handleSideMenuToggle()}>
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
-                        {MobileNavOpen &&
-                        <ReactCSSTransitionGroup transitionName="mobileMenuAnimation"
-                                                 transitionEnterTimeout={150} transitionLeaveTimeout={300}>
-                            <NavigationBar businessStore={businessStore} open={MobileNavOpen}/>
-                        </ReactCSSTransitionGroup>
-                        }
                     </div>
-                    :
-                    <NavigationBar businessStore={businessStore}/>
+                    {MobileNavOpen &&
+                    <ReactCSSTransitionGroup transitionName="mobileMenuAnimation"
+                                             transitionEnterTimeout={150} transitionLeaveTimeout={300}>
+                        <NavigationBar businessStore={businessStore} open={MobileNavOpen}/>
+                    </ReactCSSTransitionGroup>
+                    }
+                </div>
                 }
 
+                {businessStore.isLoggedIn && !this.isMobile() &&
+                    <NavigationBar businessStore={businessStore}/>
+                }
 
 
                 <div className={styles.content_wrapper}>
