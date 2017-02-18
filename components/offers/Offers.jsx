@@ -22,15 +22,15 @@ class Offers extends React.Component {
 
 
     @autobind
-    openOfferEntry(e) {
-        e.preventDefault();
-        this.state.isModalOpen = true;
+    openOfferEntry() {
+        this.setState({isModalOpen: true});
+        document.body.classList.add('showOverlay');
     }
 
     @autobind
-    closeModal() {
-        this.state.isModalOpen = false;
-
+    closeOfferEntry() {
+        this.setState({isModalOpen: false});
+        document.body.classList.remove('showOverlay');
     }
 
 
@@ -44,20 +44,20 @@ class Offers extends React.Component {
 
             <div className={style.wrapper}>
                 <h1 >Your Offers:</h1>
-                    <p dir="rtl">פלטפורמת AdFriend מבוססת על מבצעים אותם בעלי העסקים ,מגדירים ולאחר מכן שולחים ללקוחותיהם, חבריהם ובני משפחותיהם במטרה שאלו יפיצו את המבצע ללקוחות פוטנציאליים לבית העסק.
+                    <p>פלטפורמת AdFriend מבוססת על מבצעים אותם בעלי העסקים ,מגדירים ולאחר מכן שולחים ללקוחותיהם, חבריהם ובני משפחותיהם במטרה שאלו יפיצו את המבצע ללקוחות פוטנציאליים לבית העסק.
                         הפלטפורה תומכת במספר בלתי מוגבל של מבצעים, אולם בשלב ראשון מומלץ להתחיל עם שניים עד שלושה מבצעים לצורך בחינת הפלטפורמה.
                         בכל מבצע ניתן (אך אין חובה) להגדיר הטבה למפיץ המבצע ו/או למקבל המבצע,
                         מבצעים הינם לב הפלטפורה והם אשר יקבעו את הצלחת הקמפיין, ולכן מומלץ להקדיש מחשבה להגדרת ההטבות, לניסוח ברור/מעניין/מושך לקוחות והן לבחירת התמונה.</p>
                 <ul className={style.list}>
-                    <li className={style.new_item} onClick={(e) => this.openOfferEntry(e)}>
+                    <li className={style.new_item} onClick={() => this.openOfferEntry()}>
                         <div className={style.new}>
                             <span className={style.plus}>+</span>
                             Add New Offer
                         </div>
                         {isModalOpen ?
                             <Modal isOpen={isModalOpen} title="New Offer">
-                                <div className="close" onClick={() => this.closeModal()}>X</div>
-                                <OfferEntry businessStore={businessStore}  onSave={this.closeModal}/>
+                                <div className="close" onClick={() => this.closeOfferEntry()}>X</div>
+                                <OfferEntry businessStore={businessStore}  onSave={this.closeOfferEntry}/>
                             </Modal>
                             : null
                         }
