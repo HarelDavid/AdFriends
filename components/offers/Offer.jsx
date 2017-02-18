@@ -64,13 +64,11 @@ class Offer extends React.Component {
     @autobind
     openEditOffer() {
         this.setState({isModalOpen: true});
-        document.body.classList.add('showOverlay');
     }
 
     @autobind
     closeEditOffer() {
         this.setState({isModalOpen: false});
-        document.body.classList.remove('showOverlay');
     }
 
 

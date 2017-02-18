@@ -66,14 +66,12 @@ class OfferPreviewBox extends React.Component {
     @autobind
     openModal() {
         this.setState({isModalOpen: true})
-        document.body.classList.add('showOverlay');
 
     }
 
     @autobind
     closeModal() {
         this.setState({isModalOpen: false})
-        document.body.classList.remove('showOverlay');
 
     }
 
