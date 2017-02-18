@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom'
 import DevTool from 'mobx-react-devtools'
 import {observer} from 'mobx-react'
 import {observable} from 'mobx';
-import autobind from 'autobind-decorator'
-import About from './Login'
 import NavigationBar from './NavigationBar'
 
 import styles from './app.scss'
@@ -42,7 +40,9 @@ class App extends React.Component {
         return (
             <div className={styles.container}>
                 {/*<DevTool/>*/}
-                {this.isMobile() ?
+                <div className={styles.top_nav}></div>
+
+                {businessStore.isLoggedIn && this.isMobile() ?
                     <div>
                         <div className={styles.top_nav}>
                             <div className={menuIconClass} tabIndex="10000"
@@ -58,7 +58,8 @@ class App extends React.Component {
                         }
                     </div>
                     :
-                    <NavigationBar businessStore={businessStore}/>
+                    <NavigationBar businessStore={businessStore}/>}
+
                 }
 
                 <div className={styles.content_wrapper}>

@@ -57,12 +57,13 @@ class OfferEntry extends React.Component {
     handleNewOfferKeyDown(e) {
         e.preventDefault();
         var {offer} = this.state;
-        // var offer = new OfferModel({title:offer.title, description:description, imageUrl:imageUrl, store:this.props.offerStore});
+        var {onSave} = this.props;
+
         offer.save();
+        onSave();
         this.clearForm();
 
-    }
-    ;
+    };
 
     clearForm() {
         this.setState({description: ""});
@@ -91,8 +92,7 @@ class OfferEntry extends React.Component {
         this.setState({avatar: filename, progress: 100, isUploading: false});
         var imagesRef = firebase.storage().ref('images').child(filename);
         firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageUrl: url}));
-    }
-    ;
+    };
 
 
     render() {
