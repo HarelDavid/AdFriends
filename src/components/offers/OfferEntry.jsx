@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
 import autobind from 'autobind-decorator'
@@ -17,36 +17,48 @@ class OfferEntry extends React.Component {
 
     @observable
     state = {
-        offer : new OfferModel({store:this.props.businessStore.offerStore}),
+        offer: {},
         itemBeingEdited: false
-
     }
 
-    updateProperty (key, value) {
-        var  {offer} = this.state;
+    static PropTypes = {
+        offer: PropTypes.object
+    }
+
+    componentWillMount() {
+        if (this.props.offer) {
+            this.state.offer = this.props.offer;
+        } else {
+            this.state.offer = new OfferModel({store: this.props.offerStore});
+        }
+    }
+
+    updateProperty(key, value) {
+        var {offer} = this.state;
         offer[key] = value;
     }
 
     @autobind
-    onChange (event) {
+    onChange(event) {
         this.updateProperty(event.target.name, event.target.value)
     }
 
 
     @autobind
     handleSubmit() {
-        var  {offer} = this.state;
+        var {offer} = this.state;
         if (offer) {
             offer.save();
         }
-    };
+    }
+    ;
 
     @autobind
     handleNewOfferKeyDown(e) {
         e.preventDefault();
         var {offer} = this.state;
         var {onSave} = this.props;
-       // var offer = new OfferModel({title:offer.title, description:description, imageUrl:imageUrl, store:this.props.offerStore});
+
         offer.save();
         onSave();
         this.clearForm();
