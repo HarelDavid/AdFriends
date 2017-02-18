@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import { Router, hashHistory } from 'react-router'
-
 import routes from './Routes'
-import OfferStore from './stores/OfferStore'
-import ClientStore from './stores/ClientStore'
 import AuthStore from './stores/AuthStore'
 import BuisnessStore from './stores/BusinessStore'
 

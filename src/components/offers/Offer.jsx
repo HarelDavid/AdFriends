@@ -78,6 +78,7 @@ class Offer extends React.Component {
         const {offer, isModalOpen, itemBeingEdited} = this.state;
         const {businessStore} = this.props;
 
+
         return (
             <li className={itemBeingEdited ? style.item + " edit" : style.item}>
                 <OfferPreviewBox offer={offer} businessStore={businessStore} openEditOffer={this.openEditOffer} closeEditOffer={this.closeEditOffer} />

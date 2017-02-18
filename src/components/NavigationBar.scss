@@ -45,6 +45,10 @@
       border-radius: 100%;
       background-color: $primary-light;
       margin: 0 auto;
+      overflow: hidden;
+      img{
+        width: 100%;
+      }
     }
   }
 

@@ -12,7 +12,7 @@ export default class OfferModel {
 	@observable clientGift;
 	@observable endingDate;
 	@observable code;
-	@observable clientLinks;
+	@observable offerLinks;
 
 
 
@@ -29,7 +29,8 @@ export default class OfferModel {
 			this.endingDate = data.endingDate || "";
 			this.code = data.code || "";
 			this.dateCreated = data.dateCreated || "";
-			this.clientLinks = data.clientLinks || [];
+			this.offerLinks = data.offerLinks || [];
+
 		}
 	}
 
@@ -47,7 +48,7 @@ export default class OfferModel {
 		this.endingDate = offerDB.endingDate;
 		this.code = offerDB.code;
 		this.dateCreated = offerDB.dateCreated;
-		this.clientLinks = offerDB.clientLinks;
+		this.offerLinks = offerDB.offerLinks || [];
 		this.id = offerDB.id;
 
 	}
@@ -66,7 +67,7 @@ export default class OfferModel {
 		this.endingDate ? offerDB.endingDate = this.endingDate : "";
 		this.code ? offerDB.code = this.code : "";
 		this.dateCreated ? offerDB.dateCreated = this.dateCreated : "";
-		this.clientLinks ? offerDB.clientLinks = this.clientLinks : "";
+		this.offerLinks ? offerDB.offerLinks = this.offerLinks.toJS() : "";
 
 		return offerDB;
 	}
@@ -74,9 +75,23 @@ export default class OfferModel {
 	createLinks(clientsArray) {
 		clientsArray.forEach((client) => {
 			var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
-			this.clientLinks.push(offerClientLink);
+			this.offerLinks.push(offerClientLink);
+			client.offerLinks.push(offerClientLink);
+			client.save();
 		})
 		this.store.save(this);
+	}
+
+	createLink(client) {
+
+
+		var hostData = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+		var offerClientLink = `${hostData}/client-offer-preview/${this.id}/${client.id}`;
+		this.offerLinks.push(offerClientLink);
+		client.offerLinks.push(offerClientLink);
+		client.save();
+		this.store.save(this);
+		return offerClientLink;
 	}
 
 

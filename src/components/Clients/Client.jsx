@@ -47,7 +47,7 @@ class Client extends React.Component {
     handleDestroy() {
         var  {client} = this.state;
         if (client) {
-            client.remove();
+            client.destroy();
         }
     };
 

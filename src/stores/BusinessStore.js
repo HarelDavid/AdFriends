@@ -1,7 +1,8 @@
-import {observable, computed} from 'mobx'
-import BusinessModel from '../models/BusinessModel'
-import OfferStore from '../stores/OfferStore'
-import ClientStore from '../stores/ClientStore'
+import {observable, computed} from 'mobx';
+import BusinessModel from '../models/BusinessModel';
+import OfferStore from '../stores/OfferStore';
+import ClientStore from '../stores/ClientStore';
+import {hashHistory } from 'react-router'
 import * as firebase from 'firebase';
 
 
@@ -42,8 +43,23 @@ export default class BuisnessStore {
 	}
 
 	@computed get isLoggedIn(){
-		return !!this.business
+		return !!this.business;
 	}
+
+	getProviderData(accessToken){
+
+
+		return FB.api('/me',
+			{fields: "id,last_name,first_name,picture,email"},{access_token:accessToken},
+			function(response) {
+				console.log('API response', response);
+
+			}
+		);
+
+
+	}
+
 
 	login(currentUser){
 		//get business
@@ -52,22 +68,27 @@ export default class BuisnessStore {
 				if(business){
 
 					this.init(business)
-					//return  this.business;
+					hashHistory.push('/offers');
 				}
 				else{
 
-					return this.add(currentUser).then((bussines) => {
-						this.init(business)
+					var business =  this.add(currentUser);
+					this.init(business)
+					hashHistory.push('/offers');
 
-					})
+
 				}
 
 			})
 	}
 
+
 	logout(){
+		var _this = this;
 		return firebase.auth().signOut().then(function() {
-			this.business = null;
+			_this.business = null;
+			hashHistory.push('/');
+
 			return;
 		}, function(error) {
 			// An error happened.
@@ -86,10 +107,10 @@ export default class BuisnessStore {
 
 	add(currentUser) {
 
-		var business = new BusinessModel(currentUser.uid, currentUser.displayName);
-		firebase.database().ref('/business').child(currentUser.uid).set(business).then((business) => {
-			return business;
-		})
+		var business = new BusinessModel(currentUser.uid, currentUser.displayName, currentUser.photoURL);
+		firebase.database().ref('/business').child(currentUser.uid).set(business);
+		return business;
+
 
 	}
 
