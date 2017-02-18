@@ -39,6 +39,7 @@
     "react-dom": "15.0.1",
     "react-firebase-image-uploader": "^1.1.0",
     "react-router": "^2.5.2",
+    "react-select": "^1.0.0-rc.3",
     "react-tooltip": "^3.2.3",
     "resolve-url-loader": "^1.6.1"
   },

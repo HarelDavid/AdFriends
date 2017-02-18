@@ -17,7 +17,7 @@ class OfferEntry extends React.Component {
 
     @observable
     state = {
-        offer : new OfferModel({store:this.props.offerStore}),
+        offer : new OfferModel({store:this.props.businessStore.offerStore}),
         itemBeingEdited: false
 
     }
