@@ -4,11 +4,15 @@
 .nav {
   width: 320px;
   background-color: $primary;
-  position: relative;
+  position: absolute;
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.05);
   min-height: 100vh;
-  position: relative;
   z-index: 2;
+  transition: all $easing 0.3s;
+  @media #{$media-higher-than-mobile} {
+    position: relative;
+    transform: translate3d(0,0,0) !important;
+  }
   .container {
     display: flex;
     flex-direction: column;

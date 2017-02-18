@@ -14,18 +14,53 @@ Object.assign(styles)
 @observer
 class App extends React.Component {
 
+    @observable state = {
+        MobileNavOpen: false
+    }
 
+    isMobile() {
+        let mql = window.matchMedia('(max-width: 920px)');
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && mql.matches ) {
+            return true;
+        }
+        return false;
+    }
+
+    handleSideMenuToggle(){
+        setTimeout(() => {
+            this.state.MobileNavOpen = !this.state.MobileNavOpen;
+        }, 50)
+    }
 
     render() {
-        // console.log("this.props.route;",this.props.route)
         var  {businessStore} = this.props.route;
-        // console.log("businessStore",businessStore)
+        var {MobileNavOpen} = this.state;
+
+        var menuIconClass = 'menu-hamburger';
+        if (MobileNavOpen) menuIconClass += ' open';
+
         return (
             <div className={styles.container}>
                 {/*<DevTool/>*/}
-                <div className={styles.top_nav}></div>
-                <NavigationBar/>
-                <NavigationBar businessStore={businessStore}/>
+                {this.isMobile() ?
+                    <div>
+                        <div className={styles.top_nav}>
+                            <div className={menuIconClass} tabIndex="10000"
+                                 onFocus={()=> this.handleSideMenuToggle()}
+                                 onBlur={()=> this.handleSideMenuToggle()}>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        {MobileNavOpen &&
+                            <NavigationBar businessStore={businessStore} open={MobileNavOpen}/>
+                        }
+                    </div>
+                    :
+                    <NavigationBar businessStore={businessStore}/>
+                }
+
                 <div className={styles.content_wrapper}>
                     <div></div>
                     <div className={styles.content}>

@@ -30,9 +30,8 @@ class NavigationBar extends React.Component {
 
 						<ul className={styles.nav_list}>
 							{!businessStore.isLoggedIn &&<NavItem to='/' index={true}>Login {businessStore.isLoggedIn}</NavItem>}
-							{businessStore.isLoggedIn && <NavItem to='/offers'><span className="icon-offers"></span> Offers</NavItem>}
-							{businessStore.isLoggedIn && <NavItem to='/clients'><span className="icon-clients"></span> Clients</NavItem>}
-							{businessStore.isLoggedIn && <NavItem to='/Friends'><span className="icon-friends"></span> Friends</NavItem>}
+							{businessStore.isLoggedIn && <NavItem to='/offers'> Offers</NavItem>}
+							{businessStore.isLoggedIn && <NavItem to='/clients'> Clients</NavItem>}
 						</ul>
 					</div>
 				</div>
