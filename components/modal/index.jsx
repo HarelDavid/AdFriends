@@ -18,11 +18,6 @@ class Offers extends React.Component {
     }
 
 
-    componentDidMount(){
-        // document.body.classList.add('showOverlay');
-    }
-
-
 
     render() {
 

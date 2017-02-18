@@ -64,11 +64,15 @@ class OfferPreviewBox extends React.Component {
     @autobind
     openModal() {
         this.setState({isModalOpen: true})
+        document.body.classList.add('showOverlay');
+
     }
 
     @autobind
     closeModal() {
         this.setState({isModalOpen: false})
+        document.body.classList.remove('showOverlay');
+
     }
 
 
@@ -79,7 +83,6 @@ class OfferPreviewBox extends React.Component {
         return (
 
                 <div className={style.preview}>
-                    <span className="icon-offers_full"></span>
                     <h3 className={style.cell}>
                         {offer.title}
                     </h3>
@@ -89,7 +92,7 @@ class OfferPreviewBox extends React.Component {
                     <div className={classname(style.cell, style.button_cell)}>
                         Offer ends: {offer.endingDate}
                     </div>
-                    <span className="share" onClick={() => this.openModal()}>share</span>
+                    <span className="share" onClick={() => this.openModal()}>Share</span>
 
                     <Modal isOpen={isModalOpen} ref="share" title="Select a client:">
                         <div onClick={() => this.closeModal()}>X</div>
