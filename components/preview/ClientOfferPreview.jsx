@@ -11,9 +11,8 @@ import classname from 'classnames';
 class ClientOfferPreview extends React.Component {
 
 	componentDidMount(){
-		alert(3)
-	}
 
+	}
 
 
 	render() {
@@ -25,3 +24,4 @@ class ClientOfferPreview extends React.Component {
 
 }
 
+export default ClientOfferPreview;

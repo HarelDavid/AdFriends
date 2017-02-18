@@ -86,12 +86,13 @@ export default class OfferModel {
 
 
 		var hostData = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
-		var offerClientLink = `${hostData}/client-offer-preview/${this.id}/${client.id}`;
+		var linkData = `/client-offer-preview/${this.id}/${client.id}`;
+		var offerClientLink = `${hostData}${linkData}`;
 		this.offerLinks.push(offerClientLink);
 		client.offerLinks.push(offerClientLink);
 		client.save();
 		this.store.save(this);
-		return offerClientLink;
+		return linkData;
 	}
 
 
