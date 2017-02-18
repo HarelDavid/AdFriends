@@ -37,7 +37,7 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     }
   }
 
-  .tooltip {
+  [data-tip] {
     color: #fff;
     width: 16px;
     height: 16px;
@@ -46,8 +46,9 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     display: inline-block;
     font-size: 9px;
     text-align: center;
-    vertical-align: middle;
+    vertical-align: bottom;
     padding-top: 3px;
+    margin-right: 5px;
   }
 
 
@@ -81,11 +82,11 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
 
   .close {
     @include font-size(22px);
-    color: #fff;
+    color: #333;
     cursor: pointer;
     position: absolute;
-    top: -30px;
-    right: 0;
+    top: 30px;
+    left: 30px;
   }
 
   .showOverlay .Overlay {
@@ -97,5 +98,29 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     top: 0;
   }
 
-}
+  .fixedModal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 50px;
+    background: #fff;
+    height: 100%;
+    width: 100%;
+    @media #{$media-higher-than-mobile} {
+      width: calc(100vw - 320px);
+      right: 320px;
 
+    }
+  }
+
+  .shareDialog {
+    position: absolute;
+    bottom: 95px;
+    right: 0;
+    width: 100%;
+    padding: 20px;
+    @include bubble();
+  }
+
+}
+//End Global

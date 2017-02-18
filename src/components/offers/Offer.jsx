@@ -79,12 +79,14 @@ class Offer extends React.Component {
 
         return (
             <li className={itemBeingEdited ? style.item + " edit" : style.item}>
-                <OfferPreviewBox offer={offer} businessStore={businessStore} openEditOffer={this.openEditOffer} closeEditOffer={this.closeEditOffer} />
-
-                <Modal isOpen={isModalOpen} title="Edit Offer" className={style.edit_form}>
+                <OfferPreviewBox offer={offer} businessStore={businessStore} openEditOffer={this.openEditOffer}
+                                 closeEditOffer={this.closeEditOffer}/>
+                {isModalOpen &&
+                <div className="fixedModal">
                     <div className="close" onClick={() => this.closeEditOffer()}>X</div>
-                    <OfferEntry businessStore={businessStore} offer={offer} />
-                </Modal>
+                    <OfferEntry businessStore={businessStore} offer={offer}/>
+                </div>
+                }
 
             </li>
         );

@@ -52,12 +52,11 @@ class Offers extends React.Component {
                             <span className={style.plus}>+</span>
                             Add New Offer
                         </div>
-                        {isModalOpen ?
-                            <Modal isOpen={isModalOpen} title="New Offer">
+                        {isModalOpen &&
+                            <div className="fixedModal">
                                 <div className="close" onClick={() => this.closeOfferEntry()}>X</div>
                                 <OfferEntry businessStore={businessStore}  onSave={this.closeOfferEntry}/>
-                            </Modal>
-                            : null
+                            </div>
                         }
                     </li>
                     {offerStore.offers.map((offer) => (
