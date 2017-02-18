@@ -4,10 +4,9 @@ import {observable, expr} from 'mobx';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import classname from 'classnames';
-import Icon from '../icon';
+import {Link} from 'react-router';
 import Modal from '../modal';
-import ReactTooltip from 'react-tooltip'
-import ClientList from '../Clients/Client-list';
+import Select from 'react-select';
 
 import style from './style.scss';
 Object.assign(style)
@@ -24,12 +23,15 @@ class OfferPreviewBox extends React.Component {
     @observable
     state = {
         offer: {},
+        chosenClient:{},
+        link:"",
         itemBeingEdited: false,
         isModalOpen: false
     }
 
     componentWillMount() {
         const {offer} = this.props;
+        this.clientStore = this.props.businessStore.clientStore;
         this.state.offer = offer;
     }
 
@@ -71,10 +73,28 @@ class OfferPreviewBox extends React.Component {
         this.setState({isModalOpen: false})
     }
 
+    getClientOption() {
+       return this.clientStore.clients.map((it) => { return {'label':it.title,'value':it.id}})
+    }
+
+    @autobind
+    handleClientChoose(clientOption) {
+        this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
+    }
+
+    @autobind
+    createLink(){
+        const {offer} = this.state;
+        var {chosenClient}  = this.state;
+        debugger
+        this.state.link = offer.createLink(chosenClient)
+    }
+
 
     render() {
         const {offer, isModalOpen, itemBeingEdited} = this.state;
         const {businessStore, openEditOffer, closeEditOffer} = this.props;
+
 
         return (
 
@@ -93,7 +113,17 @@ class OfferPreviewBox extends React.Component {
 
                     <Modal isOpen={isModalOpen} ref="share" title="Select a client:">
                         <div onClick={() => this.closeModal()}>X</div>
-                        <ClientList businessStore={businessStore}/>
+						<Select
+							name="form-field-name"
+							value={this.state.chosenClient.id}
+							options={this.getClientOption()}
+                            onChange={this.handleClientChoose}
+						/>
+
+                        <div onClick={this.createLink}>create link</div>
+
+                        {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
+
                     </Modal>
 
                 </div>
