@@ -17,22 +17,19 @@ class Offers extends React.Component {
 
     @observable
     state = {
-        offerEntryOpened: false
+        isModalOpen: false
     }
 
-    static propTypes = {
-        showOverlay: PropTypes.func
-    }
 
     @autobind
     openOfferEntry(e) {
         e.preventDefault();
-        this.state.offerEntryOpened = true;
+        this.state.isModalOpen = true;
     }
 
     @autobind
     closeModal() {
-        this.state.offerEntryOpened = false;
+        this.state.isModalOpen = false;
 
     }
 
@@ -41,21 +38,24 @@ class Offers extends React.Component {
 
         var {businessStore} = this.props.route;
         var offerStore = businessStore.offerStore;
-        const {showOverlay} = this.props;
+        var {isModalOpen} = this.state;
 
         return (
 
             <div className={style.wrapper}>
-                <h1>Your Offers:</h1>
-                    <p>ניסיון של אורי</p>
+                <h1 >Your Offers:</h1>
+                    <p dir="rtl">פלטפורמת AdFriend מבוססת על מבצעים אותם בעלי העסקים ,מגדירים ולאחר מכן שולחים ללקוחותיהם, חבריהם ובני משפחותיהם במטרה שאלו יפיצו את המבצע ללקוחות פוטנציאליים לבית העסק.
+                        הפלטפורה תומכת במספר בלתי מוגבל של מבצעים, אולם בשלב ראשון מומלץ להתחיל עם שניים עד שלושה מבצעים לצורך בחינת הפלטפורמה.
+                        בכל מבצע ניתן (אך אין חובה) להגדיר הטבה למפיץ המבצע ו/או למקבל המבצע,
+                        מבצעים הינם לב הפלטפורה והם אשר יקבעו את הצלחת הקמפיין, ולכן מומלץ להקדיש מחשבה להגדרת ההטבות, לניסוח ברור/מעניין/מושך לקוחות והן לבחירת התמונה.</p>
                 <ul className={style.list}>
                     <li className={style.new_item} onClick={(e) => this.openOfferEntry(e)}>
                         <div className={style.new}>
                             <span className={style.plus}>+</span>
                             Add New Offer
                         </div>
-                        {this.state.offerEntryOpened ?
-                            <Modal title="New Offer">
+                        {isModalOpen ?
+                            <Modal isOpen={isModalOpen} title="New Offer">
                                 <div className="close" onClick={() => this.closeModal()}>X</div>
                                 <OfferEntry offerStore={offerStore}/>
                             </Modal>
@@ -63,7 +63,7 @@ class Offers extends React.Component {
                         }
                     </li>
                     {offerStore.offers.map((offer) => (
-                            <Offer  businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
+                            <Offer businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
                         )
                     )}
                 </ul>
