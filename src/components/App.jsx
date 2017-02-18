@@ -18,20 +18,20 @@ class App extends React.Component {
 
     isMobile() {
         let mql = window.matchMedia('(max-width: 920px)');
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && mql.matches ) {
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && mql.matches) {
             return true;
         }
         return false;
     }
 
-    handleSideMenuToggle(){
+    handleSideMenuToggle() {
         setTimeout(() => {
             this.state.MobileNavOpen = !this.state.MobileNavOpen;
         }, 50)
     }
 
     render() {
-        var  {businessStore} = this.props.route;
+        var {businessStore} = this.props.route;
         var {MobileNavOpen} = this.state;
 
         var menuIconClass = 'menu-hamburger';
@@ -46,28 +46,32 @@ class App extends React.Component {
                     <div>
                         <div className={styles.top_nav}>
                             <div className={menuIconClass} tabIndex="10000"
-                                 onFocus={()=> this.handleSideMenuToggle()}
-                                 onBlur={()=> this.handleSideMenuToggle()}>
+                                 onFocus={() => this.handleSideMenuToggle()}
+                                 onBlur={() => this.handleSideMenuToggle()}>
                                 <span></span>
                                 <span></span>
                                 <span></span>
                             </div>
                         </div>
                         {MobileNavOpen &&
+                        <ReactCSSTransitionGroup transitionName="mobileMenuAnimation"
+                                                 transitionEnterTimeout={150} transitionLeaveTimeout={300}>
                             <NavigationBar businessStore={businessStore} open={MobileNavOpen}/>
+                        </ReactCSSTransitionGroup>
                         }
                     </div>
                     :
-                    <NavigationBar businessStore={businessStore}/>}
-
+                    <NavigationBar businessStore={businessStore}/>
                 }
+
+
 
                 <div className={styles.content_wrapper}>
                     <div></div>
                     <div className={styles.content}>
                         {this.props.children}
                     </div>
-                        <div className="Overlay"></div>
+                    <div className="Overlay"></div>
                 </div>
 
             </div>
