@@ -164,3 +164,5 @@ class OfferEntry extends React.Component {
 }
 
 export default CSSModules(OfferEntry, style);
+
+

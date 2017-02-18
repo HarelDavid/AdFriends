@@ -24,13 +24,11 @@ class Offers extends React.Component {
     @autobind
     openOfferEntry() {
         this.setState({isModalOpen: true});
-        document.body.classList.add('showOverlay');
     }
 
     @autobind
     closeOfferEntry() {
         this.setState({isModalOpen: false});
-        document.body.classList.remove('showOverlay');
     }
 
 
