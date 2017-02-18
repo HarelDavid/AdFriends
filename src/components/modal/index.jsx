@@ -16,25 +16,42 @@ class Offers extends React.Component {
         title: PropTypes.string
     }
 
-    componentDidMount() {
+    @observable
+    state = {
+        open: true
+    }
+
+    componentDidMount(){
+        document.body.classList.add('showOverlay');
+
+    }
+
+    open() {
+        this.setState({open: true});
         document.body.classList.add('showOverlay');
     }
 
-    componentWillUnmount() {
+    close() {
+        this.setState({open: false});
         document.body.classList.remove('showOverlay');
     }
 
-        render() {
+    render() {
 
         var {title, children} = this.props;
+        var {open} = this.state;
+
 
         return (
-
-                <div className={style.Modal}>
-                    <h2>{title}</h2>
-
-                    {children}
-                </div>
+            <div>
+                {open ?
+                    <div className={style.Modal}>
+                        <h2>{title}</h2>
+                        <div onClick={()=>this.close()}>X</div>
+                        {children}
+                    </div>
+                    : null }
+            </div>
 
         )
     }

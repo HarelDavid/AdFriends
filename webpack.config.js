@@ -29,7 +29,12 @@ module.exports = {
                 'resolve-url',
                 'sass?sourceMap'
             ]
-		}])
+		},
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file?name=src/fonts/[name].[ext]'
+            }
+		])
 	},
 	devServer: {
 		contentBase: "./public",
