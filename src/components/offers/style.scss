@@ -20,7 +20,10 @@
   }
   .row {
     margin-bottom: 10px;
-    width: 50%;
+    width: 100%;
+    @media #{$media-higher-than-mobile} {
+      width: 50%;
+    }
     input, textarea {
       width: 90%;
     }
@@ -70,7 +73,10 @@ ul.list {
     }
     .row {
       margin-bottom: 10px;
-      width: 50%;
+      width: 100%;
+      @media #{$media-higher-than-mobile} {
+        width: 50%;
+      }
       input, textarea {
         width: 90%;
       }
