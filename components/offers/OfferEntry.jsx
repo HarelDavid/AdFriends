@@ -110,44 +110,44 @@ class OfferEntry extends React.Component {
 
         return (
             <form className="addItemForm">
-                <div className={style.cell}>
+                <div className={style.row}>
                     <label>Title <span data-tip={tooltip.title} data-for='title'>?</span></label>
                     <input type="text" name="title" value={offer.title} onChange={this.onChange}/>
                     <ReactTooltip id="title" />
                 </div>
-                <div className={style.cell}>
+                <div className={style.row}>
                     <label>Description <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
                     <textarea name="description" value={offer.description} onChange={this.onChange}/>
                     <ReactTooltip id="desc" />
 
                 </div>
-                <div className={style.cell}>
+                <div className={style.row}>
                     <label>Message to Client:<span data-tip={tooltip.message} data-for='message'>?</span></label>
                     <textarea type="text" name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
                     <ReactTooltip id="message"/>
                 </div>
-                <div className={style.cell}>
+                <div className={style.row}>
                     <label>Terms<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
                     <input type="text" name="terms" value={offer.terms} onChange={this.onChange}/>
                     <ReactTooltip id="terms"/>
                 </div>
-                <div className={style.cell}>
+                <div className={style.row}>
                     <label>Friend Gift<span data-tip={tooltip.giftFriend} data-for='giftFriend'>?</span></label>
                     <input type="text" name="offerGift" value={offer.offerGift} onChange={this.onChange}/>
                     <ReactTooltip id="giftFriend"/>
                 </div>
-                <div className={style.cell}>
+                <div className={style.row}>
                     <label>Client Gift<span data-tip={tooltip.giftClient} data-for='giftClient'>?</span></label>
                     <input type="text" name="clientGift" value={offer.clientGift} onChange={this.onChange}/>
                     <ReactTooltip id="giftClient"/>
 
                 </div>
-                <div className={style.cell}>
+                <div className={style.row}>
                     <label>Ending Date<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
                     <input type="date" name="endingDate" value={offer.endingDate} onChange={this.onChange}/>
                     <ReactTooltip id="endDate"/>
                 </div>
-                <div className={style.cell}>
+                <div className={style.row}>
                     <label>Code<span data-tip={tooltip.code} data-for='code'>?</span></label>
                     <input type="text" name="code" value={offer.code} onChange={this.onChange}/>
                     <ReactTooltip id="code"/>

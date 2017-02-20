@@ -73,10 +73,8 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
       padding-right: 15px;
     }
 
-    textarea {
-      width: 300px;
-      height: 100px;
-    }
+
+
   }
   .Overlay { display: none; }
 
@@ -106,6 +104,7 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     background: #fff;
     height: 100%;
     width: 100%;
+    z-index: 9;
     @media #{$media-higher-than-mobile} {
       width: calc(100vw - 320px);
       right: 320px;
