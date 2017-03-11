@@ -6,6 +6,7 @@ import autobind from 'autobind-decorator'
 import classname from 'classnames';
 import {Link} from 'react-router';
 import Modal from '../modal';
+import CouponModel from '../../models/CouponModel'
 import Select from 'react-select';
 
 import style from './style.scss';
@@ -90,8 +91,15 @@ class OfferPreviewBox extends React.Component {
     createLink(){
         const {offer} = this.state;
         var {chosenClient}  = this.state;
-        debugger
-        this.state.link = offer.createLink(chosenClient)
+        var {businessStore, couponsStore}  = this.props;
+        var coupon  = new CouponModel({store:couponsStore});
+        coupon.businessId =  businessStore.business.id;
+        coupon.offer =  offer.converToDB();
+        coupon.clientId =  chosenClient.id;
+        coupon.save();
+        this.state.link = coupon.link;
+        offer.couponLinks.push(coupon.link)
+        offer.save();
     }
 
 
@@ -125,7 +133,7 @@ class OfferPreviewBox extends React.Component {
 
                         <div onClick={this.createLink}>create link</div>
 
-                        {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
+                        {this.state.link && <Link to={`${this.state.link}/preview`}>go to offer preview</Link>}
 
                     </Modal>
 

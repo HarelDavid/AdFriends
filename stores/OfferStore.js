@@ -44,8 +44,9 @@ export default class OfferStore {
 		this.offersRef.child(offerDB.id).set(offerDB);
 	}
 
+
 	remove (offer) {
-		this.offers.push(offer);
+		this.offers.remove(offer);
 		this.offers = this.offers.filter((offerInstace) => offerInstace.id != offer.id)
 		this.offersRef.child(offer.id).remove();
 	}
