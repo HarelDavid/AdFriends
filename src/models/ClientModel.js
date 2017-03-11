@@ -7,7 +7,7 @@ export default class ClientModel {
 	@observable description;
 	@observable imageUrl;
 	@observable friends;
-	@observable offerLinks;
+	@observable couponLinks;
 
 
 	constructor(data){
@@ -17,7 +17,7 @@ export default class ClientModel {
 			this.imageUrl = data.imageUrl || "";
 			this.friends = data.friends || [];
 			this.store = data.store || "";
-			this.offerLinks = data.offerLinks || "";
+			this.couponLinks = data.couponLinks || [];
 		}
 
 	}
@@ -27,7 +27,7 @@ export default class ClientModel {
 		this.description = clientDB.description;
 		this.imageUrl = clientDB.imageUrl;
 		this.id = clientDB.id;
-		this.offerLinks = clientDB.offerLinks || [];
+		this.couponLinks = clientDB.couponLinks || [];
 
 	}
 
@@ -36,7 +36,7 @@ export default class ClientModel {
 		clientDB.title = this.title || "";
 		clientDB.description = this.description || "";
 		clientDB.imageUrl = this.imageUrl || "";
-		clientDB.offerLinks = this.offerLinks ? this.offerLinks.toJS() : "";
+		clientDB.couponLinks = this.couponLinks ? this.couponLinks.toJS() : "";
 		clientDB.id = this.id || "";
 		return clientDB;
 	}

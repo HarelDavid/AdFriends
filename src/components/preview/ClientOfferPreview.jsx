@@ -13,6 +13,10 @@ import classname from 'classnames';
 class ClientOfferPreview extends React.Component {
 	offerStore = {}
 	couponStore = {};
+	@observable
+	state = {
+		coupon: false
+	}
 
 
 	componentDidMount(){
@@ -20,19 +24,29 @@ class ClientOfferPreview extends React.Component {
 		this.couponStore.init();
 
 		var couponId = this.props.routeParams.couponId;
+		var offerId = this.props.routeParams.offerId;
 		return this.couponStore.getCoupon(couponId)
 			.then((coupon) => {
-
-				console.log(coupon)
+				this.state.coupon = coupon;
+				coupon.watches++;
+				coupon.save();
 			})
 
 
 	}
 
+	@autobind
+	realizeCoupon(){
+
+		var {coupon} = this.state;
+		coupon.realized = true;
+		coupon.save()
+	}
+
 
 	render() {
 
-		return <div>sss</div>
+		return <button onClick={this.realizeCoupon} >ממש</button>
 
 	}
 
