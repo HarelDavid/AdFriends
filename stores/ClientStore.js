@@ -41,6 +41,7 @@ export default class ClientStore {
 		this.clientsRef.child(clientDB.id).set(clientDB);
 	}
 
+
 	remove (client) {
 		this.clients.push(client);
 		this.clients = this.clients.filter((clientInstace) => clientInstace.id != client.id)

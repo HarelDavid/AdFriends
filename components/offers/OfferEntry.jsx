@@ -33,7 +33,7 @@ class OfferEntry extends React.Component {
             console.log(this.props.offerStore);
 
         } else {
-            this.state.offer = new OfferModel({store: this.props.offerStore});
+            this.state.offer = new OfferModel({store: this.props.businessStore.offerStore});
         }
 
         console.log(tooltip);
