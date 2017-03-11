@@ -36,7 +36,9 @@ export default class ClientStore {
 			client.id = clientId;
 			client.store = this;
 		}
-		this.clients.push( client);
+		if(!this.clients.find(it => it.id == client.id)) {
+			this.clients.push(client);
+		}
 		var  clientDB =  client.converToDB();
 		this.clientsRef.child(clientDB.id).set(clientDB);
 	}
