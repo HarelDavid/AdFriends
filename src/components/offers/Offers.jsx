@@ -24,13 +24,11 @@ class Offers extends React.Component {
     @autobind
     openOfferEntry() {
         this.setState({isModalOpen: true});
-        document.body.classList.add('showOverlay');
     }
 
     @autobind
     closeOfferEntry() {
         this.setState({isModalOpen: false});
-        document.body.classList.remove('showOverlay');
     }
 
 
@@ -54,16 +52,15 @@ class Offers extends React.Component {
                             <span className={style.plus}>+</span>
                             Add New Offer
                         </div>
-                        {isModalOpen ?
-                            <Modal isOpen={isModalOpen} title="New Offer">
+                        {isModalOpen &&
+                            <div className="fixedModal">
                                 <div className="close" onClick={() => this.closeOfferEntry()}>X</div>
-                                <OfferEntry businessStore={businessStore}  couponsStore={couponsStore} onSave={this.closeOfferEntry}/>
-                            </Modal>
-                            : null
+                                <OfferEntry businessStore={businessStore}  onSave={this.closeOfferEntry}/>
+                            </div>
                         }
                     </li>
                     {offerStore.offers.map((offer) => (
-                            <Offer businessStore={businessStore} couponsStore={couponsStore} className={style.item} key={offer.id} offer={offer}/>
+                            <Offer couponsStore={couponsStore} businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
                         )
                     )}
                 </ul>
