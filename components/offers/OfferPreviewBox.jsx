@@ -102,9 +102,12 @@ export default class OfferPreviewBox extends React.Component {
         coupon.offer =  offer.converToDB();
         coupon.clientId =  chosenClient.id;
         coupon.save();
-        this.state.link = coupon.link;
-        offer.couponLinks.push(coupon.link)
+        this.state.link = coupon.link+ "/preview";
+        offer.couponLinks.push(coupon.link);
         offer.save();
+        chosenClient.couponLinks.push(coupon.link);
+        chosenClient.save();
+
     }
 
 

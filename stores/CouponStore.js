@@ -1,5 +1,5 @@
 import {observable, computed} from 'mobx'
-import OfferModel from '../models/OfferModel'
+import CouponModel from '../models/CouponModel'
 import * as Utils from '../utils';
 import * as firebase from 'firebase';
 
@@ -15,12 +15,42 @@ export default class CouponStore {
 	init(){
 		this.couponRef = firebase.database().ref('coupons');
 	}
+	// Find all dinosaurs whose height is exactly 25 meters.
+
+
+	getCouponsByOfferId(offerId){
+
+		return this.couponRef.orderByChild("offerId").equalTo(offerId).once("value").then((snapshot) => {
+			var couponsById = snapshot.val();
+			var coupons = [];
+			if(couponsById) {
+
+				for (var key in couponsById) {
+					if (couponsById.hasOwnProperty(key)) {
+						var coupon  = couponsById[key];
+						var couponModel = new CouponModel();
+						coupons.push(couponModel.converFromDB(coupon));
+					}
+				}
+
+			}
+			return coupons;
+		});
+
+	}
+
 
 
 
 	getCoupon(id){
-		return firebase.database().ref('/coupons/' + id).once('value').then(function(snapshot) {
-			return  snapshot.val();
+		return firebase.database().ref('/coupons/' + id).once('value').then((snapshot) => {
+			var coupon  = snapshot.val();
+
+				var couponModel = new CouponModel();
+				couponModel.converFromDB(coupon);
+				couponModel.store = this;
+				return couponModel;
+
 		});
 
 	}
@@ -37,11 +67,14 @@ export default class CouponStore {
 		}
 
 		var hostData = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
-		var linkData = `/client-offer-preview/${coupon.id}`;
+		var linkData = `/coupon/${coupon.id}`;
 		var couponsLink = `${hostData}${linkData}`;
 		coupon.link = couponsLink;
 
-		this.coupons.push(coupon);
+
+		if(!this.coupons.find(it => it.id == coupon.id)) {
+			this.coupons.push(coupon);
+		}
 		var couponDB = coupon.converToDB();
 		this.couponRef.child(couponDB.id).set(couponDB);
 	}

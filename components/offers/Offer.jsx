@@ -26,8 +26,17 @@ export default class Offer extends React.Component {
     }
 
     componentWillMount() {
-        const {offer} = this.props;
+        const {offer, couponsStore} = this.props;
         this.state.offer = offer;
+        console.log(offer.id)
+
+        return couponsStore.getCouponsByOfferId(offer.id)
+            .then((res) => {
+
+                return res
+            })
+
+
     }
 
     updateProperty(key, value) {
