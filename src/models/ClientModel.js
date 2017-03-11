@@ -36,7 +36,7 @@ export default class ClientModel {
 		clientDB.title = this.title || "";
 		clientDB.description = this.description || "";
 		clientDB.imageUrl = this.imageUrl || "";
-		clientDB.offerLinks = this.offerLinks.toJS() || "";
+		clientDB.offerLinks = this.offerLinks ? this.offerLinks.toJS() : "";
 		clientDB.id = this.id || "";
 		return clientDB;
 	}

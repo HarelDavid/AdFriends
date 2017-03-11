@@ -34,7 +34,7 @@ class Offers extends React.Component {
 
     render() {
 
-        var {businessStore} = this.props.route;
+        var {businessStore, couponsStore} = this.props.route;
         var offerStore = businessStore.offerStore;
         var {isModalOpen} = this.state;
 
@@ -60,7 +60,7 @@ class Offers extends React.Component {
                         }
                     </li>
                     {offerStore.offers.map((offer) => (
-                            <Offer businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
+                            <Offer couponsStore={couponsStore} businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
                         )
                     )}
                 </ul>

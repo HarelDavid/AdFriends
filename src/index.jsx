@@ -1,9 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
-import { Router, hashHistory } from 'react-router'
-import routes from './Routes'
-import AuthStore from './stores/AuthStore'
-import BuisnessStore from './stores/BusinessStore'
+import ReactDOM from 'react-dom';
+import { Router, hashHistory } from 'react-router';
+import routes from './Routes';
+import AuthStore from './stores/AuthStore';
+import BuisnessStore from './stores/BusinessStore';
+import CouponStore from './stores/CouponStore';
 
 import * as firebase from 'firebase';
 
@@ -26,10 +27,13 @@ const initialState = window.initialState || {
 
 var authStore = new AuthStore();
 var businessStore = new BuisnessStore();
+var couponStore = new CouponStore();
 
 var stores = {};
 stores.authStore = authStore;
 stores.businessStore = businessStore;
+stores.couponStore = couponStore;
+stores.couponStore.init();
 
 
 
