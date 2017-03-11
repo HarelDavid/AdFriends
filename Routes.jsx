@@ -13,8 +13,8 @@ export default(stores) => {
 			<IndexRoute component={Login} businessStore={stores.businessStore}    authStore={stores.authStore}/>
 			<Route path="offers" component={Offers}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
 			<Route path="clients" component={Clients} businessStore={stores.businessStore}/>
-			<Route path="client-offer-preview/:couponId" component={ClientOfferPreview} />
-			<Route path="client-offer-preview/:couponId/preview" component={ClientOfferPreview} businessStore={stores.businessStore}/>
+			<Route path="coupon/:couponId" component={ClientOfferPreview} />
+			<Route path="coupon/:couponId/preview" component={ClientOfferPreview} businessStore={stores.businessStore}/>
 		</Route>
 	)
 }

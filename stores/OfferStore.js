@@ -27,6 +27,8 @@ export default class OfferStore {
 		})
 	}
 
+
+
 	@computed get offerCount() {
 		return this.offers.length;
 	}
