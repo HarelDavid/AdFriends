@@ -24,8 +24,8 @@ class OfferPreviewBox extends React.Component {
     @observable
     state = {
         offer: {},
-        chosenClient:{},
-        link:"",
+        chosenClient: {},
+        link: "",
         itemBeingEdited: false,
         isModalOpen: false
     }
@@ -67,19 +67,19 @@ class OfferPreviewBox extends React.Component {
     @autobind
     openModal() {
         this.setState({isModalOpen: true})
-        document.body.classList.add('showOverlay');
 
     }
 
     @autobind
     closeModal() {
         this.setState({isModalOpen: false})
-        document.body.classList.remove('showOverlay');
 
     }
 
     getClientOption() {
-       return this.clientStore.clients.map((it) => { return {'label':it.title,'value':it.id}})
+        return this.clientStore.clients.map((it) => {
+            return {'label': it.title, 'value': it.id}
+        })
     }
 
     @autobind
@@ -110,34 +110,34 @@ class OfferPreviewBox extends React.Component {
 
         return (
 
-                <div className={style.preview}>
-                    <h3 className={style.cell}>
-                        {offer.title}
-                    </h3>
-                    <div className={classname(style.cell, style.button_cell)}>
-                        <button className="button edit" onClick={() => openEditOffer()}>edit</button>
-                    </div>
-                    <div className={classname(style.cell, style.button_cell)}>
-                        Offer ends: {offer.endingDate}
-                    </div>
-                    <span className="share" onClick={() => this.openModal()}>Share</span>
+            <div className={style.preview}>
+                <h3 className={style.cell}>
+                    {offer.title}
+                </h3>
+                <div className={classname(style.cell, style.button_cell)}>
+                    <button className="button edit" onClick={() => openEditOffer()}>edit</button>
+                </div>
+                <div className={classname(style.cell, style.button_cell)}>
+                    Offer ends: {offer.endingDate}
+                </div>
+                <span className="share" onClick={() => this.openModal()}>Share</span>
+                {isModalOpen &&
+                <div className="shareDialog">
+                    <div onClick={() => this.closeModal()}>X</div>
+                    <Select
+                        name="form-field-name"
+                        value={this.state.chosenClient.id}
+                        options={this.getClientOption()}
+                        onChange={this.handleClientChoose}
+                    />
 
-                    <Modal isOpen={isModalOpen} ref="share" title="Select a client:">
-                        <div onClick={() => this.closeModal()}>X</div>
-						<Select
-							name="form-field-name"
-							value={this.state.chosenClient.id}
-							options={this.getClientOption()}
-                            onChange={this.handleClientChoose}
-						/>
+                    <div onClick={this.createLink}>create link</div>
 
-                        <div onClick={this.createLink}>create link</div>
-
-                        {this.state.link && <Link to={`${this.state.link}/preview`}>go to offer preview</Link>}
-
-                    </Modal>
+                    {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
 
                 </div>
+                }
+            </div>
 
         );
     }

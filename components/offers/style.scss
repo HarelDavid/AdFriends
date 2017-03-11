@@ -18,6 +18,17 @@
     margin: 30px;
     padding: 25px;
   }
+  .row {
+    margin-bottom: 10px;
+    width: 100%;
+    @media #{$media-higher-than-mobile} {
+      width: 50%;
+    }
+    input, textarea {
+      width: 90%;
+    }
+  }
+
   .new {
     @include font-size(18px);
     cursor: pointer;
@@ -60,12 +71,14 @@ ul.list {
       height: 290px;
       margin: 30px;
     }
-    .cell {
+    .row {
       margin-bottom: 10px;
-      &.image_cell {
-        img {
-          max-width: 100px;
-        }
+      width: 100%;
+      @media #{$media-higher-than-mobile} {
+        width: 50%;
+      }
+      input, textarea {
+        width: 90%;
       }
 
       label {
@@ -87,6 +100,7 @@ ul.list {
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+    position: relative;
     .offer_title {
       font-weight: bold;
     }
