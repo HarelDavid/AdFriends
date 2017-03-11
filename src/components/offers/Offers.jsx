@@ -7,13 +7,16 @@ import {observable} from 'mobx';
 import classname from 'classnames';
 import autobind from 'autobind-decorator'
 import Modal from '../modal';
+import {Link} from 'react-router'
+import FontIcon from 'material-ui/FontIcon';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import style from './style.scss';
 Object.assign(style)
 
 
 @observer
-class Offers extends React.Component {
+export default class Offers extends React.Component {
 
     @observable
     state = {
@@ -40,30 +43,23 @@ class Offers extends React.Component {
 
         return (
 
-            <div className={style.wrapper}>
+            <div className="offers-wrapper">
                 <h1 >Your Offers:</h1>
                     <p>פלטפורמת AdFriend מבוססת על מבצעים אותם בעלי העסקים ,מגדירים ולאחר מכן שולחים ללקוחותיהם, חבריהם ובני משפחותיהם במטרה שאלו יפיצו את המבצע ללקוחות פוטנציאליים לבית העסק.
                         הפלטפורה תומכת במספר בלתי מוגבל של מבצעים, אולם בשלב ראשון מומלץ להתחיל עם שניים עד שלושה מבצעים לצורך בחינת הפלטפורמה.
                         בכל מבצע ניתן (אך אין חובה) להגדיר הטבה למפיץ המבצע ו/או למקבל המבצע,
                         מבצעים הינם לב הפלטפורה והם אשר יקבעו את הצלחת הקמפיין, ולכן מומלץ להקדיש מחשבה להגדרת ההטבות, לניסוח ברור/מעניין/מושך לקוחות והן לבחירת התמונה.</p>
-                <ul className={style.list}>
-                    <li className={style.new_item} onClick={() => this.openOfferEntry()}>
-                        <div className={style.new}>
-                            <span className={style.plus}>+</span>
-                            Add New Offer
-                        </div>
-                        {isModalOpen &&
-                            <div className="fixedModal">
-                                <div className="close" onClick={() => this.closeOfferEntry()}>X</div>
-                                <OfferEntry businessStore={businessStore}  onSave={this.closeOfferEntry}/>
-                            </div>
-                        }
-                    </li>
+                <div className={style.list}>
+                        <Link to="offer/new-offer" className="new">
+                            <RaisedButton primary={true} label="Add New Offer" onTouchTap={() => this.openOfferEntry()} icon={<FontIcon className="material-icons">event_note</FontIcon>}  />
+                        </Link>
+
                     {offerStore.offers.map((offer) => (
                             <Offer couponsStore={couponsStore} businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
+
                         )
                     )}
-                </ul>
+                </div>
             </div>
 
 
@@ -71,4 +67,3 @@ class Offers extends React.Component {
     }
 }
 
-export default CSSModules(Offers, style);

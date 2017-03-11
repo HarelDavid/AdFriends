@@ -23,7 +23,7 @@ export default class App extends React.Component {
             <MuiThemeProvider className="container">
                 {/*<DevTool/>*/}
 
-               <Content businessStore={businessStore}/>
+               <Content businessStore={businessStore} children={this.props.children}/>
 
             </MuiThemeProvider>
         );

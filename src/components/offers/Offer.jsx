@@ -9,13 +9,14 @@ import Modal from '../modal';
 import ReactTooltip from 'react-tooltip'
 import OfferPreviewBox from './OfferPreviewBox';
 import OfferEntry from './OfferEntry';
+import Paper from 'material-ui/Paper';
 
 import style from './style.scss';
 Object.assign(style)
 
 
 @observer
-class Offer extends React.Component {
+export default class Offer extends React.Component {
 
     @observable
     state = {
@@ -78,21 +79,16 @@ class Offer extends React.Component {
 
 
         return (
-            <li className={itemBeingEdited ? style.item + " edit" : style.item}>
+            <Paper className="offer-item">
                 <OfferPreviewBox couponsStore={couponsStore} offer={offer} businessStore={businessStore} openEditOffer={this.openEditOffer}
                                  closeEditOffer={this.closeEditOffer}/>
-                {isModalOpen &&
-                <div className="fixedModal">
-                    <div className="close" onClick={() => this.closeEditOffer()}>X</div>
-                    <OfferEntry businessStore={businessStore} offer={offer}/>
-                </div>
-                }
 
-            </li>
+
+            </Paper>
         );
     }
 
 
 }
 
-export default CSSModules(Offer, style);
+

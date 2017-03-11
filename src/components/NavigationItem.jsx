@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, IndexLink, withRouter } from 'react-router'
-
+import FlatButton from 'material-ui/FlatButton';
 
 class NavItem extends Component {
   render () {
@@ -10,9 +10,11 @@ class NavItem extends Component {
     const LinkComponent = index ?  IndexLink : Link
 
     return (
-      <li className={router.isActive(to,true) ? 'active' : 'inactive'}>
-        <LinkComponent to={to} {...props}>{children}</LinkComponent>
-      </li>
+
+        <LinkComponent to={to} {...props}>
+          <FlatButton primary={router.isActive(to,true)}>{children}</FlatButton>
+        </LinkComponent>
+
     )
   }
 }
