@@ -4,14 +4,15 @@ import ReactDOM from 'react-dom'
 import DevTool from 'mobx-react-devtools'
 import {observer} from 'mobx-react'
 import {observable} from 'mobx';
-import NavigationBar from './NavigationBar'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Link} from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
+import Avatar from 'material-ui/Avatar';
 import NavItem from './NavigationItem'
+import FontIcon from 'material-ui/FontIcon';
+import {pinkA200} from 'material-ui/styles/colors';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -38,35 +39,34 @@ export default class Content extends React.Component {
     }
 
 
-
     render() {
         var {businessStore} = this.props;
         var {NavOpen} = this.state;
 
-        var menuIconClass = 'menu-hamburger';
-
         return (
 
             <div>
-                {businessStore.isLoggedIn && this.isMobile() &&
+
                 <div>
                     <AppBar
-                        title="Title"
+                        title="Add Friend"
                         iconClassNameRight="muidocs-icon-navigation-expand-more"
-                        onLeftIconButtonTouchTap={()=> this.handleSideMenuToggle()}
+                        onLeftIconButtonTouchTap={() => this.handleSideMenuToggle()}
+                        iconElementRight={businessStore.isLoggedIn ? <FlatButton label="Log Out"/> :
+                            <Link to='/'><FlatButton label="Log In"/></Link>}
                     />
-                    <Drawer docked={false} open={NavOpen} onRequestChange={(NavOpen) => this.setState({NavOpen})} businessStore={businessStore}>
-                        {!businessStore.isLoggedIn &&<MenuItem><NavItem to='/' index={true}>Login {businessStore.isLoggedIn}</NavItem></MenuItem>}
-                        {businessStore.isLoggedIn && <MenuItem><NavItem to='/offers'> Offers</NavItem></MenuItem>}
-                        {businessStore.isLoggedIn && <MenuItem><NavItem to='/clients'> Clients</NavItem></MenuItem>}
+                    {businessStore.isLoggedIn &&
+                    <Drawer docked={!this.isMobile()} open={this.isMobile() ? NavOpen : true}
+                            onRequestChange={(NavOpen) => this.setState({NavOpen})}
+                            businessStore={businessStore}>
+
+                        <Avatar style={{margin: '20px auto', display: 'block'}} size={100} backgroundColor={pinkA200} icon={<FontIcon className="material-icons">face</FontIcon>}/>
+                        <MenuItem><NavItem to='/offers'> Offers</NavItem></MenuItem>
+                        <MenuItem><NavItem to='/clients'> Clients</NavItem></MenuItem>
+                        <MenuItem><NavItem to='/settings'>Settings</NavItem></MenuItem>
                     </Drawer>
-
+                    }
                 </div>
-                }
-
-                {/*{businessStore.isLoggedIn && !this.isMobile() &&*/}
-                {/*<NavigationBar businessStore={businessStore}/>*/}
-                {/*}*/}
 
 
                 <div className="wrapper">

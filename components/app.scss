@@ -6,6 +6,8 @@
   }
 }
 
+
+
 .content_wrapper {
   @media #{$media-higher-than-mobile}{
     flex: 1;
@@ -71,7 +73,9 @@
       }
     }
   }
-
+  .wrapper {
+    padding: 0 15px;
+  }
   .mobileMenuAnimation-enter {
     transform: translate3d(320px,0,0);
   }

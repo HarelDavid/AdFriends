@@ -8,13 +8,18 @@ import {Link} from 'react-router';
 import Modal from '../modal';
 import CouponModel from '../../models/CouponModel'
 import Select from 'react-select';
+import RaisedButton from 'material-ui/RaisedButton';
+import FontIcon from 'material-ui/FontIcon';
+import IconMenu from 'material-ui/IconMenu';
+import TextField from 'material-ui/TextField';
 
 import style from './style.scss';
+
 Object.assign(style)
 
 
 @observer
-class OfferPreviewBox extends React.Component {
+export default class OfferPreviewBox extends React.Component {
 
     static PropTypes = {
         openEditOffer: PropTypes.func,
@@ -110,33 +115,35 @@ class OfferPreviewBox extends React.Component {
 
         return (
 
-            <div className={style.preview}>
-                <h3 className={style.cell}>
+            <div className="preview">
+                <h3 className="cell">
                     {offer.title}
                 </h3>
-                <div className={classname(style.cell, style.button_cell)}>
-                    <button className="button edit" onClick={() => openEditOffer()}>edit</button>
+                <div className="cell">
+                    <Link to={`/offer/${offer.id}`}>
+                        <RaisedButton label="Edit" secondary={true} />
+                    </Link>
                 </div>
-                <div className={classname(style.cell, style.button_cell)}>
+                <div className="cell">
                     Offer ends: {offer.endingDate}
                 </div>
-                <span className="share" onClick={() => this.openModal()}>Share</span>
-                {isModalOpen &&
-                <div className="shareDialog">
-                    <div onClick={() => this.closeModal()}>X</div>
-                    <Select
-                        name="form-field-name"
-                        value={this.state.chosenClient.id}
-                        options={this.getClientOption()}
-                        onChange={this.handleClientChoose}
-                    />
+                <IconMenu iconButtonElement={<FontIcon className="material-icons">share</FontIcon>}
+                            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                            targetOrigin={{horizontal: 'left', vertical: 'top'}}>
+
+                     <div className="shareDialog">
+                         <Select
+                             name="form-field-name"
+                             value={this.state.chosenClient.id}
+                             options={this.getClientOption()}
+                             onChange={this.handleClientChoose}/>
 
                     <div onClick={this.createLink}>create link</div>
 
                     {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
+                    </div>
+                </IconMenu>
 
-                </div>
-                }
             </div>
 
         );
@@ -145,4 +152,4 @@ class OfferPreviewBox extends React.Component {
 
 }
 
-export default CSSModules(OfferPreviewBox, style);
+
