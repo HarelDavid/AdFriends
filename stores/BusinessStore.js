@@ -72,13 +72,13 @@ export default class BuisnessStore {
 				if(business){
 
 					this.init(business);
-					//hashHistory.push('/offers');
+					hashHistory.push('/offers');
 				}
 				else{
 
 					var business =  this.add(currentUser);
 					this.init(business);
-					//hashHistory.push('/offers');
+					hashHistory.push('/offers');
 
 
 				}
