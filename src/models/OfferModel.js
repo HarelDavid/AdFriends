@@ -12,7 +12,7 @@ export default class OfferModel {
 	@observable clientGift;
 	@observable endingDate;
 	@observable code;
-	@observable offerLinks;
+	@observable couponLinks;
 
 
 
@@ -29,7 +29,7 @@ export default class OfferModel {
 			this.endingDate = data.endingDate || "";
 			this.code = data.code || "";
 			this.dateCreated = data.dateCreated || "";
-			this.offerLinks = data.offerLinks || [];
+			this.couponLinks = data.couponLinks || [];
 
 		}
 	}
@@ -48,7 +48,7 @@ export default class OfferModel {
 		this.endingDate = offerDB.endingDate;
 		this.code = offerDB.code;
 		this.dateCreated = offerDB.dateCreated;
-		this.offerLinks = offerDB.offerLinks || [];
+		this.couponLinks = offerDB.couponLinks || [];
 		this.id = offerDB.id;
 
 	}
@@ -67,7 +67,7 @@ export default class OfferModel {
 		this.endingDate ? offerDB.endingDate = this.endingDate : "";
 		this.code ? offerDB.code = this.code : "";
 		this.dateCreated ? offerDB.dateCreated = this.dateCreated : "";
-		this.offerLinks ? offerDB.offerLinks = this.offerLinks.toJS() : "";
+		this.couponLinks ? offerDB.couponLinks = this.couponLinks.toJS() : "";
 
 		return offerDB;
 	}
@@ -75,20 +75,20 @@ export default class OfferModel {
 	createLinks(clientsArray) {
 		clientsArray.forEach((client) => {
 			var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
-			this.offerLinks.push(offerClientLink);
+			this.couponLinks.push(offerClientLink);
 			client.offerLinks.push(offerClientLink);
 			client.save();
 		})
 		this.store.save(this);
 	}
 
-	createLink(client) {
+	createLink(client,bussinessId) {
 
 
 		var hostData = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
-		var linkData = `/client-offer-preview/${this.id}/${client.id}`;
+		var linkData = `/client-offer-preview/${this.id}/${client.id}/${bussinessId}`;
 		var offerClientLink = `${hostData}${linkData}`;
-		this.offerLinks.push(offerClientLink);
+		this.couponLinks.push(offerClientLink);
 		client.offerLinks.push(offerClientLink);
 		client.save();
 		this.store.save(this);

@@ -29,7 +29,7 @@ class OfferEntry extends React.Component {
         if (this.props.offer) {
             this.state.offer = this.props.offer;
         } else {
-            this.state.offer = new OfferModel({store: this.props.offerStore});
+            this.state.offer = new OfferModel({store: this.props.businessStore.offerStore});
         }
     }
 

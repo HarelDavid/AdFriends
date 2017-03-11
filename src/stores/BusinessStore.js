@@ -61,20 +61,24 @@ export default class BuisnessStore {
 	}
 
 
+
+
+
+
 	login(currentUser){
 		//get business
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
 				if(business){
 
-					this.init(business)
-					hashHistory.push('/offers');
+					this.init(business);
+					//hashHistory.push('/offers');
 				}
 				else{
 
 					var business =  this.add(currentUser);
-					this.init(business)
-					hashHistory.push('/offers');
+					this.init(business);
+					//hashHistory.push('/offers');
 
 
 				}
@@ -84,15 +88,13 @@ export default class BuisnessStore {
 
 
 	logout(){
-		var _this = this;
-		return firebase.auth().signOut().then(function() {
-			_this.business = null;
+
+		return firebase.auth().signOut().then(() =>  {
+			this.business = null;
 			hashHistory.push('/');
 
 			return;
-		}, function(error) {
-			// An error happened.
-		});
+		})
 
 	}
 
