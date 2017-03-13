@@ -29,7 +29,7 @@ export default class CouponStore {
 					if (couponsById.hasOwnProperty(key)) {
 						var coupon  = couponsById[key];
 						var couponModel = new CouponModel();
-						coupons.push(couponModel.converFromDB(coupon));
+						coupons.push(couponModel.convertFromDB(coupon));
 					}
 				}
 
@@ -41,13 +41,12 @@ export default class CouponStore {
 
 
 
-
 	getCoupon(id){
 		return firebase.database().ref('/coupons/' + id).once('value').then((snapshot) => {
 			var coupon  = snapshot.val();
 
 				var couponModel = new CouponModel();
-				couponModel.converFromDB(coupon);
+				couponModel.convertFromDB(coupon);
 				couponModel.store = this;
 				return couponModel;
 
@@ -75,7 +74,7 @@ export default class CouponStore {
 		if(!this.coupons.find(it => it.id == coupon.id)) {
 			this.coupons.push(coupon);
 		}
-		var couponDB = coupon.converToDB();
+		var couponDB = coupon.convertToDB();
 		this.couponRef.child(couponDB.id).set(couponDB);
 	}
 

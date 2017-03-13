@@ -18,7 +18,7 @@ export default class ClientStore {
 		var clientsArr = bussines.clients ? Object.keys(bussines.clients).map(function(client) { return bussines.clients[client] }): [];
 		clientsArr.forEach((client) => {
 			var clientModel = new ClientModel();
-			clientModel.converFromDB(client);
+			clientModel.convertFromDB(client);
 			clientModel.store = this;
 			this.clients.push(clientModel)
 		})
@@ -39,7 +39,7 @@ export default class ClientStore {
 		if(!this.clients.find(it => it.id == client.id)) {
 			this.clients.push(client);
 		}
-		var  clientDB =  client.converToDB();
+		var  clientDB =  client.convertToDB();
 		this.clientsRef.child(clientDB.id).set(clientDB);
 	}
 
