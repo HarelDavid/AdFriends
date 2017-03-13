@@ -10,6 +10,7 @@ import ClientOfferPreview from './components/preview/ClientOfferPreview'
 
 export default(stores) => {
 	return (
+
 		<Route path="/" component={App} businessStore={stores.businessStore}>
 			<IndexRoute component={Login} businessStore={stores.businessStore}    authStore={stores.authStore}/>
 			<Route path="offers" component={Offers}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>

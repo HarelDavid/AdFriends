@@ -23,7 +23,7 @@ export default class OfferModel {
 
 
 
-	converFromDB(friendDB) {
+	convertFromDB(friendDB) {
 		this.name = friendDB.name;
 		this.phoneNumber = friendDB.phoneNumber;
 		this.dateAdded = friendDB.dateAdded;
@@ -32,7 +32,7 @@ export default class OfferModel {
 
 	}
 
-	converToDB() {
+	convertToDB() {
 		var friendDB = {}
 		friendDB.name = this.name || "";
 		friendDB.phoneNumber = this.phoneNumber || "";

@@ -37,7 +37,7 @@ export default class OfferModel {
 
 
 
-	converFromDB(offerDB) {
+	convertFromDB(offerDB) {
 		this.title = offerDB.title;
 		this.description = offerDB.description;
 		this.imageUrl = offerDB.imageUrl;
@@ -53,7 +53,7 @@ export default class OfferModel {
 
 	}
 
-	converToDB() {
+	convertToDB() {
 		var offerDB = {}
 		this.id ? offerDB.id = this.id : "";
 		this.title ? offerDB.title = this.title : "";
