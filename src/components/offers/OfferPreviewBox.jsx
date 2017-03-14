@@ -8,7 +8,7 @@ import {Link} from 'react-router';
 import Modal from '../modal';
 import CouponModel from '../../models/CouponModel'
 import Select from 'react-select';
-import RaisedButton from 'material-ui/RaisedButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FontIcon from 'material-ui/FontIcon';
 import IconMenu from 'material-ui/IconMenu';
 import TextField from 'material-ui/TextField';
@@ -32,13 +32,15 @@ export default class OfferPreviewBox extends React.Component {
         chosenClient: {},
         link: "",
         itemBeingEdited: false,
-        isModalOpen: false
+        formatDate: false
     }
 
     componentWillMount() {
         const {offer} = this.props;
         this.clientStore = this.props.businessStore.clientStore;
         this.state.offer = offer;
+
+        // this.state.formatDate = offer.endingDate.slice(0,10).replace(/-/g,"");
     }
 
     updateProperty(key, value) {
@@ -112,7 +114,7 @@ export default class OfferPreviewBox extends React.Component {
 
 
     render() {
-        const {offer, isModalOpen, itemBeingEdited} = this.state;
+        const {offer, formatDate} = this.state;
         const {businessStore, openEditOffer, closeEditOffer} = this.props;
 
 
@@ -123,29 +125,32 @@ export default class OfferPreviewBox extends React.Component {
                     {offer.title}
                 </h3>
                 <div className="cell">
-                    <Link to={`/offer/${offer.id}`}>
-                        <RaisedButton label="Edit" secondary={true} />
-                    </Link>
+                    Offer ends: {formatDate}
                 </div>
                 <div className="cell">
-                    Offer ends: {offer.endingDate}
+                    <Link to={`/offer/${offer.id}`}>
+                        <FloatingActionButton mini primary><FontIcon className="material-icons">mode_edit</FontIcon></FloatingActionButton>
+                    </Link>
+                    <FloatingActionButton primary mini>
+                    <IconMenu iconButtonElement={<FontIcon className="material-icons">share</FontIcon>}
+                              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                              targetOrigin={{horizontal: 'right', vertical: 'top'}}>
+
+                        <div className="shareDialog">
+                            <Select
+                                name="form-field-name"
+                                value={this.state.chosenClient.id}
+                                options={this.getClientOption()}
+                                onChange={this.handleClientChoose}/>
+
+                            <div onClick={this.createLink}>create link</div>
+
+                            {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
+                        </div>
+                    </IconMenu>
+                    </FloatingActionButton>
                 </div>
-                <IconMenu iconButtonElement={<FontIcon className="material-icons">share</FontIcon>}
-                            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                            targetOrigin={{horizontal: 'left', vertical: 'top'}}>
 
-                     <div className="shareDialog">
-                         <Select
-                             name="form-field-name"
-                             value={this.state.chosenClient.id}
-                             options={this.getClientOption()}
-                             onChange={this.handleClientChoose}/>
-
-                    <div onClick={this.createLink}>create link</div>
-
-                    {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
-                    </div>
-                </IconMenu>
 
             </div>
 

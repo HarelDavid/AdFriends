@@ -73,21 +73,22 @@
       }
     }
   }
-  .wrapper {
-    padding: 0 15px;
-  }
-  .mobileMenuAnimation-enter {
-    transform: translate3d(320px,0,0);
-  }
-  .mobileMenuAnimation-enter-active {
-    transform: translate3d(0px,0,0);
-  }
-  .mobileMenuAnimation-leave {
-    transform: translate3d(0px,0,0);
-  }
-  .mobileMenuAnimation-leave-active {
-    transform: translate3d(320px,0,0);
+
+  #root {
+    @media #{$media-higher-than-mobile}{
+      padding-right: 255px;
+    }
   }
 
+  .wrapper {
+    padding: 0 15px 30px;
+  }
+
+  .offer-item {
+    text-align: center;
+    @media #{$media-higher-than-mobile}{
+      max-width: 250px;
+    }
+  }
 }
 //End global

@@ -9,8 +9,10 @@ body,html {
   margin: 0;
   padding: 0;
   background: $grey-bg;
-
+  direction: rtl;
 }
+
+
 
 
 input[type="text"], input[type="date"], input[type="text"], textarea {
@@ -22,11 +24,14 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
   @media #{$media-higher-than-mobile} {
     min-width: 300px;
   }
-  box-shadow: 0 0 2px rgba(0,0,0,0.05);
+
 }
 
 
 :global {
+
+
+
   .button {
     border:0;
     color: #fff;
@@ -63,6 +68,8 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    max-width: 300px;
+    margin: 0 auto;
     @include font-size(16px);
     > div {
       width: 100%;
@@ -118,12 +125,20 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
   }
 
   .shareDialog {
-    position: absolute;
-    bottom: 95px;
-    right: 0;
-    width: 100%;
-    padding: 20px;
-    @include bubble();
+    width: 300px;
+    min-height: 200px;
+    //position: absolute;
+    //bottom: 95px;
+    //right: 0;
+    //width: 100%;
+    //padding: 20px;
+    //@include bubble();
+  }
+
+  .preview {
+    padding: 10px;
+    margin-top: 15px;
+
   }
 
 }
