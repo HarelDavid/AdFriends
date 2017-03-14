@@ -10,6 +10,7 @@ import * as firebase from 'firebase';
 
 export default class BuisnessStore {
 	@observable business = null;
+	@observable initialize = false;
 	offerStore = null;
 	clientStore = null;
 
@@ -20,9 +21,17 @@ export default class BuisnessStore {
 	}
 
 	init(business){
-		this.business = business;
-		this.offerStore.init(this.business);
-		this.clientStore.init(this.business);
+
+		return Promise.resolve(null)
+			.then(() => {
+				while(!this.business) {
+					this.business = business;
+					this.offerStore.init(this.business);
+					this.clientStore.init(this.business);
+					this.initialize = true;
+				}
+			})
+
 	}
 
 
@@ -31,8 +40,8 @@ export default class BuisnessStore {
 
 	startObserve(){
 		var _this = this;
-		firebase.auth().onAuthStateChanged(function(user) {
-			console.log(user)
+		return firebase.auth().onAuthStateChanged(function(user) {
+
 			if (user && !_this.business) {
 				_this.login(user);
 			} else {
@@ -43,8 +52,14 @@ export default class BuisnessStore {
 	}
 
 	@computed get isLoggedIn(){
-		return !!this.business;
+		return !!this.business ;
 	}
+
+	@computed get isInitialized(){
+		return !!this.initialize ;
+	}
+
+
 
 	getProviderData(accessToken){
 
@@ -72,13 +87,13 @@ export default class BuisnessStore {
 				if(business){
 
 					this.init(business);
-					// hashHistory.push('/offers');
+					//hashHistory.push('/offers');
 				}
 				else{
 
 					var business =  this.add(currentUser);
 					this.init(business);
-					// hashHistory.push('/offers');
+//					hashHistory.push('/offers');
 
 
 				}

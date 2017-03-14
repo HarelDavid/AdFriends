@@ -101,7 +101,7 @@ export default class OfferPreviewBox extends React.Component {
         var {businessStore, couponsStore}  = this.props;
         var coupon  = new CouponModel({store:couponsStore});
         coupon.businessId =  businessStore.business.id;
-        coupon.offer =  offer.converToDB();
+        coupon.offer =  offer.convertToDB();
         coupon.clientId =  chosenClient.id;
         coupon.save();
         this.state.link = coupon.link+ "/preview";

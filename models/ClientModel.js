@@ -22,7 +22,7 @@ export default class ClientModel {
 
 	}
 
-	converFromDB(clientDB) {
+	convertFromDB(clientDB) {
 		this.title = clientDB.title;
 		this.description = clientDB.description;
 		this.imageUrl = clientDB.imageUrl;
@@ -31,7 +31,7 @@ export default class ClientModel {
 
 	}
 
-	converToDB(clientDB) {
+	convertToDB(clientDB) {
 		var clientDB = {}
 		clientDB.title = this.title || "";
 		clientDB.description = this.description || "";
