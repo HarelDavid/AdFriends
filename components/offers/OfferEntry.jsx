@@ -10,6 +10,9 @@ import {observable} from 'mobx';
 import ReactTooltip from 'react-tooltip';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
 
 import style from './style.scss';
 Object.assign(style)
@@ -31,7 +34,7 @@ class OfferEntry extends React.Component {
         offer: PropTypes.object
     }
 
-    componentWillMount() {
+    componentDidMount() {
         var {offerStore} = this.props.route.businessStore;
         // const offerId = this.props.routeParams.offerId;
         const offerId = this.props.params.offerId;
@@ -53,6 +56,11 @@ class OfferEntry extends React.Component {
         this.updateProperty(event.target.name, event.target.value)
     }
 
+    @autobind
+    onChangeDate(event,date) {
+        this.updateProperty('endingDate', date)
+    }
+
 
     @autobind
     handleSubmit() {
@@ -67,9 +75,9 @@ class OfferEntry extends React.Component {
     handleNewOfferKeyDown(e) {
         e.preventDefault();
         var {offer} = this.state;
-
+        // offer['endingDate'] = offer['endingDate'].toISOString();
         offer.save();
-        hashHistory.push('/offers');
+        // hashHistory.push('/offers');
         this.clearForm();
 
     };
@@ -111,7 +119,7 @@ class OfferEntry extends React.Component {
     render() {
         var {offer} = this.state;
 
-        if (!firebase.storage) {
+        if (!firebase.storage || !this.props.route.businessStore) {
             return null;
         }
 
@@ -119,53 +127,55 @@ class OfferEntry extends React.Component {
             <div>
 
                 <FlatButton
-                    label="Back"
+                    label="back"
+                    style={{position: 'absolute', left: 5}}
+                    labelPosition="before"
                     secondary={true}
                     onTouchTap={()=> this.goBack()}
                     icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
                 />
                 <form className="addItemForm">
 
-                    <div className={style.row}>
+                    <div className="row">
                         <label>Title <span data-tip={tooltip.title} data-for='title'>?</span></label>
-                        <input type="text" name="title" value={offer.title} onChange={this.onChange}/>
+                        <TextField name="title" defaultValue={offer.title} onChange={this.onChange}/>
                         <ReactTooltip id="title"/>
                     </div>
-                    <div className={style.row}>
+                    <div className="row">
                         <label>Description <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
-                        <textarea name="description" value={offer.description} onChange={this.onChange}/>
+                        <TextField multiLine={true} name="description" defaultValue={offer.description} onChange={this.onChange}/>
                         <ReactTooltip id="desc"/>
 
                     </div>
-                    <div className={style.row}>
+                    <div className="row">
                         <label>Message to Client:<span data-tip={tooltip.message} data-for='message'>?</span></label>
-                        <textarea type="text" name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
+                        <TextField multiLine={true} name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
                         <ReactTooltip id="message"/>
                     </div>
-                    <div className={style.row}>
+                    <div className="row">
                         <label>Terms<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
-                        <input type="text" name="terms" value={offer.terms} onChange={this.onChange}/>
+                        <TextField name="terms" value={offer.terms} onChange={this.onChange}/>
                         <ReactTooltip id="terms"/>
                     </div>
-                    <div className={style.row}>
+                    <div className="row">
                         <label>Friend Gift<span data-tip={tooltip.giftFriend} data-for='giftFriend'>?</span></label>
-                        <input type="text" name="offerGift" value={offer.offerGift} onChange={this.onChange}/>
+                        <TextField name="offerGift" value={offer.offerGift} onChange={this.onChange}/>
                         <ReactTooltip id="giftFriend"/>
                     </div>
-                    <div className={style.row}>
+                    <div className="row">
                         <label>Client Gift<span data-tip={tooltip.giftClient} data-for='giftClient'>?</span></label>
-                        <input type="text" name="clientGift" value={offer.clientGift} onChange={this.onChange}/>
+                        <TextField name="clientGift" value={offer.clientGift} onChange={this.onChange}/>
                         <ReactTooltip id="giftClient"/>
 
                     </div>
-                    <div className={style.row}>
+                    <div className="row">
                         <label>Ending Date<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-                        <input type="date" name="endingDate" value={offer.endingDate} onChange={this.onChange}/>
+                        {/*<DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate}/>*/}
                         <ReactTooltip id="endDate"/>
                     </div>
-                    <div className={style.row}>
+                    <div className="row">
                         <label>Code<span data-tip={tooltip.code} data-for='code'>?</span></label>
-                        <input type="text" name="code" value={offer.code} onChange={this.onChange}/>
+                        <TextField name="code" value={offer.code} onChange={this.onChange}/>
                         <ReactTooltip id="code"/>
 
                     </div>
@@ -187,7 +197,7 @@ class OfferEntry extends React.Component {
                     </label>
 
 
-                    <button className="button save" onClick={(e) => this.handleNewOfferKeyDown(e)}>submit</button>
+                    <RaisedButton secondary={true} onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>Save</RaisedButton>
 
 
                 </form>

@@ -1,12 +1,23 @@
 import React from 'react'
 import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
+import {observable} from 'mobx';
+import {Link} from 'react-router';
 import autobind from 'autobind-decorator'
 import NavItem from './NavigationItem'
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
+import Avatar from 'material-ui/Avatar';
+import FontIcon from 'material-ui/FontIcon';
+import {pinkA200} from 'material-ui/styles/colors';
+
 import styles from './NavigationBar.scss'
 
 @observer
-class NavigationBar extends React.Component {
+
+export default class NavigationBar extends React.Component {
 
 	@autobind
 	logout(){
@@ -14,38 +25,54 @@ class NavigationBar extends React.Component {
 		businessStore && businessStore.logout();
 	}
 
+    @observable state = {
+        NavOpen: false
+    }
+
+    isMobile() {
+        let mql = window.matchMedia('(max-width: 920px)');
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && mql.matches) {
+            return true;
+        }
+        return false;
+    }
+
+    handleSideMenuToggle() {
+        this.setState({NavOpen: !this.state.NavOpen});
+    }
+
 	render() {
 
 		var {businessStore} = this.props;
+        var {NavOpen} = this.state;
 
 		if(!businessStore) {
 			return null;
 		}
 
-		return (
-			<nav className={styles.nav}>
-				<div className={styles.container}>
-					<div className={styles.header}>
-						<a className={styles.brand} href="#">
-							<div className={styles.user}>
-							<img src={businessStore.business && businessStore.business.imageUrl }/>
-							</div>
-						</a>
-					</div>
-					<div className={styles.menu_list}>
-						<div className={styles.name}>Hello, {businessStore.business && businessStore.business.title}</div>
 
-						<ul className={styles.nav_list}>
-							{!businessStore.isLoggedIn &&<NavItem to='/' index={true}>Login {businessStore.isLoggedIn}</NavItem>}
-							{businessStore.isLoggedIn && <NavItem to='/offers'> Offers</NavItem>}
-							{businessStore.isLoggedIn && <NavItem to='/clients'> Clients</NavItem>}
-							{businessStore.isLoggedIn && <div onClick={this.logout}> Logout</div>}
-						</ul>
-					</div>
-				</div>
-			</nav>
+		return (
+			<div>
+				<AppBar
+					title="Add Friend"
+					iconElementLeft={!this.isMobile() && <div className="menu-hamburger"></div>}
+					onLeftIconButtonTouchTap={() => this.handleSideMenuToggle()}
+					iconElementRight={businessStore.isLoggedIn ? <FlatButton label="Log Out"/> :
+						<Link to='/'><FlatButton label="Log In"/></Link>}
+				/>
+                {businessStore.isLoggedIn &&
+				<Drawer openSecondary docked={!this.isMobile()} open={this.isMobile() ? NavOpen : true}
+						onRequestChange={(NavOpen) => this.setState({NavOpen})}
+						businessStore={businessStore}>
+
+					<Avatar style={{margin: '20px auto', display: 'block'}} size={100} backgroundColor={pinkA200} icon={<FontIcon className="material-icons">face</FontIcon>}/>
+					<MenuItem><NavItem to='/offers'> Offers</NavItem></MenuItem>
+					<MenuItem><NavItem to='/clients'> Clients</NavItem></MenuItem>
+					<MenuItem><NavItem to='/settings'>Settings</NavItem></MenuItem>
+				</Drawer>
+                }
+			</div>
 		)
 	}
 }
 
-export default CSSModules(NavigationBar, styles, {allowMultiple: true})

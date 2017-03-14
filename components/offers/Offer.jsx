@@ -66,31 +66,16 @@ export default class Offer extends React.Component {
         }
     };
 
-    @autobind
-    handleEdit() {
-        this.state.itemBeingEdited = true;
-    };
-
-    @autobind
-    openEditOffer() {
-        this.setState({isModalOpen: true});
-    }
-
-    @autobind
-    closeEditOffer() {
-        this.setState({isModalOpen: false});
-    }
 
 
     render() {
-        const {offer, isModalOpen, itemBeingEdited} = this.state;
+        const {offer} = this.state;
         const {businessStore, couponsStore} = this.props;
 
 
         return (
             <Paper className="offer-item">
-                <OfferPreviewBox couponsStore={couponsStore} offer={offer} businessStore={businessStore} openEditOffer={this.openEditOffer}
-                                 closeEditOffer={this.closeEditOffer}/>
+                <OfferPreviewBox couponsStore={couponsStore} offer={offer} businessStore={businessStore} />
 
 
             </Paper>
