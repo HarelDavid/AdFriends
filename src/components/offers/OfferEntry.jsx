@@ -35,16 +35,26 @@ class OfferEntry extends React.Component {
     }
 
     componentDidMount() {
+
         var {offerStore} = this.props.route.businessStore;
-        // const offerId = this.props.routeParams.offerId;
         const offerId = this.props.params.offerId;
 
         if(offerId) {
-            this.state.offer = offerStore.offers.find((it)=> it.id = offerId);
+
+				this.state.offer = offerStore.offers.find((it)=> it.id == offerId);
+
+
+
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
     }
+
+	shouldComponentUpdate(){
+
+	}
+
+
 
     updateProperty(key, value) {
         var {offer} = this.state;
@@ -118,8 +128,8 @@ class OfferEntry extends React.Component {
 
     render() {
         var {offer} = this.state;
-
-        if (!firebase.storage || !this.props.route.businessStore) {
+        var {route} = this.props;
+        if (!firebase.storage || !route.businessStore.isInitialized) {
             return null;
         }
 

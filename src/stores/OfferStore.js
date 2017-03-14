@@ -21,7 +21,7 @@ export default class OfferStore {
 		var offersArr = bussines.offers ? Object.keys(bussines.offers).map(function(offer) { return bussines.offers[offer] }): [];
 		offersArr.forEach((offer) => {
 			var offerModel = new OfferModel();
-			offerModel.converFromDB(offer);
+			offerModel.convertFromDB(offer);
 			offerModel.store = this;
 			this.offers.push(offerModel)
 		})
@@ -42,7 +42,7 @@ export default class OfferStore {
 			offer.store = this;
 		}
 		this.offers.push(offer);
-		var offerDB = offer.converToDB();
+		var offerDB = offer.convertToDB();
 		this.offersRef.child(offerDB.id).set(offerDB);
 	}
 
