@@ -6,14 +6,12 @@ import ClientEntry from './ClientEntry'
 import {observable} from 'mobx';
 import classname from 'classnames';
 import autobind from 'autobind-decorator'
-import Modal from '../modal';
 
 import style from './style.scss';
-Object.assign(style)
 
 
 @observer
-class Clients extends React.Component {
+export default class Clients extends React.Component {
 
 	@observable
 	state = {
@@ -36,19 +34,17 @@ class Clients extends React.Component {
 
 		var  {businessStore} = this.props.route;
 		var clientStore = businessStore.clientStore;
-		const {showOverlay} = this.props;
 
 		return (
 
-			<div className={style.wrapper}>
-				<h1>Your Clients:</h1>
+			<div className="Client-wrapper">
+				<h1>לקוחות</h1>
 
-
-				<div className={style.top}>
+				<div className="Client-top">
 					<ClientEntry clientStore={clientStore}/>
 				</div>
 
-				<ul className={style.list}>
+				<ul className="Client-table">
 					{clientStore.clients.map((client) => (
 							<Client className={style.item} key={client.id} client={client}/>
 						)
@@ -61,4 +57,4 @@ class Clients extends React.Component {
 	}
 }
 
-export default CSSModules(Clients, style);
+
