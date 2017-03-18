@@ -6,14 +6,15 @@ import ImageUploader from'react-firebase-image-uploader';
 import * as firebase from 'firebase';
 import ClientModel from '../../models/ClientModel'
 import {observable} from 'mobx';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import style from './style.scss';
-Object.assign(style)
 
 const ENTER_KEY = 13;
 
 @observer
-class ClientEntry extends React.Component {
+export default class ClientEntry extends React.Component {
 
     @observable
     state = {
@@ -38,9 +39,7 @@ class ClientEntry extends React.Component {
     handleNewClientKeyDown() {
 
         var {client} = this.state;
-        var {onSave} = this.props;
         client.save();
-        onSave();
         this.clearForm();
 
     };
@@ -82,11 +81,12 @@ class ClientEntry extends React.Component {
         }
 
         return (
-            <form className="addItemForm">
-                <div className={style.cell}>
-                    <label>Name</label>
-                    <input type="text" name="title" value={client.title} onChange={this.onChange}/>
-                    <div className="button save" onClick={this.handleNewClientKeyDown}>Add Client</div>
+            <form className="Client-addItemForm">
+                <div className="cell">
+
+                    <TextField placeholder="Add New Client" name="clientName" value={client.name} onChange={this.onChange}/>
+
+                    <RaisedButton  onClick={this.handleNewClientKeyDown}>Add Client</RaisedButton>
 
                 </div>
 
@@ -95,4 +95,4 @@ class ClientEntry extends React.Component {
     }
 }
 
-export default CSSModules(ClientEntry, style);
+

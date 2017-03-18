@@ -66,9 +66,9 @@ export default class NavigationBar extends React.Component {
 						businessStore={businessStore}>
 
 					<Avatar style={{margin: '20px auto', display: 'block'}} size={100} backgroundColor={pinkA200} icon={<FontIcon className="material-icons">face</FontIcon>}/>
-					<MenuItem><NavItem to='/offers'> Offers</NavItem></MenuItem>
-					<MenuItem><NavItem to='/clients'> Clients</NavItem></MenuItem>
-					<MenuItem><NavItem to='/settings'>Settings</NavItem></MenuItem>
+					<MenuItem><NavItem to='/offers'>מבצעים</NavItem></MenuItem>
+					<MenuItem><NavItem to='/clients'>לקוחות</NavItem></MenuItem>
+					<MenuItem><NavItem to='/settings'>הגדרות</NavItem></MenuItem>
 				</Drawer>
                 }
 			</div>
