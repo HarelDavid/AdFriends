@@ -50,6 +50,7 @@ export default class NavigationBar extends React.Component {
 			return null;
 		}
 
+		console.log(businessStore)
 
 		return (
 			<div>
@@ -65,7 +66,10 @@ export default class NavigationBar extends React.Component {
 						onRequestChange={(NavOpen) => this.setState({NavOpen})}
 						businessStore={businessStore}>
 
-					<Avatar style={{margin: '20px auto', display: 'block'}} size={100} backgroundColor={pinkA200} icon={<FontIcon className="material-icons">face</FontIcon>}/>
+					<Avatar style={{margin: '20px auto', display: 'block'}} size={100} backgroundColor={pinkA200}
+							icon={!businessStore.business.imageUrl && <FontIcon className="material-icons">face</FontIcon>}
+							src={businessStore.business.imageUrl && businessStore.business.imageUrl}
+					/>
 					<MenuItem><NavItem to='/offers'>מבצעים</NavItem></MenuItem>
 					<MenuItem><NavItem to='/clients'>לקוחות</NavItem></MenuItem>
 					<MenuItem><NavItem to='/settings'>הגדרות</NavItem></MenuItem>

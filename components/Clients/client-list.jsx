@@ -25,7 +25,7 @@ export default class ClientList extends React.Component {
 		return (
 
 			<div className="clients-wrapper">
-				<ul className="clients-list">
+				<div className="clients-list">
 					<ClientEntry/>
 					{clientStore.clients.map((client) => (
 						<div className={style.item} key={client.id}>
@@ -34,7 +34,7 @@ export default class ClientList extends React.Component {
 						</div>
 						)
 					)}
-				</ul>
+				</div>
 			</div>
 
 
