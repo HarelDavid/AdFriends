@@ -14,7 +14,6 @@ export default class Client extends React.Component {
 
     @observable
     state = {
-        client: {},
         itemBeingEdited: false
 
     }
@@ -58,13 +57,21 @@ export default class Client extends React.Component {
 
 
     render() {
-        
+        var {client, index} = this.props;
+        console.log(client)
         return (
 
             <TableRow>
-                <TableRowColumn>1</TableRowColumn>
-                <TableRowColumn>John Smith</TableRowColumn>
-                <TableRowColumn>Employed</TableRowColumn>
+                <TableRowColumn style={{width:40}}>{index+1}</TableRowColumn>
+                <TableRowColumn>{client.title}</TableRowColumn>
+                <TableRowColumn>קופונים:
+                    <ul>
+                        {client.couponLinks.length > 0 && client.couponLinks.map(()=> {
+                            <li></li>
+                        })
+                        }
+                    </ul>
+                </TableRowColumn>
             </TableRow>
         );
     }

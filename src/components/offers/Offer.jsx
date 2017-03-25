@@ -7,11 +7,12 @@ import classname from 'classnames';
 import {Link} from 'react-router';
 import CouponModel from '../../models/CouponModel'
 import Select from 'react-select';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import IconMenu from 'material-ui/IconMenu';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
+import moment from 'moment';
 
 import './style.scss';
 
@@ -114,13 +115,13 @@ export default class Offer extends React.Component {
                         {offer.title}
                     </h3>
                     <div className="cell">
-                        Offer ends: {}
+                        בתוקף עד: {moment(offer.endingDate).format('DD/MM/YYYY')}
                     </div>
-                    <div className="cell">
+                    <div className="cell offer-action-buttons">
                         <Link to={`/offer/${offer.id}`}>
-                            <FloatingActionButton mini primary><FontIcon className="material-icons">mode_edit</FontIcon></FloatingActionButton>
+                            <IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
                         </Link>
-                        <FloatingActionButton primary mini>
+                        <IconButton>
                             <IconMenu iconButtonElement={<FontIcon className="material-icons">share</FontIcon>}
                                       anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                                       targetOrigin={{horizontal: 'right', vertical: 'top'}}>
@@ -137,7 +138,7 @@ export default class Offer extends React.Component {
                                     {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
                                 </div>
                             </IconMenu>
-                        </FloatingActionButton>
+                        </IconButton>
                     </div>
                 </div>
 

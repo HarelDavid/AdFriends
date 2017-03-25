@@ -6,6 +6,8 @@ import ClientEntry from './ClientEntry'
 import {observable} from 'mobx';
 import classname from 'classnames';
 import autobind from 'autobind-decorator'
+import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
+    from 'material-ui/Table';
 
 import style from './style.scss';
 
@@ -44,12 +46,14 @@ export default class Clients extends React.Component {
 					<ClientEntry clientStore={clientStore}/>
 				</div>
 
-				<ul className="Client-table">
-					{clientStore.clients.map((client) => (
-							<Client className={style.item} key={client.id} client={client}/>
+				<Table className="Client-table">
+					<TableBody>
+					{clientStore.clients.map((client,idx) => (
+							<Client className={style.item} key={client.id} client={client} index={idx}/>
 						)
 					)}
-				</ul>
+					</TableBody>
+				</Table>
 			</div>
 
 
