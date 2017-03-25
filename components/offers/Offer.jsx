@@ -4,15 +4,17 @@ import {observable, expr} from 'mobx';
 import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import classname from 'classnames';
-import Icon from '../icon';
-import Modal from '../modal';
-import ReactTooltip from 'react-tooltip'
-import OfferPreviewBox from './OfferPreviewBox';
-import OfferEntry from './OfferEntry';
+import {Link} from 'react-router';
+import CouponModel from '../../models/CouponModel'
+import Select from 'react-select';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import FontIcon from 'material-ui/FontIcon';
+import IconMenu from 'material-ui/IconMenu';
+import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
 
-import style from './style.scss';
-Object.assign(style)
+import './style.scss';
+
 
 
 @observer
@@ -22,22 +24,26 @@ export default class Offer extends React.Component {
     state = {
         offer: {},
         itemBeingEdited: false,
-        isModalOpen: false
+        isModalOpen: false,
+        chosenClient: {}
     }
 
     componentWillMount() {
         const {offer, couponsStore} = this.props;
         this.state.offer = offer;
+        this.clientStore = this.props.businessStore.clientStore;
+
         console.log(offer.id)
 
         return couponsStore.getCouponsByOfferId(offer.id)
             .then((res) => {
-
                 return res
             })
 
 
     }
+
+
 
     updateProperty(key, value) {
         var {offer} = this.state;
@@ -66,7 +72,34 @@ export default class Offer extends React.Component {
         }
     };
 
+    @autobind
+    createLink(){
+        const {offer} = this.state;
+        var {chosenClient}  = this.state;
+        var {businessStore, couponsStore}  = this.props;
+        var coupon  = new CouponModel({store:couponsStore});
+        coupon.businessId =  businessStore.business.id;
+        coupon.offer =  offer.convertToDB();
+        coupon.clientId =  chosenClient.id;
+        coupon.save();
+        this.state.link = coupon.link+ "/preview";
+        offer.couponLinks.push(coupon.link);
+        offer.save();
+        chosenClient.couponLinks.push(coupon.link);
+        chosenClient.save();
 
+    }
+
+    getClientOption() {
+        return this.clientStore.clients.map((it) => {
+            return {'label': it.title, 'value': it.id}
+        })
+    }
+
+    @autobind
+    handleClientChoose(clientOption) {
+        this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
+    }
 
     render() {
         const {offer} = this.state;
@@ -75,7 +108,38 @@ export default class Offer extends React.Component {
 
         return (
             <Paper className="offer-item">
-                <OfferPreviewBox couponsStore={couponsStore} offer={offer} businessStore={businessStore} />
+
+                <div className="preview">
+                    <h3 className="cell">
+                        {offer.title}
+                    </h3>
+                    <div className="cell">
+                        Offer ends: {}
+                    </div>
+                    <div className="cell">
+                        <Link to={`/offer/${offer.id}`}>
+                            <FloatingActionButton mini primary><FontIcon className="material-icons">mode_edit</FontIcon></FloatingActionButton>
+                        </Link>
+                        <FloatingActionButton primary mini>
+                            <IconMenu iconButtonElement={<FontIcon className="material-icons">share</FontIcon>}
+                                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                                      targetOrigin={{horizontal: 'right', vertical: 'top'}}>
+
+                                <div className="shareDialog">
+                                    <Select
+                                        name="form-field-name"
+                                        value={this.state.chosenClient.id}
+                                        options={this.getClientOption()}
+                                        onChange={this.handleClientChoose}/>
+
+                                    <div onClick={this.createLink}>create link</div>
+
+                                    {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
+                                </div>
+                            </IconMenu>
+                        </FloatingActionButton>
+                    </div>
+                </div>
 
 
             </Paper>
