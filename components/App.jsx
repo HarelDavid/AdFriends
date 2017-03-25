@@ -16,17 +16,20 @@ Object.assign(styles)
 export default class App extends React.Component {
 
 
+
     render() {
         var {businessStore} = this.props.route;
 
-        return (
+        return businessStore.isInitialized ? (
+
             <MuiThemeProvider className="container">
                 {/*<DevTool/>*/}
-
                <Content businessStore={businessStore} children={this.props.children}/>
-
             </MuiThemeProvider>
-        );
+        )
+        :
+         <div>loading</div>
+
     }
 }
 
