@@ -40,6 +40,6 @@ stores.couponStore.init();
 
 
 ReactDOM.render((
-  <Router history={hashHistory} routes={routes(stores)}>
+<Router history={hashHistory} routes={routes(stores)}>
   </Router>
 ), document.querySelector("#root"))
