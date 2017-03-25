@@ -10,6 +10,7 @@ body,html {
   padding: 0;
   background: $grey-bg;
   direction: rtl;
+  color: #555
 }
 
 
@@ -48,7 +49,7 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     color: #fff;
     width: 16px;
     height: 16px;
-    background: #333;
+    background: #555;
     border-radius: 100%;
     display: inline-block;
     font-size: 9px;
@@ -76,8 +77,8 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     }
     label {
       padding-right: 15px;
-      margin-top: 10px;
-      margin-bottom: 5px;
+      margin-top: 15px;
+      margin-bottom: 0px;
       display: block;
     }
     .input-name {

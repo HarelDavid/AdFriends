@@ -9,11 +9,11 @@ import autobind from 'autobind-decorator'
 import Modal from '../modal';
 
 import style from './style.scss';
-Object.assign(style)
+
 
 
 @observer
-class ClientList extends React.Component {
+export default class ClientList extends React.Component {
 
 
 
@@ -24,8 +24,8 @@ class ClientList extends React.Component {
 
 		return (
 
-			<div className={style.wrapper}>
-				<ul className={style.list}>
+			<div className="clients-wrapper">
+				<ul className="clients-list">
 					<ClientEntry/>
 					{clientStore.clients.map((client) => (
 						<div className={style.item} key={client.id}>
@@ -42,4 +42,3 @@ class ClientList extends React.Component {
 	}
 }
 
-export default CSSModules(ClientList, style);
