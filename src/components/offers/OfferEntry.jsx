@@ -6,7 +6,7 @@ import autobind from 'autobind-decorator'
 import ImageUploader from'react-firebase-image-uploader';
 import * as firebase from 'firebase';
 import OfferModel from '../../models/OfferModel'
-import {observable} from 'mobx';
+import {observable, computed, action, extendObservable, toJS, autorun} from 'mobx';
 import ReactTooltip from 'react-tooltip';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
@@ -34,27 +34,30 @@ class OfferEntry extends React.Component {
         offer: PropTypes.object
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
         var {offerStore} = this.props.route.businessStore;
         const offerId = this.props.params.offerId;
 
+
         if(offerId) {
-
-				this.state.offer = offerStore.offers.find((it)=> it.id == offerId);
-
-
+			this.state.offer = offerStore.offers.find((it)=> it.id == offerId);
 
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
     }
 
-	shouldComponentUpdate(){
 
+
+
+	shouldComponentUpdate(nextProps, nextState) {
+
+		if (this.state.offer !== nextState.offer) {
+			return true;
+		}
+		return false;
 	}
-
-
 
     updateProperty(key, value) {
         var {offer} = this.state;
@@ -116,9 +119,10 @@ class OfferEntry extends React.Component {
 
     @autobind
     handleUploadSuccess(filename) {
+        var {offer} = this.state;
         this.setState({avatar: filename, progress: 100, isUploading: false});
         var imagesRef = firebase.storage().ref('images').child(filename);
-        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageUrl: url}));
+        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => offer.imageUrl = url);
     };
 
     @autobind
@@ -129,9 +133,10 @@ class OfferEntry extends React.Component {
     render() {
         var {offer} = this.state;
         var {route} = this.props;
-        if (!firebase.storage || !route.businessStore.isInitialized) {
-            return null;
+        if (!firebase.storage || !route.businessStore.isInitialized){
+            return null;console.log(toJS(this.state.offer))
         }
+
 
         return (
             <div>

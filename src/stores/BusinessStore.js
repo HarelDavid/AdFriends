@@ -22,15 +22,10 @@ export default class BuisnessStore {
 
 	init(business){
 
-		return Promise.resolve(null)
-			.then(() => {
-				while(!this.business) {
-					this.business = business;
-					this.offerStore.init(this.business);
-					this.clientStore.init(this.business);
-					this.initialize = true;
-				}
-			})
+		this.business = business;
+		this.offerStore.init(this.business);
+		this.clientStore.init(this.business);
+		this.initialize = true;
 
 	}
 
