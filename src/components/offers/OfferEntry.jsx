@@ -149,7 +149,7 @@ class OfferEntry extends React.Component {
                 {/*onTouchTap={()=> this.goBack()}*/}
                 {/*icon={<FontIcon className="material-icons">arrow_back</FontIcon>}*/}
                 {/*/>*/}
-                <Paper>
+                <Paper style={{marginTop: 20}}>
                     <form className="addItemForm">
 
                         <div className="row">
