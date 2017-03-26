@@ -84,6 +84,21 @@
     padding: 0 15px 30px;
   }
 
+  .NavigationBar {
+    button {
+      margin-right: -10px !important;
+      margin-left: 10px !important;
+    }
+  }
+
+  .offers-wrapper {
+    .offer-new {
+      button {
+        padding: 0 10px !important;
+      }
+    }
+  }
+
   .offer-item {
     text-align: center;
     width: 100%;

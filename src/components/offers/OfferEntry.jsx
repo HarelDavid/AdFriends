@@ -149,6 +149,9 @@ class OfferEntry extends React.Component {
                 {/*onTouchTap={()=> this.goBack()}*/}
                 {/*icon={<FontIcon className="material-icons">arrow_back</FontIcon>}*/}
                 {/*/>*/}
+                <a href="whatsapp://send?text=test">Share</a>
+
+
                 <Paper style={{marginTop: 20}}>
                     <form className="addItemForm">
 
@@ -215,6 +218,7 @@ class OfferEntry extends React.Component {
                             />
                         </label>
 
+                        <img src={offer.imageUrl} />
 
                         <RaisedButton secondary={true} style={{color: 'white', margin: '10px 0'}}
                                       onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>שמור</RaisedButton>

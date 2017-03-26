@@ -26,7 +26,8 @@ export default class Offer extends React.Component {
         offer: {},
         itemBeingEdited: false,
         isModalOpen: false,
-        chosenClient: {}
+        chosenClient: {},
+        link:""
     }
 
     componentWillMount() {

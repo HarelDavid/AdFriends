@@ -76,7 +76,6 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
       width: 100%;
     }
     label {
-      padding-right: 15px;
       margin-top: 15px;
       margin-bottom: 0px;
       display: block;
@@ -86,6 +85,14 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
       padding-right: 15px;
     }
 
+    button {
+      color: #fff;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
 
 
   }

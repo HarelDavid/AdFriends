@@ -53,7 +53,7 @@ export default class NavigationBar extends React.Component {
 		console.log(businessStore)
 
 		return (
-			<div>
+			<div  className="NavigationBar">
 				<AppBar
 					title="Add Friend"
 					iconElementLeft={!this.isMobile() && <div className="menu-hamburger"></div>}
