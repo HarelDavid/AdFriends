@@ -25,7 +25,6 @@ export default class Offer extends React.Component {
     state = {
         offer: {},
         itemBeingEdited: false,
-        isModalOpen: false,
         chosenClient: {},
         link:""
     }

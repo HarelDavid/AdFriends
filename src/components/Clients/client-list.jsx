@@ -4,9 +4,7 @@ import {observer} from 'mobx-react';
 import Client from './Client'
 import ClientEntry from './ClientEntry'
 import {observable} from 'mobx';
-import classname from 'classnames';
-import autobind from 'autobind-decorator'
-import Modal from '../modal';
+
 
 import style from './style.scss';
 

@@ -1,16 +1,24 @@
-import CSSModules from 'react-css-modules'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import DevTool from 'mobx-react-devtools'
 import {observer} from 'mobx-react'
 import {observable} from 'mobx';
-import NavigationBar from './NavigationBar'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Content from './Content';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {grey800} from 'material-ui/styles/colors';
 
-import styles from './app.scss'
-Object.assign(styles)
+import  './app.scss';
+
+const muiTheme = getMuiTheme({
+    isRtl: true,
+    palette: {
+        textColor: grey800,
+    },
+    fontFamily: 'Assistant, sans-serif',
+    appBar: {
+        height: 50,
+    },
+});
 
 @observer
 export default class App extends React.Component {
@@ -22,7 +30,7 @@ export default class App extends React.Component {
 
         return businessStore.isInitialized ? (
 
-            <MuiThemeProvider className="container">
+            <MuiThemeProvider className="container" muiTheme={muiTheme}>
                 {/*<DevTool/>*/}
                 <Content businessStore={businessStore} children={this.props.children}/>
             </MuiThemeProvider>

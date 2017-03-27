@@ -1,4 +1,3 @@
-import CSSModules from 'react-css-modules'
 import React, {PropTypes} from 'react';
 import {observer} from 'mobx-react';
 import Client from './Client'
@@ -6,11 +5,8 @@ import ClientEntry from './ClientEntry'
 import {observable} from 'mobx';
 import classname from 'classnames';
 import autobind from 'autobind-decorator'
-import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn}
-    from 'material-ui/Table';
-
 import style from './style.scss';
-
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 @observer
 export default class Clients extends React.Component {
@@ -42,18 +38,14 @@ export default class Clients extends React.Component {
 			<div className="Client-wrapper">
 				<h1>לקוחות</h1>
 
-				<div className="Client-top">
-					<ClientEntry clientStore={clientStore}/>
-				</div>
+				<ClientEntry clientStore={clientStore}/>
 
-				<Table className="Client-table">
-					<TableBody>
+				<div className="Client-table">
 					{clientStore.clients.map((client,idx) => (
 							<Client className={style.item} key={client.id} client={client} index={idx}/>
 						)
 					)}
-					</TableBody>
-				</Table>
+				</div>
 			</div>
 
 

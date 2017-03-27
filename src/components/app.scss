@@ -155,5 +155,29 @@
     }
   }
 
+  .Settings {
+
+    .Settings-paper {
+      padding: 15px;
+      height: calc(100vh - 140px);
+      min-height: 380px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      button {
+        color: #fff;
+        display: inline-block !important;
+
+      }
+      img {
+        width: 100%;
+        max-width: 400px;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
+
 }
 //End global

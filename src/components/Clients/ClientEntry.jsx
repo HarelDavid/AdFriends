@@ -18,34 +18,38 @@ export default class ClientEntry extends React.Component {
 
     @observable
     state = {
-        client : new ClientModel({store:this.props.clientStore}),
-        itemBeingEdited: false
+        client: new ClientModel({store: this.props.clientStore}),
+        error: false
 
     }
 
-    updateProperty (key, value) {
-        var  {client} = this.state;
+    updateProperty(key, value) {
+        var {client} = this.state;
         client[key] = value;
     }
 
     @autobind
-    onChange (event) {
+    onChange(event) {
         this.updateProperty(event.target.name, event.target.value)
     }
 
 
-
     @autobind
-    handleNewClientKeyDown() {
-
+    handleNewClientKeyDown(e) {
         var {client} = this.state;
-        client.save();
+
+        e.preventDefault();
+        if (client.name !== "") {
+            client.save();
+        } else {
+            this.state.error = true;
+        }
         this.clearForm();
 
     };
 
     clearForm() {
-        this.setState({title: ""});
+        this.setState({client: {name: ""}});
     }
 
 
@@ -74,7 +78,7 @@ export default class ClientEntry extends React.Component {
 
 
     render() {
-        var {client} = this.state;
+        var {client,error} = this.state;
 
         if (!firebase.storage) {
             return null;
@@ -82,11 +86,11 @@ export default class ClientEntry extends React.Component {
 
         return (
             <form className="Client-addItemForm">
-                <div className="cell">
+                <div className={error ? "cell error" : "cell"}>
 
-                    <TextField placeholder="Add New Client" name="clientName" value={client.name} onChange={this.onChange}/>
+                    <TextField placeholder="לקוח חדש" name="title" value={client.title} onChange={this.onChange}/>
 
-                    <RaisedButton  onClick={this.handleNewClientKeyDown}>Add Client</RaisedButton>
+                    <RaisedButton primary onClick={this.handleNewClientKeyDown}>שמור</RaisedButton>
 
                 </div>
 

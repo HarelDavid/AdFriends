@@ -3,9 +3,9 @@ import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
 import autobind from 'autobind-decorator'
 import classname from 'classnames';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
-import style from './style.scss';
+import './style.scss';
 
 
 @observer
@@ -34,45 +34,30 @@ export default class Client extends React.Component {
     }
 
 
-    @autobind
-    handleSubmit() {
-        var {client} = this.state;
-        if (client) {
-            client.save();
-        }
-    };
-
-    @autobind
-    handleDestroy() {
-        var {client} = this.state;
-        if (client) {
-            client.destroy();
-        }
-    };
-
-    @autobind
-    handleEdit() {
-        this.state.itemBeingEdited = true;
-    };
-
 
     render() {
         var {client, index} = this.props;
         console.log(client)
         return (
 
-            <TableRow>
-                <TableRowColumn style={{width:40}}>{index+1}</TableRowColumn>
-                <TableRowColumn>{client.title}</TableRowColumn>
-                <TableRowColumn>קופונים:
-                    <ul>
-                        {client.couponLinks.length > 0 && client.couponLinks.map(()=> {
-                            <li></li>
-                        })
-                        }
-                    </ul>
-                </TableRowColumn>
-            </TableRow>
+            <Card>
+                <CardHeader
+                    title={client.title}
+                    actAsExpander={true}
+                    showExpandableButton={true}
+                />
+                <CardActions>
+                    {/*<FlatButton label="שלח הצעה" />*/}
+                </CardActions>
+                <CardText expandable={true}>
+                    {client.couponLinks.length > 0 && client.couponLinks.map((coupon) => {
+                       return <div><a href={coupon}>הצעה</a></div>
+                    })
+                    }
+                </CardText>
+            </Card>
+
+
         );
     }
 
