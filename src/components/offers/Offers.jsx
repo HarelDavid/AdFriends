@@ -35,7 +35,7 @@ export default class Offers extends React.Component {
                         </Link>
                 <div className="offers-list">
                     {offerStore.offers.map((offer) => (
-                            <Offer couponsStore={couponsStore} businessStore={businessStore} className={style.item} key={offer.id} offer={offer}/>
+                            <Offer couponsStore={couponsStore} businessStore={businessStore} className="offer" key={offer.id} offer={offer}/>
 
                         )
                     )}

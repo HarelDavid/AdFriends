@@ -26,7 +26,7 @@ export default class ClientList extends React.Component {
 				<div className="clients-list">
 					<ClientEntry/>
 					{clientStore.clients.map((client) => (
-						<div className={style.item} key={client.id}>
+						<div className="client" key={client.id}>
 							<div>{client.name}</div>
 							<button>Send offer</button>
 						</div>

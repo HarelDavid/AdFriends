@@ -42,7 +42,7 @@ export default class Clients extends React.Component {
 
 				<div className="Client-table">
 					{clientStore.clients.map((client,idx) => (
-							<Client className={style.item} key={client.id} client={client} index={idx}/>
+							<Client className="client" key={client.id} client={client} index={idx}/>
 						)
 					)}
 				</div>

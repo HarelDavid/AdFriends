@@ -141,14 +141,7 @@ class OfferEntry extends React.Component {
         return (
             <div>
 
-                {/*<FlatButton*/}
-                {/*label="back"*/}
-                {/*style={{position: 'absolute', left: 5}}*/}
-                {/*labelPosition="before"*/}
-                {/*secondary={true}*/}
-                {/*onTouchTap={()=> this.goBack()}*/}
-                {/*icon={<FontIcon className="material-icons">arrow_back</FontIcon>}*/}
-                {/*/>*/}
+
                 <a href="whatsapp://send?text=test">Share</a>
 
 
