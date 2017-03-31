@@ -75,6 +75,7 @@
   }
 
   #root {
+    padding-top: 50px;
     @media #{$media-higher-than-mobile}{
       padding-right: 255px;
     }
@@ -85,6 +86,10 @@
   }
 
   .NavigationBar {
+    position: fixed;
+    width: 100%;
+    top:0;
+    z-index: 99;
     button {
       margin-right: -10px !important;
       margin-left: 10px !important;
@@ -159,8 +164,7 @@
 
     .Settings-paper {
       padding: 15px;
-      height: calc(100vh - 140px);
-      min-height: 380px;
+      min-height: calc(100vh - 140px);
       position: relative;
       display: flex;
       flex-direction: column;
@@ -168,8 +172,13 @@
       button {
         color: #fff;
         display: inline-block !important;
-
       }
+      form {
+        > div {
+          margin-bottom: 15px !important;
+        }
+      }
+
       img {
         width: 100%;
         max-width: 400px;

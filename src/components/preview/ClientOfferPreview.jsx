@@ -91,6 +91,10 @@ class ClientOfferPreview extends React.Component {
                     <p>{data.description}</p>
                     <p>בתוקף עד: {moment(data.endingDate).format('DD/MM/YYYY')}</p>
                 </div>
+                {}
+                <div>
+
+                </div>
                 <div className="Coupon-realization">
                     {formOpen ?
                         <form>

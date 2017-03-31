@@ -133,14 +133,9 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
   }
 
   .shareDialog {
-    width: 300px;
-    min-height: 200px;
-    //position: absolute;
-    //bottom: 95px;
-    //right: 0;
-    //width: 100%;
-    //padding: 20px;
-    //@include bubble();
+    button {
+      color: #fff !important;
+    }
   }
 
   .preview {

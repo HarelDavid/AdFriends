@@ -14,12 +14,28 @@ import * as firebase from 'firebase';
 @observer
 export default class Settings extends React.Component {
 
+    @observable
+    state = {
+        business: {}
+    }
 
     @autobind
     onChange(event) {
         this.updateProperty(event.target.name, event.target.value)
     }
 
+    updateProperty(key, value) {
+        var {business} = this.state;
+        business[key] = value;
+    }
+
+    @autobind
+    save(business) {
+        var {business} = this.state;
+        if (business) {
+            // business.save();
+        }
+    };
 
     render() {
 
@@ -38,23 +54,31 @@ export default class Settings extends React.Component {
 
                 <Paper className="Settings-paper">
                     <div>
-                    <TextField name="clientName" onChange={this.onChange} hintText="שם בית העסק"/>
-                    <TextField name="offerCode" onChange={this.onChange} hintText="כתובת"/>
-                    <TextField name="offerCode" onChange={this.onChange} hintText="תיאור"/>
+                        <form>
+                            <TextField name="clientName" onChange={this.onChange} hintText="שם בית העסק"/>
+                            <TextField name="address" onChange={this.onChange} hintText="כתובת"/>
+                            <TextField name="description" multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
+                            <TextField name="businessType" onChange={this.onChange} hintText="סוג בית עסק"/>
+                            <TextField name="phone" onChange={this.onChange} hintText="מספר טלפון"/>
+                            <TextField name="website" onChange={this.onChange} hintText="אתר אינטרנט"/>
+                            <TextField name="facebook" onChange={this.onChange} hintText="דף פייסבוק"/>
 
-                    <ImageUploader
-                        name="avatar"
-                        storageRef={firebase.storage().ref('images')}
-                        onUploadStart={this.handleUploadStart}
-                        onUploadError={this.handleUploadError}
-                        onUploadSuccess={this.handleUploadSuccess}
-                        onProgress={this.handleProgress}
-                    />
+                            <ImageUploader
+                                name="avatar"
+                                storageRef={firebase.storage().ref('images')}
+                                onUploadStart={this.handleUploadStart}
+                                onUploadError={this.handleUploadError}
+                                onUploadSuccess={this.handleUploadSuccess}
+                                onProgress={this.handleProgress}
+                            />
 
-                    <Avatar style={{margin: '20px auto', display: 'block'}} size={100} backgroundColor={pinkA200}
-                            src={businessStore.business.imageUrl}/>
+                            <Avatar style={{margin: '20px auto', display: 'block'}} size={100}
+                                    backgroundColor={pinkA200}
+                                    src={businessStore.business.imageUrl}/>
+                        </form>
+
                     </div>
-                    <RaisedButton primary>שמור</RaisedButton>
+                    <RaisedButton primary onClick={this.save()}>שמור</RaisedButton>
 
                 </Paper>
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
-import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import classname from 'classnames';
 import {Link} from 'react-router';
@@ -9,10 +8,10 @@ import CouponModel from '../../models/CouponModel'
 import Select from 'react-select';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
-import IconMenu from 'material-ui/IconMenu';
-import TextField from 'material-ui/TextField';
-import Paper from 'material-ui/Paper';
+import Toggle from 'material-ui/Toggle';
+import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 import './style.scss';
 
@@ -24,7 +23,7 @@ export default class Offer extends React.Component {
     @observable
     state = {
         offer: {},
-        itemBeingEdited: false,
+        expended: false,
         chosenClient: {},
         link:""
     }
@@ -102,48 +101,48 @@ export default class Offer extends React.Component {
         this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
     }
 
+    @autobind
+    handleToggle(event, toggle) {
+        this.setState({expanded: toggle});
+    };
+
+
     render() {
         const {offer} = this.state;
         const {businessStore, couponsStore} = this.props;
 
 
         return (
-            <Paper className="offer-item">
 
-                <div className="preview">
-                    <h3 className="cell">
-                        {offer.title}
-                    </h3>
-                    <div className="cell">
-                        בתוקף עד: {moment(offer.endingDate).format('DD/MM/YYYY')}
-                    </div>
-                    <div className="cell offer-action-buttons">
-                        <Link to={`/offer/${offer.id}`}>
-                            <IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
-                        </Link>
-                        <IconButton>
-                            <IconMenu iconButtonElement={<FontIcon className="material-icons">share</FontIcon>}
-                                      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                                      targetOrigin={{horizontal: 'right', vertical: 'top'}}>
+        <Card style={{margin: '20px 0'}}>
+            <CardHeader
+                title={offer.title}
+                actAsExpander={true}
+                showExpandableButton={true}
+                closeIcon={<FontIcon className="material-icons" style={{color: '#189d0e'}}>share</FontIcon>}
+                openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
+            />
+            <CardActions style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <Link to={`/offer/${offer.id}`}>
+                    <IconButton><FontIcon className="material-icons" >mode_edit</FontIcon></IconButton>
+                </Link>
+                {/*<IconButton actAsExpander></IconButton>*/}
+            </CardActions>
+            <CardText expandable={true}>
+                <div className="shareDialog">
+                    <Select
+                        name="form-field-name"
+                        value={this.state.chosenClient.id}
+                        options={this.getClientOption()}
+                        onChange={this.handleClientChoose}/>
 
-                                <div className="shareDialog">
-                                    <Select
-                                        name="form-field-name"
-                                        value={this.state.chosenClient.id}
-                                        options={this.getClientOption()}
-                                        onChange={this.handleClientChoose}/>
+                    <RaisedButton primary onClick={this.createLink}>צור קופון</RaisedButton>
 
-                                    <div onClick={this.createLink}>create link</div>
-
-                                    {this.state.link && <Link to={this.state.link}>go to offer preview</Link>}
-                                </div>
-                            </IconMenu>
-                        </IconButton>
-                    </div>
+                    {this.state.link && <Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}
                 </div>
+            </CardText>
+        </Card>
 
-
-            </Paper>
         );
     }
 

@@ -27,8 +27,7 @@ class OfferEntry extends React.Component {
 
     @observable
     state = {
-        offer: {},
-        itemBeingEdited: false
+        offer: {}
     }
 
     static PropTypes = {
@@ -80,8 +79,7 @@ class OfferEntry extends React.Component {
         if (offer) {
             offer.save();
         }
-    }
-    ;
+    };
 
     @autobind
     handleNewOfferKeyDown(e) {
