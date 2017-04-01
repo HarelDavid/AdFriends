@@ -79,6 +79,7 @@ export default class BuisnessStore {
 		//get business
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
+				business = business.convertFromDB();
 				if(business){
 
 					this.init(business);
@@ -115,11 +116,17 @@ export default class BuisnessStore {
 
 	}
 
+	save(businessModel){
+		var businessModelDB = businessModel.convertToDB();
+		return firebase.database().ref('/business/' + businessModel.id).child(businessModelDB.id).set(businessModelDB);
+
+	}
+
 
 
 	add(currentUser) {
 
-		var business = new BusinessModel(currentUser.uid, currentUser.displayName, currentUser.photoURL);
+		var business = new BusinessModel(currentUser.uid, currentUser.displayName, currentUser.photoURL, this);
 		firebase.database().ref('/business').child(currentUser.uid).set(business);
 		return business;
 

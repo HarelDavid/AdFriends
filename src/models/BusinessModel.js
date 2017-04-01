@@ -7,15 +7,20 @@ export default class BusinessModel {
 	@observable imageUrl;
 
 
-	constructor(id, title, photoURL) {
+	constructor(id, title, photoURL,store) {
 		this.id = id;
 		this.title = title;
 		this.imageUrl = photoURL;
+		this.store = store;
 
 	}
 
 	destroy() {
 		this.store.remove(this);//.offers.remove(this);
+	}
+
+	save() {
+		this.store.save(this);//.offers.remove(this);
 	}
 
 	toJS() {
