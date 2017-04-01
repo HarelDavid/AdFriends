@@ -79,7 +79,7 @@ export default class BuisnessStore {
 		//get business
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
-				var businessModel = new BusinessModel()
+				var businessModel = new BusinessModel();
 				businessModel.convertFromDB(business);
 				businessModel.store = this;
 				if(businessModel){
@@ -120,7 +120,9 @@ export default class BuisnessStore {
 
 	save(businessModel){
 		var businessModelDB = businessModel.convertToDB();
-		return firebase.database().ref('/business/' + businessModel.id).child(businessModelDB.id).set(businessModelDB);
+		businessModelDB.offers = this.offerStore.offers.map(o => o.convertToDB())
+		businessModelDB.clients = this.clientStore.clients.map(o => o.convertToDB())
+		return firebase.database().ref('/business').child(businessModelDB.id).set(businessModelDB);
 
 	}
 
@@ -129,15 +131,10 @@ export default class BuisnessStore {
 	add(currentUser) {
 
 		var business = new BusinessModel(currentUser.uid, currentUser.displayName, currentUser.photoURL, this);
+
 		firebase.database().ref('/business').child(currentUser.uid).set(business);
 		return business;
 	}
-
-	//update
-    save(business) {
-        // this.offers.push(business);
-        // var businessDB = business.convertToDB();
-    }
 
 
 	toJS() {

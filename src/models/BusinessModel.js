@@ -14,17 +14,18 @@ export default class BusinessModel {
 	@observable description;
 
 
-	constructor(id, title, photoURL, phone, address, website, facebook, businessType, description,store) {
-		this.id = id;
-		this.title = title;
-		this.imageUrl = photoURL;
-		this.phone = phone;
-		this.address = address;
-		this.website = website;
-		this.facebook = facebook;
-		this.businessType = businessType;
-		this.description = description;
-		this.store = store;
+	constructor(data) {
+		if(data) {
+			this.id = data.id || "";
+			this.title = data.title || "";
+			this.imageUrl = data.photoURL || "";
+			this.phone = data.phone || "";
+			this.address = data.address || "";
+			this.website = data.website || "";
+			this.facebook = data.facebook || "";
+			this.businessType = data.businessType || "";
+			this.description =  data.description || "";
+		}
 	}
 
 
@@ -62,10 +63,6 @@ export default class BusinessModel {
 
     destroy() {
 		this.store.remove(this);//.offers.remove(this);
-	}
-
-	save() {
-		this.store.save(this);//.offers.remove(this);
 	}
 
 	toJS() {

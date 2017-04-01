@@ -19,21 +19,28 @@ export default class Settings extends React.Component {
         business: {}
     }
 
+    componentWillMount() {
+        var {businessStore} = this.props.route;
+        this.state.business = businessStore.business;
+
+    }
+
     @autobind
     onChange(event) {
         this.updateProperty(event.target.name, event.target.value)
     }
 
     updateProperty(key, value) {
+        debugger
         var {business} = this.state;
         business[key] = value;
     }
 
     @autobind
-    save(business) {
+    save() {
         var {business} = this.state;
         if (business) {
-            // business.save();
+            business.save();
         }
     };
 
@@ -56,7 +63,7 @@ export default class Settings extends React.Component {
                     <div>
                         <form>
                             <TextField name="clientName" onChange={this.onChange} hintText="שם בית העסק"/>
-                            <TextField name="address" onChange={this.onChange} hintText="כתובת"/>
+                            <TextField name="address" value={business.address} onChange={this.onChange} hintText="כתובת"/>
                             <TextField name="description" multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
                             <TextField name="businessType" onChange={this.onChange} hintText="סוג בית עסק"/>
                             <TextField name="phone" onChange={this.onChange} hintText="מספר טלפון"/>
@@ -78,7 +85,7 @@ export default class Settings extends React.Component {
                         </form>
 
                     </div>
-                    <RaisedButton primary onClick={this.save()}>שמור</RaisedButton>
+                    <RaisedButton primary onClick={this.save}>שמור</RaisedButton>
 
                 </Paper>
 
