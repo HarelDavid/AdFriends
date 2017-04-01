@@ -75,6 +75,7 @@
   }
 
   #root {
+    padding-top: 50px;
     @media #{$media-higher-than-mobile}{
       padding-right: 255px;
     }
@@ -84,11 +85,108 @@
     padding: 0 15px 30px;
   }
 
-  .offer-item {
-    text-align: center;
-    @media #{$media-higher-than-mobile}{
-      max-width: 250px;
+  .NavigationBar {
+    position: fixed;
+    width: 100%;
+    top:0;
+    z-index: 99;
+    button {
+      margin-right: -10px !important;
+      margin-left: 10px !important;
     }
   }
+
+  .offers-wrapper {
+    .offer-new {
+      button {
+        padding: 0 10px !important;
+      }
+    }
+  }
+
+  .offer-item {
+    text-align: center;
+    width: 100%;
+    .offer-action-buttons {
+      text-align: left;
+      margin-top: 10px;
+    }
+    @media #{$media-higher-than-mobile}{
+      max-width: 250px;
+      display: inline-block;
+      margin: 15px;
+    }
+  }
+
+
+
+  .Coupon {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    background: #fff;
+    border: 2px dashed $grey-medium-light;
+    margin-top: 15px;
+    position: relative;
+    font-size: 18px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    > div {
+      padding: 10px;
+    }
+    img {
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+    form {
+      > div {
+        width: 100% !important;
+      }
+    }
+    .Coupon-realization {
+      width: 100%;
+      padding: 10px;
+      text-align: left;
+
+    }
+    .form-button {
+      text-align: left;
+    }
+    button {
+      color: #fff;
+    }
+  }
+
+  .Settings {
+
+    .Settings-paper {
+      padding: 15px;
+      min-height: calc(100vh - 140px);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      button {
+        color: #fff;
+        display: inline-block !important;
+      }
+      form {
+        > div {
+          margin-bottom: 15px !important;
+        }
+      }
+
+      img {
+        width: 100%;
+        max-width: 400px;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
+
 }
 //End global

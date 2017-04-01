@@ -131,9 +131,13 @@ export default class BuisnessStore {
 		var business = new BusinessModel(currentUser.uid, currentUser.displayName, currentUser.photoURL, this);
 		firebase.database().ref('/business').child(currentUser.uid).set(business);
 		return business;
-
-
 	}
+
+	//update
+    save(business) {
+        // this.offers.push(business);
+        // var businessDB = business.convertToDB();
+    }
 
 
 	toJS() {

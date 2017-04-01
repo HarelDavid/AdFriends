@@ -41,7 +41,9 @@ export default class NavigationBar extends React.Component {
         this.setState({NavOpen: !this.state.NavOpen});
     }
 
-	render() {
+
+
+    render() {
 
 		var {businessStore} = this.props;
         var {NavOpen} = this.state;
@@ -50,9 +52,10 @@ export default class NavigationBar extends React.Component {
 			return null;
 		}
 
+		console.log(businessStore)
 
 		return (
-			<div>
+			<div  className="NavigationBar">
 				<AppBar
 					title="Add Friend"
 					iconElementLeft={!this.isMobile() && <div className="menu-hamburger"></div>}
@@ -61,14 +64,16 @@ export default class NavigationBar extends React.Component {
 						<Link to='/'><FlatButton label="Log In"/></Link>}
 				/>
                 {businessStore.isLoggedIn &&
-				<Drawer openSecondary docked={!this.isMobile()} open={this.isMobile() ? NavOpen : true}
+				<Drawer docked={!this.isMobile()} open={this.isMobile() ? NavOpen : true}
 						onRequestChange={(NavOpen) => this.setState({NavOpen})}
 						businessStore={businessStore}>
 
-					<Avatar style={{margin: '20px auto', display: 'block'}} size={100} backgroundColor={pinkA200} icon={<FontIcon className="material-icons">face</FontIcon>}/>
-					<MenuItem><NavItem to='/offers'> Offers</NavItem></MenuItem>
-					<MenuItem><NavItem to='/clients'> Clients</NavItem></MenuItem>
-					<MenuItem><NavItem to='/settings'>Settings</NavItem></MenuItem>
+					<Avatar style={{margin: '20px auto', display: 'block'}} size={100} backgroundColor={pinkA200}
+							src={businessStore.business.imageUrl}/>
+
+					<MenuItem><NavItem onTouchTap={() => this.handleSideMenuToggle()} to='/offers'>מבצעים</NavItem></MenuItem>
+					<MenuItem><NavItem onTouchTap={() => this.handleSideMenuToggle()} to='/clients'>לקוחות</NavItem></MenuItem>
+					<MenuItem><NavItem onTouchTap={() => this.handleSideMenuToggle()} to='/settings'>הגדרות</NavItem></MenuItem>
 				</Drawer>
                 }
 			</div>

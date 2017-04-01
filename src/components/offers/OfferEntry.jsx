@@ -13,6 +13,7 @@ import FontIcon from 'material-ui/FontIcon';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
+import Paper from 'material-ui/Paper';
 
 import style from './style.scss';
 Object.assign(style)
@@ -26,8 +27,7 @@ class OfferEntry extends React.Component {
 
     @observable
     state = {
-        offer: {},
-        itemBeingEdited: false
+        offer: {}
     }
 
     static PropTypes = {
@@ -40,8 +40,8 @@ class OfferEntry extends React.Component {
         const offerId = this.props.params.offerId;
 
 
-        if(offerId) {
-			this.state.offer = offerStore.offers.find((it)=> it.id == offerId);
+        if (offerId) {
+            this.state.offer = offerStore.offers.find((it) => it.id == offerId);
 
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
@@ -49,15 +49,13 @@ class OfferEntry extends React.Component {
     }
 
 
+    shouldComponentUpdate(nextProps, nextState) {
 
-
-	shouldComponentUpdate(nextProps, nextState) {
-
-		if (this.state.offer !== nextState.offer) {
-			return true;
-		}
-		return false;
-	}
+        if (this.state.offer !== nextState.offer) {
+            return true;
+        }
+        return false;
+    }
 
     updateProperty(key, value) {
         var {offer} = this.state;
@@ -70,7 +68,7 @@ class OfferEntry extends React.Component {
     }
 
     @autobind
-    onChangeDate(event,date) {
+    onChangeDate(event, date) {
         this.updateProperty('endingDate', date)
     }
 
@@ -81,8 +79,7 @@ class OfferEntry extends React.Component {
         if (offer) {
             offer.save();
         }
-    }
-    ;
+    };
 
     @autobind
     handleNewOfferKeyDown(e) {
@@ -126,96 +123,100 @@ class OfferEntry extends React.Component {
     };
 
     @autobind
-    goBack(){
+    goBack() {
         hashHistory.push('/offers');
     }
 
     render() {
         var {offer} = this.state;
         var {route} = this.props;
-        if (!firebase.storage || !route.businessStore.isInitialized){
-            return null;console.log(toJS(this.state.offer))
+        if (!firebase.storage || !route.businessStore.isInitialized) {
+            return null;
+            console.log(toJS(this.state.offer))
         }
 
 
         return (
             <div>
 
-                <FlatButton
-                    label="back"
-                    style={{position: 'absolute', left: 5}}
-                    labelPosition="before"
-                    secondary={true}
-                    onTouchTap={()=> this.goBack()}
-                    icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
-                />
-                <form className="addItemForm">
 
-                    <div className="row">
-                        <label>Title <span data-tip={tooltip.title} data-for='title'>?</span></label>
-                        <TextField name="title" defaultValue={offer.title} onChange={this.onChange}/>
-                        <ReactTooltip id="title"/>
-                    </div>
-                    <div className="row">
-                        <label>Description <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
-                        <TextField multiLine={true} name="description" defaultValue={offer.description} onChange={this.onChange}/>
-                        <ReactTooltip id="desc"/>
-
-                    </div>
-                    <div className="row">
-                        <label>Message to Client:<span data-tip={tooltip.message} data-for='message'>?</span></label>
-                        <TextField multiLine={true} name="preMessage" value={offer.preMessage} onChange={this.onChange}/>
-                        <ReactTooltip id="message"/>
-                    </div>
-                    <div className="row">
-                        <label>Terms<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
-                        <TextField name="terms" value={offer.terms} onChange={this.onChange}/>
-                        <ReactTooltip id="terms"/>
-                    </div>
-                    <div className="row">
-                        <label>Friend Gift<span data-tip={tooltip.giftFriend} data-for='giftFriend'>?</span></label>
-                        <TextField name="offerGift" value={offer.offerGift} onChange={this.onChange}/>
-                        <ReactTooltip id="giftFriend"/>
-                    </div>
-                    <div className="row">
-                        <label>Client Gift<span data-tip={tooltip.giftClient} data-for='giftClient'>?</span></label>
-                        <TextField name="clientGift" value={offer.clientGift} onChange={this.onChange}/>
-                        <ReactTooltip id="giftClient"/>
-
-                    </div>
-                    <div className="row">
-                        <label>Ending Date<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-                        {/*<DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate}/>*/}
-                        <ReactTooltip id="endDate"/>
-                    </div>
-                    <div className="row">
-                        <label>Code<span data-tip={tooltip.code} data-for='code'>?</span></label>
-                        <TextField name="code" value={offer.code} onChange={this.onChange}/>
-                        <ReactTooltip id="code"/>
-
-                    </div>
-                    <div className={style.urls}>
-                        {offer.urls && offer.urls.map((url) =>
-                            <div>{url}</div>
-                        )}
-                    </div>
-
-                    <label>
-                        <ImageUploader
-                            name="avatar"
-                            storageRef={firebase.storage().ref('images')}
-                            onUploadStart={this.handleUploadStart}
-                            onUploadError={this.handleUploadError}
-                            onUploadSuccess={this.handleUploadSuccess}
-                            onProgress={this.handleProgress}
-                        />
-                    </label>
+                <a href="whatsapp://send?text=test">Share</a>
 
 
-                    <RaisedButton secondary={true} onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>Save</RaisedButton>
+                <Paper style={{marginTop: 20}}>
+                    <form className="addItemForm">
+
+                        <div className="row">
+                            <label>Title <span data-tip={tooltip.title} data-for='title'>?</span></label>
+                            <TextField name="title" defaultValue={offer.title} onChange={this.onChange}/>
+                            <ReactTooltip id="title"/>
+                        </div>
+                        <div className="row">
+                            <label>Description <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
+                            <TextField multiLine={true} name="description" defaultValue={offer.description}
+                                       onChange={this.onChange}/>
+                            <ReactTooltip id="desc"/>
+
+                        </div>
+                        <div className="row">
+                            <label>Message to Client:<span data-tip={tooltip.message}
+                                                           data-for='message'>?</span></label>
+                            <TextField multiLine={true} name="preMessage" value={offer.preMessage}
+                                       onChange={this.onChange}/>
+                            <ReactTooltip id="message"/>
+                        </div>
+                        <div className="row">
+                            <label>Terms<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
+                            <TextField name="terms" value={offer.terms} onChange={this.onChange}/>
+                            <ReactTooltip id="terms"/>
+                        </div>
+                        <div className="row">
+                            <label>Friend Gift<span data-tip={tooltip.giftFriend} data-for='giftFriend'>?</span></label>
+                            <TextField name="offerGift" value={offer.offerGift} onChange={this.onChange}/>
+                            <ReactTooltip id="giftFriend"/>
+                        </div>
+                        <div className="row">
+                            <label>Client Gift<span data-tip={tooltip.giftClient} data-for='giftClient'>?</span></label>
+                            <TextField name="clientGift" value={offer.clientGift} onChange={this.onChange}/>
+                            <ReactTooltip id="giftClient"/>
+
+                        </div>
+                        <div className="row">
+                            <label>Ending Date<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
+                            {/*<DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate}/>*/}
+                            <ReactTooltip id="endDate"/>
+                        </div>
+                        <div className="row">
+                            <label>Code<span data-tip={tooltip.code} data-for='code'>?</span></label>
+                            <TextField name="code" value={offer.code} onChange={this.onChange}/>
+                            <ReactTooltip id="code"/>
+
+                        </div>
+                        <div className={style.urls}>
+                            {offer.urls && offer.urls.map((url) =>
+                                <div>{url}</div>
+                            )}
+                        </div>
+
+                        <label>
+                            <ImageUploader
+                                name="avatar"
+                                storageRef={firebase.storage().ref('images')}
+                                onUploadStart={this.handleUploadStart}
+                                onUploadError={this.handleUploadError}
+                                onUploadSuccess={this.handleUploadSuccess}
+                                onProgress={this.handleProgress}
+                            />
+                        </label>
+
+                        <img src={offer.imageUrl} />
+
+                        <RaisedButton secondary={true} style={{color: 'white', margin: '10px 0'}}
+                                      onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>שמור</RaisedButton>
 
 
-                </form>
+                    </form>
+                </Paper>
             </div>
         )
     }

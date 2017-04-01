@@ -6,47 +6,50 @@ import ImageUploader from'react-firebase-image-uploader';
 import * as firebase from 'firebase';
 import ClientModel from '../../models/ClientModel'
 import {observable} from 'mobx';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import style from './style.scss';
-Object.assign(style)
 
 const ENTER_KEY = 13;
 
 @observer
-class ClientEntry extends React.Component {
+export default class ClientEntry extends React.Component {
 
     @observable
     state = {
-        client : new ClientModel({store:this.props.clientStore}),
-        itemBeingEdited: false
+        client: new ClientModel({store: this.props.clientStore}),
+        error: false
 
     }
 
-    updateProperty (key, value) {
-        var  {client} = this.state;
+    updateProperty(key, value) {
+        var {client} = this.state;
         client[key] = value;
     }
 
     @autobind
-    onChange (event) {
+    onChange(event) {
         this.updateProperty(event.target.name, event.target.value)
     }
 
 
-
     @autobind
-    handleNewClientKeyDown() {
-
+    handleNewClientKeyDown(e) {
         var {client} = this.state;
-        var {onSave} = this.props;
-        client.save();
-        onSave();
+
+        e.preventDefault();
+        if (client.name !== "") {
+            client.save();
+        } else {
+            this.state.error = true;
+        }
         this.clearForm();
 
     };
 
     clearForm() {
-        this.setState({title: ""});
+        this.setState({client: {name: ""}});
     }
 
 
@@ -75,18 +78,19 @@ class ClientEntry extends React.Component {
 
 
     render() {
-        var {client} = this.state;
+        var {client,error} = this.state;
 
         if (!firebase.storage) {
             return null;
         }
 
         return (
-            <form className="addItemForm">
-                <div className={style.cell}>
-                    <label>Name</label>
-                    <input type="text" name="title" value={client.title} onChange={this.onChange}/>
-                    <div className="button save" onClick={this.handleNewClientKeyDown}>Add Client</div>
+            <form className="Client-addItemForm">
+                <div className={error ? "cell error" : "cell"}>
+
+                    <TextField placeholder="לקוח חדש" name="title" value={client.title} onChange={this.onChange}/>
+
+                    <RaisedButton primary onClick={this.handleNewClientKeyDown}>שמור</RaisedButton>
 
                 </div>
 
@@ -95,4 +99,4 @@ class ClientEntry extends React.Component {
     }
 }
 
-export default CSSModules(ClientEntry, style);
+
