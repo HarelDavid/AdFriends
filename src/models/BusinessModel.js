@@ -38,6 +38,8 @@ export default class BusinessModel {
         this.website = businessDB.website;
         this.facebook = businessDB.facebook;
         this.businessType = businessDB.businessType;
+		this.offers = businessDB.offers;
+		this.clients = businessDB.clients;
 
     }
 
