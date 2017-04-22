@@ -33,6 +33,7 @@ export default class Offer extends React.Component {
         this.state.offer = offer;
         this.clientStore = this.props.businessStore.clientStore;
 
+        console.log(offer.id)
 
         return couponsStore.getCouponsByOfferId(offer.id)
             .then((res) => {

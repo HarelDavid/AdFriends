@@ -22,7 +22,6 @@ export default class Clients extends React.Component {
 
 	@autobind
 	openClientEntry(e) {
-		console.log("dd")
 		e.preventDefault();
 		this.state.clientEntryOpened = true;
 	}

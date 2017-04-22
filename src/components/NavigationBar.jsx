@@ -52,7 +52,6 @@ export default class NavigationBar extends React.Component {
 			return null;
 		}
 
-		console.log(businessStore)
 
 		return (
 			<div  className="NavigationBar">

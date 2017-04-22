@@ -37,7 +37,6 @@ export default class Client extends React.Component {
 
     render() {
         var {client, index} = this.props;
-        console.log(client)
         return (
 
             <Card>
@@ -51,7 +50,7 @@ export default class Client extends React.Component {
                 </CardActions>
                 <CardText expandable={true}>
                     {client.couponLinks.length > 0 && client.couponLinks.map((coupon) => {
-                       return <div><a href={coupon}>הצעה</a></div>
+                       return <div><a href={coupon + '/preview'}>הצעה</a></div>
                     })
                     }
                 </CardText>

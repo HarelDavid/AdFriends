@@ -132,7 +132,6 @@ class OfferEntry extends React.Component {
         var {route} = this.props;
         if (!firebase.storage || !route.businessStore.isInitialized) {
             return null;
-            console.log(toJS(this.state.offer))
         }
 
 

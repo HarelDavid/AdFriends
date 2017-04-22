@@ -79,7 +79,7 @@ class ClientOfferPreview extends React.Component {
             return null;
         }
 
-        console.log(this.state.coupon);
+        console.log(this.routes);
 
         var data = coupon.offer;
 
