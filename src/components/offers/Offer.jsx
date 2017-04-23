@@ -5,13 +5,13 @@ import autobind from 'autobind-decorator'
 import classname from 'classnames';
 import {Link} from 'react-router';
 import CouponModel from '../../models/CouponModel'
-import Select from 'react-select';
+import { Creatable } from 'react-select';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
-import Toggle from 'material-ui/Toggle';
 import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import ClientModel from '../../models/ClientModel'
 
 import './style.scss';
 
@@ -25,8 +25,9 @@ export default class Offer extends React.Component {
         offer: {},
         expended: false,
         chosenClient: {},
-        link:""
-    }
+        link:"",
+		client: new ClientModel({store: this.props.clientStore}),
+	}
 
     componentWillMount() {
         const {offer, couponsStore} = this.props;
@@ -97,6 +98,9 @@ export default class Offer extends React.Component {
 
     @autobind
     handleClientChoose(clientOption) {
+        if(clientOption && clientOption.className) {
+            this.handleNewClient(clientOption);
+        }
         this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
     }
 
@@ -104,6 +108,15 @@ export default class Offer extends React.Component {
     handleToggle(event, toggle) {
         this.setState({expanded: toggle});
     };
+
+    @autobind
+	handleNewClient(){
+		var {client} = this.state;
+
+		if (client.label !== "") {
+			client.save();
+		}
+    }
 
 
     render() {
@@ -129,13 +142,14 @@ export default class Offer extends React.Component {
             </CardActions>
             <CardText expandable={true}>
                 <div className="shareDialog">
-                    <Select
+                    <Creatable
                         name="form-field-name"
                         value={this.state.chosenClient.id}
                         options={this.getClientOption()}
-                        onChange={this.handleClientChoose}/>
+                        onChange={this.handleClientChoose}
+                        />
 
-                    <RaisedButton primary onClick={this.createLink}>צור קופון</RaisedButton>
+                    <RaisedButton secondary onClick={this.createLink}>צור קופון</RaisedButton>
 
                     {this.state.link && <Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}
                 </div>

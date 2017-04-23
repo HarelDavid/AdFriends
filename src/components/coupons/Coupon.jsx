@@ -136,7 +136,7 @@ export default class Offer extends React.Component {
                         options={this.getClientOption()}
                         onChange={this.handleClientChoose}/>
 
-                    <RaisedButton primary onClick={this.createLink}>צור קופון</RaisedButton>
+                    <RaisedButton secondary onClick={this.createLink}>צור קופון</RaisedButton>
 
                     {this.state.link && <Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}
                 </div>
