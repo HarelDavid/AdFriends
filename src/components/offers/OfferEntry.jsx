@@ -8,8 +8,7 @@ import * as firebase from 'firebase';
 import OfferModel from '../../models/OfferModel'
 import {observable, computed, action, extendObservable, toJS, autorun} from 'mobx';
 import ReactTooltip from 'react-tooltip';
-import FlatButton from 'material-ui/FlatButton';
-import FontIcon from 'material-ui/FontIcon';
+import moment from 'moment';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
@@ -42,7 +41,7 @@ class OfferEntry extends React.Component {
 
         if (offerId) {
             this.state.offer = offerStore.offers.find((it) => it.id == offerId);
-
+            this.state.offer.endingDate = new Date(this.state.offer.endingDate);
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
@@ -182,7 +181,7 @@ class OfferEntry extends React.Component {
                         </div>
                         <div className="row">
                             <label>Ending Date<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-                            {/*<DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate}/>*/}
+                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={function() {return moment(offer.endingDate).format('DD-MM-YYYY')}}/>
                             <ReactTooltip id="endDate"/>
                         </div>
                         <div className="row">
