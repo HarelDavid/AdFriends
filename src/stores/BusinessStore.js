@@ -119,6 +119,7 @@ export default class BuisnessStore {
 	}
 
 	save(businessModel){
+		debugger
 		var businessModelDB = businessModel.convertToDB();
 		businessModelDB.offers = this.offerStore.offers.map(o => o.convertToDB())
 		businessModelDB.clients = this.clientStore.clients.map(o => o.convertToDB())
