@@ -4,6 +4,8 @@ import {observable, expr} from 'mobx';
 import autobind from 'autobind-decorator'
 import classname from 'classnames';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
 
 import './style.scss';
 
@@ -33,11 +35,13 @@ export default class Client extends React.Component {
         this.updateProperty(event.target.name, event.target.value)
     }
 
-
+    @autobind
+	handleClientDelete(client){
+		this.props.clientStore.remove(client);
+    }
 
     render() {
         var {client, index} = this.props;
-        console.log(client)
         return (
 
             <Card>
@@ -47,11 +51,11 @@ export default class Client extends React.Component {
                     showExpandableButton={true}
                 />
                 <CardActions>
-                    {/*<FlatButton label="שלח הצעה" />*/}
+                    <IconButton onTouchTap={()=>this.handleClientDelete(client)}><FontIcon className="material-icons" style={{color: 'red'}}>delete_forever</FontIcon></IconButton>
                 </CardActions>
                 <CardText expandable={true}>
                     {client.couponLinks.length > 0 && client.couponLinks.map((coupon) => {
-                       return <div><a href={coupon}>הצעה</a></div>
+                       return <div key={coupon.id}><a href={coupon + '/preview'}>הצעה</a></div>
                     })
                     }
                 </CardText>

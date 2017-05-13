@@ -21,7 +21,6 @@ export default class Content extends React.Component {
     render() {
         var {businessStore} = this.props;
 
-        console.log(businessStore.isLoggedIn)
 
         return (
 

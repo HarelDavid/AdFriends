@@ -3,7 +3,6 @@ import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
 import OfferStore from '../../stores/OfferStore';
 import CouponStore from '../../stores/CouponStore';
-import CSSModules from 'react-css-modules'
 import autobind from 'autobind-decorator'
 import classname from 'classnames';
 import moment from 'moment';
@@ -79,7 +78,7 @@ class ClientOfferPreview extends React.Component {
             return null;
         }
 
-        console.log(this.state.coupon);
+        console.log(this.routes);
 
         var data = coupon.offer;
 

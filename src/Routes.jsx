@@ -8,6 +8,7 @@ import OfferEntry from './components/offers/OfferEntry';
 import Clients from './components/Clients/Clients'
 import ClientOfferPreview from './components/preview/ClientOfferPreview'
 import settings from './components/settings/settings';
+// import coupons from './components/coupons/Coupons';
 
 export default(stores) => {
 	return (
@@ -18,6 +19,7 @@ export default(stores) => {
 			<Route path="offer/new-offer" component={OfferEntry}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
 			<Route path="offer/:offerId" component={OfferEntry}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
 			<Route path="clients" component={Clients} businessStore={stores.businessStore}/>
+			{/*<Route path="coupons" component={coupons} businessStore={stores.businessStore}/>*/}
 			<Route path="coupon/:couponId" component={ClientOfferPreview} />
 			<Route path="coupon/:couponId/preview" component={ClientOfferPreview} businessStore={stores.businessStore}/>
 			<Route path="settings" component={settings} businessStore={stores.businessStore}/>

@@ -12,6 +12,8 @@ import  './app.scss';
 const muiTheme = getMuiTheme({
     isRtl: true,
     palette: {
+		primary1Color: "#585D91",
+		accent1Color: "#50BAB4",
         textColor: grey800,
     },
     fontFamily: 'Assistant, sans-serif',
