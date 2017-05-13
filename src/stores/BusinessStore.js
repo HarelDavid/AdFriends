@@ -79,10 +79,10 @@ export default class BuisnessStore {
 		//get business
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
+				if(business){
 				var businessModel = new BusinessModel();
 				businessModel.convertFromDB(business);
 				businessModel.store = this;
-				if(businessModel){
 
 					this.init(businessModel);
 					//hashHistory.push('/offers');

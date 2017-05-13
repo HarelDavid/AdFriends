@@ -31,7 +31,7 @@ export default class Settings extends React.Component {
     }
 
     updateProperty(key, value) {
-        debugger
+
         var {business} = this.state;
         business[key] = value;
     }
