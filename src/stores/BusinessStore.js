@@ -34,13 +34,14 @@ export default class BuisnessStore {
 
 
 	startObserve(){
-		var _this = this;
-		return firebase.auth().onAuthStateChanged(function(user) {
 
-			if (user && !_this.business) {
-				_this.login(user);
+		firebase.auth().onAuthStateChanged((user)  => {
+
+			if (user && ! this.business) {
+				this.login(user);
 			} else {
-				return;
+				this.initialize = true;
+
 			}
 		})
 
@@ -76,9 +77,11 @@ export default class BuisnessStore {
 
 
 	login(currentUser){
+		debugger
 		//get business
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
+				debugger
 				var businessModel = new BusinessModel();
 				businessModel.convertFromDB(business);
 				businessModel.store = this;
