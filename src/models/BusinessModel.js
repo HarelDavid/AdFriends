@@ -30,6 +30,7 @@ export default class BusinessModel {
 
 
     convertFromDB(businessDB) {
+		this.id = businessDB.id;
         this.title = businessDB.title;
         this.description = businessDB.description;
         this.imageUrl = businessDB.imageUrl;

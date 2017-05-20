@@ -5,6 +5,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 
+
 module.exports = {
 	entry: [
 		'webpack-dev-server/client?http://0.0.0.0:8080', // WebpackDevServer host and port
@@ -21,6 +22,7 @@ module.exports = {
 		modulesDirectories: ['src', 'src/js', 'web_modules', 'bower_components', 'node_modules']
 	},
 	module: {
+
 		loaders: loaders.concat([{
             test: /\.scss$/,
             loaders: [
