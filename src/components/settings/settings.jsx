@@ -31,7 +31,6 @@ export default class Settings extends React.Component {
     }
 
     updateProperty(key, value) {
-        debugger
         var {business} = this.state;
         business[key] = value;
     }
@@ -55,6 +54,8 @@ export default class Settings extends React.Component {
 
         var business = businessStore.business;
 
+        console.log(business);
+
         return (
             <div className="Settings">
                 <h1>עדכון פרטים</h1>
@@ -62,13 +63,13 @@ export default class Settings extends React.Component {
                 <Paper className="Settings-paper">
                     <div>
                         <form>
-                            <TextField name="clientName" onChange={this.onChange} hintText="שם בית העסק"/>
-                            <TextField name="address" value={business.address} onChange={this.onChange} hintText="כתובת"/>
-                            <TextField name="description" multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
-                            <TextField name="businessType" onChange={this.onChange} hintText="סוג בית עסק"/>
-                            <TextField name="phone" onChange={this.onChange} hintText="מספר טלפון"/>
-                            <TextField name="website" onChange={this.onChange} hintText="אתר אינטרנט"/>
-                            <TextField name="facebook" onChange={this.onChange} hintText="דף פייסבוק"/>
+                            <TextField name="clientName" defaultValue={business.title} onChange={this.onChange} hintText="שם בית העסק"/>
+                            <TextField name="address" defaultValue={business.address} onChange={this.onChange} hintText="כתובת"/>
+                            <TextField name="description" defaultValue={business.description} multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
+                            <TextField name="businessType" defaultValue={business.businessType} onChange={this.onChange} hintText="סוג בית עסק"/>
+                            <TextField name="phone" defaultValue={business.phone}  onChange={this.onChange} hintText="מספר טלפון"/>
+                            <TextField name="website" defaultValue={business.website} onChange={this.onChange} hintText="אתר אינטרנט"/>
+                            <TextField name="facebook" defaultValue={business.facebook} onChange={this.onChange} hintText="דף פייסבוק"/>
 
                             <ImageUploader
                                 name="avatar"
@@ -81,7 +82,7 @@ export default class Settings extends React.Component {
 
                             <Avatar style={{margin: '20px auto', display: 'block'}} size={100}
                                     backgroundColor={pinkA200}
-                                    src={businessStore.business.imageUrl}/>
+                                    src={business.imageUrl}/>
                         </form>
 
                     </div>
