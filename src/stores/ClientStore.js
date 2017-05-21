@@ -46,7 +46,6 @@ export default class ClientStore {
 
 	remove (client) {
 		// this.clients.push(client);
-		debugger
 		this.clients = this.clients.filter((clientInstace) => clientInstace.id != client.id)
 		this.clientsRef.child(client.id).remove();
 	}

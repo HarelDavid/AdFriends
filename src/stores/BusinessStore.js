@@ -80,7 +80,6 @@ export default class BuisnessStore {
 		//get business
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
-				debugger
 				if(business){
 				var businessModel = new BusinessModel();
 				businessModel.convertFromDB(business);
