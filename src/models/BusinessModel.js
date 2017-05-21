@@ -5,7 +5,6 @@ export default class BusinessModel {
 	id;
 	@observable title;
 	@observable imageUrl;
-	@observable photoURL; //????
 	@observable phone;
 	@observable address;
 	@observable website;
@@ -16,7 +15,7 @@ export default class BusinessModel {
 
 	constructor(data) {
 		if(data) {
-			this.id = data.id || "";
+			this.id = data.uid || "";
 			this.title = data.title || "";
 			this.imageUrl = data.photoURL || "";
 			this.phone = data.phone || "";

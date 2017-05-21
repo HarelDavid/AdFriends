@@ -82,10 +82,11 @@ export default class BuisnessStore {
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
 				debugger
+				if(business){
 				var businessModel = new BusinessModel();
 				businessModel.convertFromDB(business);
 				businessModel.store = this;
-				if(businessModel){
+
 
 					this.init(businessModel);
 					//hashHistory.push('/offers');
@@ -134,7 +135,8 @@ export default class BuisnessStore {
 
 	add(currentUser) {
 
-		var business = new BusinessModel(currentUser.uid, currentUser.displayName, currentUser.photoURL, this);
+		var business = new BusinessModel(currentUser);
+
 
 		firebase.database().ref('/business').child(currentUser.uid).set(business);
 		return business;
