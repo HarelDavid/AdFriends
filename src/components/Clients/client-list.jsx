@@ -1,5 +1,5 @@
 import CSSModules from 'react-css-modules'
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {observer} from 'mobx-react';
 import Client from './Client'
 import ClientEntry from './ClientEntry'

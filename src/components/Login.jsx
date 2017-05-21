@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router';
 import autobind from 'autobind-decorator'
 import {observer} from 'mobx-react';

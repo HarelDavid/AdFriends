@@ -134,6 +134,7 @@ export default class BuisnessStore {
 	add(currentUser) {
 
 		var business = new BusinessModel(currentUser);
+		business.store = this;
 
 
 		firebase.database().ref('/business').child(currentUser.uid).set(business);
