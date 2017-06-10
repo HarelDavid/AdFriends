@@ -133,7 +133,7 @@ export default class Offer extends React.Component {
 					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
-					{offer.endingDate && <p>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YYYY')}</p> }
+					<p>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YYYY')}</p>
 					<Link to={`/offer/${offer.id}`}>
 						<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
 					</Link>

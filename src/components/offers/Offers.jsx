@@ -31,7 +31,7 @@ export default class Offers extends React.Component {
                         בכל מבצע ניתן (אך אין חובה) להגדיר הטבה למפיץ המבצע ו/או למקבל המבצע,
                         מבצעים הינם לב הפלטפורה והם אשר יקבעו את הצלחת הקמפיין, ולכן מומלץ להקדיש מחשבה להגדרת ההטבות, לניסוח ברור/מעניין/מושך לקוחות והן לבחירת התמונה.</p>
                         <Link to="offer/new-offer" className="offer-new">
-                            <RaisedButton primary={true} label="צור הצעה חדשה" onTouchTap={() => this.openOfferEntry()} icon={<FontIcon className="material-icons">event_note</FontIcon>}  />
+                            <RaisedButton primary={true} label="צור הצעה חדשה" icon={<FontIcon className="material-icons">event_note</FontIcon>}  />
                         </Link>
                 <div className="offers-list">
                     {offerStore.offers.map((offer) => (

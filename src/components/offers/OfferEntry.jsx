@@ -156,13 +156,13 @@ class OfferEntry extends React.Component {
                             <ReactTooltip id="desc"/>
 
                         </div>
-                        <div className="row">
-                            <label>Message to Client:<span data-tip={tooltip.message}
-                                                           data-for='message'>?</span></label>
-                            <TextField multiLine={true} name="preMessage" value={offer.preMessage}
-                                       onChange={this.onChange}/>
-                            <ReactTooltip id="message"/>
-                        </div>
+                        {/*<div className="row">*/}
+                            {/*<label>Message to Client:<span data-tip={tooltip.message}*/}
+                                                           {/*data-for='message'>?</span></label>*/}
+                            {/*<TextField multiLine={true} name="preMessage" value={offer.preMessage}*/}
+                                       {/*onChange={this.onChange}/>*/}
+                            {/*<ReactTooltip id="message"/>*/}
+                        {/*</div>*/}
                         <div className="row">
                             <label>Terms<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
                             <TextField name="terms" value={offer.terms} onChange={this.onChange}/>

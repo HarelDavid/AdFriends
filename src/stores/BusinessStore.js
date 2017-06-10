@@ -104,9 +104,9 @@ export default class BuisnessStore {
 
 
 	logout(){
-
+		var _this = this;
 		return firebase.auth().signOut().then(() =>  {
-			this.business = null;
+			_this .business = null;
 			hashHistory.push('/');
 
 			return;
