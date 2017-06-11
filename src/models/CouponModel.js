@@ -9,6 +9,7 @@ export default class CouponModel {
 	@observable watches;
 	@observable link;
 	@observable realized;
+	@observable message;
 
 
 
@@ -21,8 +22,8 @@ export default class CouponModel {
 			this.link = data.link || [];
 			this.store = data.store || {};
 			this.realized = data.realized || false;
+			this.message = data.message || "";
 		}
-
 
 	}
 
@@ -36,6 +37,7 @@ export default class CouponModel {
 		this.watches = couponDB.watches || 0;
 		this.realized = couponDB.realized || false;
 		this.id = couponDB.id;
+		this.message = couponDB.message;
 
 	}
 
@@ -50,6 +52,8 @@ export default class CouponModel {
 		couponDB.id = this.id || "";
 		couponDB.watches = this.watches || 0;
 		couponDB.realized = this.realized || false;
+		couponDB.message = this.message || "";
+
 		return couponDB;
 	}
 
@@ -72,6 +76,6 @@ export default class CouponModel {
 	}
 
 	static fromJS(store, object) {
-		return new ClientModel({store:store, id:object.id, title:object.title, description:object.description,imageUrl:object.imageUrl});
+		return new ClientModel({store:store, id:object.id, title:object.title, description:object.description,imageUrl:object.imageUrl,message:object.message});
 	}
 }

@@ -25,7 +25,8 @@ export default class Offer extends React.Component {
 		expended: false,
 		chosenClient: {},
 		link: "",
-		client: new ClientModel({store: this.props.clientStore}),
+		client: {},
+		preMessage: false
 	}
 
 	componentWillMount() {
@@ -33,6 +34,7 @@ export default class Offer extends React.Component {
 		this.state.offer = offer;
 		this.clientStore = this.props.businessStore.clientStore;
 
+		this.state.client = new ClientModel({store: this.props.businessStore.clientStore})
 
 		return couponsStore.getCouponsByOfferId(offer.id)
 			.then((res) => {
@@ -79,6 +81,7 @@ export default class Offer extends React.Component {
 		coupon.businessId = businessStore.business.id;
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
+		coupon.message = offer.preMessage;
 		coupon.save();
 		this.state.link = coupon.link + "/preview";
 		offer.couponLinks.push(coupon.link);
@@ -94,12 +97,16 @@ export default class Offer extends React.Component {
 		})
 	}
 
+
 	@autobind
 	handleClientChoose(clientOption) {
 		if (clientOption && clientOption.className) {
+			this.state.chosenClient = clientOption;
+			this.state.client.title = clientOption.value;
 			this.handleNewClient(clientOption);
+		} else {
+			this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
 		}
-		this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
 	}
 
 	@autobind
@@ -108,6 +115,11 @@ export default class Offer extends React.Component {
 	};
 
 	@autobind
+	openPreMessage(){
+		this.setState({preMessage: true});
+
+	}
+
 	handleNewClient() {
 		var {client} = this.state;
 
@@ -118,7 +130,7 @@ export default class Offer extends React.Component {
 
 
 	render() {
-		const {offer} = this.state;
+		const {offer,preMessage} = this.state;
 		const {businessStore, couponsStore} = this.props;
 
 
@@ -146,11 +158,13 @@ export default class Offer extends React.Component {
 							options={this.getClientOption()}
 							onChange={this.handleClientChoose}
 						/>
-
-						<RaisedButton secondary onClick={this.createLink}>צור קופון</RaisedButton>
-
-						{this.state.link &&
-						<Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}
+						<div>
+							<RaisedButton secondary onClick={this.openPreMessage}>שלח קופון</RaisedButton>
+							{preMessage && <TextField name="preMessage"  onChange={this.onChange}/>}
+							<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>
+						</div>
+						{/*{this.state.link &&*/}
+						{/*<Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}*/}
 					</div>
 				</CardText>
 			</Card>

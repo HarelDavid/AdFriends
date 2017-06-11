@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {observer} from 'mobx-react';
 import Offer from './Offer'
 import {observable} from 'mobx';
@@ -34,8 +34,8 @@ export default class Offers extends React.Component {
                             <RaisedButton primary={true} label="צור הצעה חדשה" icon={<FontIcon className="material-icons">event_note</FontIcon>}  />
                         </Link>
                 <div className="offers-list">
-                    {offerStore.offers.map((offer) => (
-                            <Offer couponsStore={couponsStore} businessStore={businessStore} className="offer" key={offer.id} offer={offer}/>
+                    {offerStore.offers.map((offer,idx) => (
+                            <Offer couponsStore={couponsStore} businessStore={businessStore} className="offer" key={offer.id + '/' + idx} offer={offer}/>
 
                         )
                     )}

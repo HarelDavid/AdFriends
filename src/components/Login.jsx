@@ -1,10 +1,8 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {Link} from 'react-router';
 import autobind from 'autobind-decorator'
 import {observer} from 'mobx-react';
 import firebase from 'firebase';
-
-
 
 
 @observer
@@ -12,17 +10,22 @@ export default class Login extends Component {
 
 	authUi;
 
+
+
 	componentDidMount () {
 		var {businessStore, authStore} = this.props.route;
 		var uiConfig = this.getConfig(businessStore);
 		authStore.authUi.start('.firebaseui-auth', uiConfig);
+
+		businessStore.isLoggedIn && this.props.history.push(null, '/#/offers/');
+
+
 	}
 
 	initStores(bussines){
 		var {offerStore} = this.props.route;
 		offerStore.init(bussines);
 	}
-
 
 
 	@autobind

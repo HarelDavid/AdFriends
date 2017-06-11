@@ -2,6 +2,7 @@ import {observable, computed} from 'mobx';
 import BusinessModel from '../models/BusinessModel';
 import OfferStore from '../stores/OfferStore';
 import ClientStore from '../stores/ClientStore';
+import CouponStore from '../stores/CouponStore';
 import {hashHistory } from 'react-router'
 import * as firebase from 'firebase';
 
@@ -13,10 +14,12 @@ export default class BuisnessStore {
 	@observable initialize = false;
 	offerStore = null;
 	clientStore = null;
+	couponStore = null;
 
 	constructor() {
 		this.offerStore = new OfferStore();
 		this.clientStore = new ClientStore();
+		this.couponStore = new CouponStore();
 		this.startObserve();
 	}
 
@@ -25,6 +28,7 @@ export default class BuisnessStore {
 		this.business = business;
 		this.offerStore.init(this.business);
 		this.clientStore.init(this.business);
+		this.couponStore.init(this.business);
 		this.initialize = true;
 
 	}
@@ -80,7 +84,6 @@ export default class BuisnessStore {
 		//get business
 		return this.getBuissnes(currentUser.uid)
 			.then((business) => {
-				debugger
 				if(business){
 				var businessModel = new BusinessModel();
 				businessModel.convertFromDB(business);
@@ -134,6 +137,7 @@ export default class BuisnessStore {
 	add(currentUser) {
 
 		var business = new BusinessModel(currentUser);
+		business.store = this;
 
 
 		firebase.database().ref('/business').child(currentUser.uid).set(business);

@@ -33,7 +33,7 @@ var stores = {};
 stores.authStore = authStore;
 stores.businessStore = businessStore;
 stores.couponStore = couponStore;
-stores.couponStore.init();
+//stores.couponStore.init();
 
 
 

@@ -12,10 +12,24 @@ export default class CouponStore {
 
 	}
 
-	init(){
-		this.couponRef = firebase.database().ref('coupons');
+	init(business){
+		this.couponRef = firebase.database().ref('coupons').orderByChild("businessId").equalTo(business.id)
+			.once('value').then((snapshot) => {
+			var coupons = [];
+			var couponsObj = snapshot.val();
+			for (var key in couponsObj) {
+				if (couponsObj.hasOwnProperty(key)) {
+					var coupon  = couponsObj[key];
+					var couponModel = new CouponModel();
+					couponModel.convertFromDB(coupon)
+					coupons.push(couponModel);
+				}
+			}
+
+			this.coupons = coupons;
+		});
+
 	}
-	// Find all dinosaurs whose height is exactly 25 meters.
 
 
 	getCouponsByOfferId(offerId){
@@ -29,7 +43,8 @@ export default class CouponStore {
 					if (couponsById.hasOwnProperty(key)) {
 						var coupon  = couponsById[key];
 						var couponModel = new CouponModel();
-						coupons.push(couponModel.convertFromDB(coupon));
+						couponModel.convertFromDB(coupon)
+						coupons.push(couponModel);
 					}
 				}
 

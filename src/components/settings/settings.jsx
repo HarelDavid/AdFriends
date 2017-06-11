@@ -63,7 +63,7 @@ export default class Settings extends React.Component {
                 <Paper className="Settings-paper">
                     <div>
                         <form>
-                            <TextField name="clientName" defaultValue={business.title} onChange={this.onChange} hintText="שם בית העסק"/>
+                            <TextField name="title" defaultValue={business.title} onChange={this.onChange} hintText="שם בית העסק"/>
                             <TextField name="address" defaultValue={business.address} onChange={this.onChange} hintText="כתובת"/>
                             <TextField name="description" defaultValue={business.description} multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
                             <TextField name="businessType" defaultValue={business.businessType} onChange={this.onChange} hintText="סוג בית עסק"/>
