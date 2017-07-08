@@ -42,6 +42,7 @@ export default class Login extends Component {
 		var _this = this;
 		var uiConfig = {
 
+
 			signInFlow:  'popup',
 			signInSuccessUrl: window.location.href,
 			credentialHelper:firebaseui.auth.CredentialHelper.NONE,
