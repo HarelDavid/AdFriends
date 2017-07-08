@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import autobind from 'autobind-decorator'
 import {observer} from 'mobx-react';
 import firebase from 'firebase';
@@ -17,9 +17,8 @@ export default class Login extends Component {
 		var uiConfig = this.getConfig(businessStore);
 		authStore.authUi.start('.firebaseui-auth', uiConfig);
 
-		businessStore.isLoggedIn && this.props.history.push(null, '/#/offers/');
-
-
+		// businessStore.isLoggedIn && browserHistory.push('/#/offers/');
+console.log(businessStore.isLoggedIn);
 	}
 
 	initStores(bussines){
@@ -49,6 +48,7 @@ export default class Login extends Component {
 
 			'callbacks': {
 				'signInSuccess': function(currentUser,credential) {
+					debugger
 					if(credential){
 						return businessStore.getProviderData(credential.accessToken)
 						if(currentUser){

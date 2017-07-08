@@ -33,8 +33,8 @@ export default class CouponStore {
 
 
 	getCouponsByOfferId(offerId){
-
-		return this.couponRef.orderByChild("offerId").equalTo(offerId).once("value").then((snapshot) => {
+		// this.couponRef = firebase.database().ref('coupons');
+		return firebase.database().ref('coupons').orderByChild("offerId").equalTo(offerId).once("value").then((snapshot) => {
 			var couponsById = snapshot.val();
 			var coupons = [];
 			if(couponsById) {
@@ -80,7 +80,7 @@ export default class CouponStore {
 			coupon.store = this;
 		}
 
-		var hostData = location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '');
+		var hostData = location.protocol+'//api.'+location.hostname+(location.port ? ':'+location.port: '');
 		var linkData = `/coupon/${coupon.id}`;
 		var couponsLink = `${hostData}${linkData}`;
 		coupon.link = couponsLink;

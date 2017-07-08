@@ -14,8 +14,10 @@ import './style.scss';
 @observer
 export default class Coupons extends React.Component {
 
-	componentDidMount(){
-		console.log(this.props.route.couponsStore.coupons.toJS());
+	componentWillMount(){
+		var {businessStore, couponsStore} = this.props.route;
+
+		couponsStore.init(businessStore.business);
 	}
 
 

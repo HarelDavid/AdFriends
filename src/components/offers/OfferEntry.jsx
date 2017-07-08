@@ -86,7 +86,7 @@ class OfferEntry extends React.Component {
         var {offer} = this.state;
         // offer['endingDate'] = offer['endingDate'].toISOString();
         offer.save();
-        // hashHistory.push('/offers');
+        hashHistory.push('/offers');
         this.clearForm();
 
     };

@@ -24,7 +24,6 @@ export default class BuisnessStore {
 	}
 
 	init(business){
-
 		this.business = business;
 		this.offerStore.init(this.business);
 		this.clientStore.init(this.business);

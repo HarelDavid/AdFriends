@@ -31,8 +31,8 @@ class ClientOfferPreview extends React.Component {
 		return this.couponStore.getCoupon(couponId)
 			.then((coupon) => {
 				this.state.coupon = coupon;
-				coupon.watches++;
-				coupon.save();
+				//coupon.watches++;
+				//coupon.save();
 			})
 
 	}
