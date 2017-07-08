@@ -38,9 +38,9 @@ console.log(businessStore.isLoggedIn);
 
 	getConfig(businessStore){
 
-
 		var _this = this;
 		var uiConfig = {
+
 
 			signInFlow:  'popup',
 			signInSuccessUrl: window.location.href,
@@ -89,7 +89,6 @@ console.log(businessStore.isLoggedIn);
 	// }
 
 	render() {
-
 		return (
 			<div>
 			<div>WELCOME , PLEASE LOGIN</div>
