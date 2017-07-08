@@ -24,6 +24,8 @@ export default class BusinessModel {
 			this.facebook = data.facebook || "";
 			this.businessType = data.businessType || "";
 			this.description =  data.description || "";
+            this.offers = data.offers || [];
+            this.clients = data.clients || [];
 		}
 	}
 

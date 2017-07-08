@@ -138,7 +138,7 @@ class OfferEntry extends React.Component {
             <div>
 
 
-                <a href="whatsapp://send?text=test">Share</a>
+                <a href="whatsapp://send?text=http://www.ynet.co.il/home/0,7340,L-8,00.html">Share</a>
 
 
                 <Paper style={{marginTop: 20}}>

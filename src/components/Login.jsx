@@ -1,99 +1,66 @@
 import React, {Component} from 'react';
-import {Link, browserHistory} from 'react-router';
 import autobind from 'autobind-decorator'
 import {observer} from 'mobx-react';
+import {observable} from 'mobx';
 import firebase from 'firebase';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const LOGIN_PROVIDERS = {
+    FACEBOOK: 'facebook',
+    GOOGLE: 'google'
+}
 
 
+const ERRORS = {
+    ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIALS: {
+    	CODE: "auth/account-exists-with-different-credential",
+		TEXT: "Account exists with different credentials"
+	}
+}
 @observer
 export default class Login extends Component {
 
-	authUi;
+    @observable
+    state = {
+        errorMessage: ""
+    }
 
 
 
-	componentDidMount () {
-		var {businessStore, authStore} = this.props.route;
-		var uiConfig = this.getConfig(businessStore);
-		authStore.authUi.start('.firebaseui-auth', uiConfig);
+	handelLoginFail( error){
+        switch(error.code) {
+			case  ERRORS.ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIALS.CODE : {
+                this.state.errorMessage = ERRORS.ACCOUNT_EXISTS_WITH_DIFFERENT_CREDENTIALS.TEXT
+				break;
+			}
+			default: {
 
-		// businessStore.isLoggedIn && browserHistory.push('/#/offers/');
-console.log(businessStore.isLoggedIn);
-	}
-
-	initStores(bussines){
-		var {offerStore} = this.props.route;
-		offerStore.init(bussines);
+			}
+        }
 	}
 
 
 	@autobind
-	reset(){
-		var {authStore} = this.props.route;
-		var uiConfig = this.getConfig();
-		authStore.authUi.reset();
-		authStore.authUi.start('.firebaseui-auth', uiConfig);
-	}
+    providerLogin(providerName) {
+        var {businessStore} = this.props.route;
+        var provider = providerName == LOGIN_PROVIDERS.GOOGLE ?
+            new firebase.auth.GoogleAuthProvider() :
+            new firebase.auth.FacebookAuthProvider();
 
+        return firebase.auth().signInWithPopup(provider)
+       .catch((error) => {
+            this.handelLoginFail(error);
+        });
+    }
 
-	getConfig(businessStore){
-
-		var _this = this;
-		var uiConfig = {
-
-
-			signInFlow:  'popup',
-			signInSuccessUrl: window.location.href,
-			credentialHelper:firebaseui.auth.CredentialHelper.NONE,
-
-			'callbacks': {
-				'signInSuccess': function(currentUser,credential) {
-					debugger
-					if(credential){
-						return businessStore.getProviderData(credential.accessToken)
-						if(currentUser){
-							businessStore.login(currentUser, credential);
-							return false;
-						}
-					}
-					if(currentUser){
-						businessStore.login(currentUser, credential);
-						return false;
-					}
-					return false;
-
-				}
-			},
-			'signInOptions': [
-				{
-					provider:firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-					scopes: ['https://www.googleapis.com/auth/userinfo.profile']
-				},
-				{
-					provider: firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-
-					scopes: [
-						'public_profile',
-						'email'
-					]
-				}
-			]
-		};
-		return uiConfig;
-	}
-
-	// componentDidMount(){
-	// 	// document.getElementsByClassName("input")[1].innerHTML="This message was written via JS script! "; // Fills the text box message
-	// 	// var input = document.getElementsByClassName("icon btn-icon icon-send");//Grabs the send button
-	// 	// input[0].click();// Clicks the send button
-	// }
 
 	render() {
 		return (
 			<div>
 			<div>WELCOME , PLEASE LOGIN</div>
 			<div>
-				<div className="firebaseui-auth"  ></div>
+				<RaisedButton primary onClick={() => this.providerLogin(LOGIN_PROVIDERS.GOOGLE)}>Google Login</RaisedButton>
+				<RaisedButton primary onClick={() => this.providerLogin(LOGIN_PROVIDERS.FACEBOOK)}>facebook Login</RaisedButton>
 			</div>
 			</div>
 		);

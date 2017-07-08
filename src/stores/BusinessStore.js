@@ -6,7 +6,10 @@ import CouponStore from '../stores/CouponStore';
 import {hashHistory } from 'react-router'
 import * as firebase from 'firebase';
 
-
+const LOGIN_PROVIDERS = {
+    FACEBOOK: 'facebook',
+    GOOGLE: 'google'
+}
 
 
 export default class BuisnessStore {
@@ -20,7 +23,8 @@ export default class BuisnessStore {
 		this.offerStore = new OfferStore();
 		this.clientStore = new ClientStore();
 		this.couponStore = new CouponStore();
-		this.startObserve();
+		this.startObserve()
+
 	}
 
 	init(business){
@@ -33,22 +37,20 @@ export default class BuisnessStore {
 	}
 
 
+    startObserve(){
+		//if(!this.disableAuthObserver) {
 
+            firebase.auth().onAuthStateChanged((user) => {
+                console.log("in")
+                if (user && !this.business) {
+                    this.login(user, user.refreshToken);
+                } else {
+                    this.initialize = true;
 
+                }
+            })
+    }
 
-	startObserve(){
-
-		firebase.auth().onAuthStateChanged((user)  => {
-
-			if (user && ! this.business) {
-				this.login(user);
-			} else {
-				this.initialize = true;
-
-			}
-		})
-
-	}
 
 	@computed get isLoggedIn(){
 		return !!this.business ;
@@ -61,8 +63,6 @@ export default class BuisnessStore {
 
 
 	getProviderData(accessToken){
-
-
 		return FB.api('/me',
 			{fields: "id,last_name,first_name,picture,email"},{access_token:accessToken},
 			function(response) {
@@ -70,37 +70,40 @@ export default class BuisnessStore {
 
 			}
 		);
-
-
 	}
 
+    handleLoginSuccess(result) {
+      //  disableAuthObserver = true;
+        var token = result.credential.accessToken;
+        debugger
+        if(result.credential){
+            var { user, credential } = result;
+            return this.getProviderData(credential.accessToken);
+            if(user){
+                this.login(user, credential);
+                return false;
+            }
+        }
+        return false;
+
+    }
 
 
 
 
-
-	login(currentUser){
-		//get business
-		return this.getBuissnes(currentUser.uid)
+    login(currentUser, credentials){
+		return this.getBusiness(currentUser.uid)
 			.then((business) => {
-				if(business){
-				var businessModel = new BusinessModel();
-				businessModel.convertFromDB(business);
-				businessModel.store = this;
-
-
+				if(!business) {
+                    var business = this.addNewBusiness(currentUser, credentials);
+                    this.init(business);
+                }
+                else {
+					var businessModel = new BusinessModel();
+					businessModel.convertFromDB(business);
+					businessModel.store = this;
 					this.init(businessModel);
-					//hashHistory.push('/offers');
 				}
-				else{
-
-					var business =  this.add(currentUser);
-					this.init(business);
-//					hashHistory.push('/offers');
-
-
-				}
-
 			})
 	}
 
@@ -116,7 +119,7 @@ export default class BuisnessStore {
 
 	}
 
-	getBuissnes(id){
+    getBusiness(id){
 		return firebase.database().ref('/business/' + id).once('value').then(function(snapshot) {
 			return  snapshot.val();
 		});
@@ -132,15 +135,12 @@ export default class BuisnessStore {
 	}
 
 
-
-	add(currentUser) {
-
+	addNewBusiness(currentUser, credentials) {
 		var business = new BusinessModel(currentUser);
-		business.store = this;
-
-
-		firebase.database().ref('/business').child(currentUser.uid).set(business);
+		return firebase.database().ref('/business').child(currentUser.uid).set(business);
+        business.store = this;
 		return business;
+
 	}
 
 
