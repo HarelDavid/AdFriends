@@ -41,7 +41,7 @@ class OfferEntry extends React.Component {
 
         if (offerId) {
             this.state.offer = offerStore.offers.find((it) => it.id == offerId);
-            this.state.offer.endingDate = new Date(this.state.offer.endingDate);
+            // this.state.offer.endingDate = new Date(this.state.offer.endingDate);
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
@@ -138,7 +138,6 @@ class OfferEntry extends React.Component {
             <div>
 
 
-                <a href="whatsapp://send?text=test">Share</a>
 
 
                 <Paper style={{marginTop: 20}}>

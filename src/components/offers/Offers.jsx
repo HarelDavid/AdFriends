@@ -36,7 +36,6 @@ export default class Offers extends React.Component {
                 <div className="offers-list">
                     {offerStore.offers.map((offer,idx) => (
                             <Offer couponsStore={couponsStore} businessStore={businessStore} className="offer" key={offer.id} offer={offer}/>
-
                         )
                     )}
                 </div>

@@ -43,6 +43,7 @@ export default class OfferStore {
 		}
 		this.offers.push(offer);
 		var offerDB = offer.convertToDB();
+		debugger
 		this.offersRef.child(offerDB.id).set(offerDB);
 	}
 
