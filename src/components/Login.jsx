@@ -39,7 +39,6 @@ export default class Login extends Component {
 
 	getConfig(businessStore){
 
-
 		var _this = this;
 		var uiConfig = {
 
