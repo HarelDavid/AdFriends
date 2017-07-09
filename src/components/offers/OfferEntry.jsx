@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
 import {hashHistory} from 'react-router';
@@ -138,7 +139,7 @@ class OfferEntry extends React.Component {
             <div>
 
 
-                <a href="whatsapp://send?text=http://www.ynet.co.il/home/0,7340,L-8,00.html">Share</a>
+                <a href="whatsapp://send?text=test">Share</a>
 
 
                 <Paper style={{marginTop: 20}}>

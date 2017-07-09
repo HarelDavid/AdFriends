@@ -47,8 +47,9 @@ export default class Login extends Component {
             new firebase.auth.GoogleAuthProvider() :
             new firebase.auth.FacebookAuthProvider();
 
-        return firebase.auth().signInWithPopup(provider)
-       .catch((error) => {
+        return firebase.auth().signInWithPopup(provider).then((result) => {
+            return businessStore.handleLoginSuccess(result);
+        }).catch((error) => {
             this.handelLoginFail(error);
         });
     }

@@ -75,7 +75,6 @@ export default class BuisnessStore {
     handleLoginSuccess(result) {
       //  disableAuthObserver = true;
         var token = result.credential.accessToken;
-        debugger
         if(result.credential){
             var { user, credential } = result;
             return this.getProviderData(credential.accessToken);
@@ -104,6 +103,7 @@ export default class BuisnessStore {
 					businessModel.store = this;
 					this.init(businessModel);
 				}
+                hashHistory.push('/offers');
 			})
 	}
 
