@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import autobind from 'autobind-decorator'
 import {observer} from 'mobx-react';
 import {observable} from 'mobx';
+import {hashHistory} from 'react-router';
 import firebase from 'firebase';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -25,6 +26,12 @@ export default class Login extends Component {
         errorMessage: ""
     }
 
+	componentDidMount () {
+		var {businessStore} = this.props.route;
+
+		businessStore.isLoggedIn && hashHistory.push('/#/offers/');
+		console.log(businessStore.isLoggedIn);
+	}
 
 
 	handelLoginFail( error){

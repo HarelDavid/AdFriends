@@ -85,7 +85,6 @@ export default class Offer extends React.Component {
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
 		coupon.message = this.state.preMessage || offer.preMessage;
-		coupon.link = "http://api.adfriend.co.il/coupon" + coupon
 		coupon.save();
 		this.state.link = coupon.link + "/preview";
 		offer.couponLinks.push(coupon.link);
@@ -146,9 +145,11 @@ export default class Offer extends React.Component {
 
 
 	render() {
-		const {offer,dialogOpen} = this.state;
+		const {offer,dialogOpen, preMessage} = this.state;
 		const {businessStore, couponsStore} = this.props;
-var actions =  <a href="whatsapp://send?text=https://www.b-unique.co.il/product/katmandu-front-close-shoes-by-372544-black/">Share</a>;
+console.log(couponsStore);
+		var shareUrl = "whatsapp://send?text=" + (preMessage || offer.preMessage) + " http://api.adfriend.co.il/coupon/";
+		var actions =  <a href={shareUrl}>Share</a>;
 
 		return (
 
