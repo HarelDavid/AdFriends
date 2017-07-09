@@ -77,6 +77,8 @@ export default class Offer extends React.Component {
 
 	@autobind
 	createLink() {
+
+		debugger
 		const {offer} = this.state;
 		var {chosenClient}  = this.state;
 		var {businessStore, couponsStore}  = this.props;
