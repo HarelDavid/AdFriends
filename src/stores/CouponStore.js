@@ -7,13 +7,15 @@ import * as firebase from 'firebase';
 
 export default class CouponStore {
 	@observable coupons = [];
+	couponRef = null
 
 	constructor() {
 
 	}
 
 	init(business){
-		this.couponRef = firebase.database().ref('coupons').orderByChild("businessId").equalTo(business.id)
+		this.couponRef = firebase.database().ref('coupons');
+		this.couponRef.orderByChild("businessId").equalTo(business.id)
 			.once('value').then((snapshot) => {
 			var coupons = [];
 			var couponsObj = snapshot.val();
@@ -90,6 +92,7 @@ export default class CouponStore {
 			this.coupons.push(coupon);
 		}
 		var couponDB = coupon.convertToDB();
+		this.couponRef = firebase.database().ref('coupons');
 		this.couponRef.child(couponDB.id).set(couponDB);
 	}
 

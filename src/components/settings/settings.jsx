@@ -1,5 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
+import {hashHistory} from 'react-router';
 import {observable, expr} from 'mobx';
 import autobind from 'autobind-decorator'
 import classname from 'classnames';
@@ -41,6 +42,7 @@ export default class Settings extends React.Component {
         if (business) {
             business.save();
         }
+        hashHistory.push('/');
     };
 
     render() {

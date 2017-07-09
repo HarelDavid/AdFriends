@@ -12,6 +12,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import ClientModel from '../../models/ClientModel'
+import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
 
 import './style.scss';
 
@@ -26,7 +28,8 @@ export default class Offer extends React.Component {
 		chosenClient: {},
 		link: "",
 		client: {},
-		preMessage: false
+		dialogOpen: false,
+		preMessage: ''
 	}
 
 	componentWillMount() {
@@ -81,7 +84,7 @@ export default class Offer extends React.Component {
 		coupon.businessId = businessStore.business.id;
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
-		coupon.message = offer.preMessage;
+		coupon.message = this.state.preMessage || offer.preMessage;
 		coupon.save();
 		this.state.link = coupon.link + "/preview";
 		offer.couponLinks.push(coupon.link);
@@ -115,10 +118,13 @@ export default class Offer extends React.Component {
 	};
 
 	@autobind
-	openPreMessage(){
-		this.setState({preMessage: true});
+	openDialog(){
+		this.createLink();
 
+		this.setState({dialogOpen: true});
 	}
+
+
 
 	handleNewClient() {
 		var {client} = this.state;
@@ -129,10 +135,21 @@ export default class Offer extends React.Component {
 	}
 
 
-	render() {
-		const {offer,preMessage} = this.state;
-		const {businessStore, couponsStore} = this.props;
+	@autobind
+	updatePreMessage(event) {
+		this.setState({preMessage: event.target.value});
+	}
 
+
+
+
+
+	render() {
+		const {offer,dialogOpen, preMessage} = this.state;
+		const {businessStore, couponsStore} = this.props;
+console.log(couponsStore);
+		var shareUrl = "whatsapp://send?text=" + (preMessage || offer.preMessage) + " http://api.adfriend.co.il/coupon/";
+		var actions =  <a href={shareUrl}>Share</a>;
 
 		return (
 
@@ -159,9 +176,20 @@ export default class Offer extends React.Component {
 							onChange={this.handleClientChoose}
 						/>
 						<div>
-							<RaisedButton secondary onClick={this.openPreMessage}>שלח קופון</RaisedButton>
-							{preMessage && <TextField name="preMessage"  onChange={this.onChange}/>}
-							<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>
+							<RaisedButton secondary onClick={this.openDialog}>שלח קופון</RaisedButton>
+							{dialogOpen &&
+							<Dialog
+								title="שלח קופון ללקוח"
+								actions={actions}
+								modal={false}
+								open={this.state.dialogOpen}
+								onRequestClose={this.handleClose}
+							>
+								<TextField multiLine={true} name="preMessage"
+										   onChange={this.updatePreMessage}/>
+								{/*<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>*/}
+							</Dialog>
+							}
 						</div>
 						{/*{this.state.link &&*/}
 						{/*<Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}*/}
