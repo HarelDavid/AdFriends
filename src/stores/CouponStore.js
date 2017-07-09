@@ -82,7 +82,7 @@ export default class CouponStore {
 			coupon.store = this;
 		}
 
-		var hostData = location.protocol+'//coupon.'+location.hostname+(location.port ? ':'+location.port: '');
+		var hostData = 'http://coupon.adfriend.co.il';
 		var linkData = `/coupon/${coupon.id}`;
 		var couponsLink = `${hostData}${linkData}`;
 		coupon.link = couponsLink;
