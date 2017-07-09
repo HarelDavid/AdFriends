@@ -86,9 +86,9 @@ export default class Offer extends React.Component {
 		coupon.businessId = businessStore.business.id;
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
-		coupon.message = this.state.preMessage || offer.preMessage;
+		coupon.message = this.state.preMessage || offer.message;
 		coupon.save();
-		this.state.link = coupon.link + "/preview";
+		this.state.link = coupon.link;
 		offer.couponLinks.push(coupon.link);
 		offer.save();
 		chosenClient.couponLinks.push(coupon.link);
@@ -147,10 +147,10 @@ export default class Offer extends React.Component {
 
 
 	render() {
-		const {offer,dialogOpen, preMessage} = this.state;
+		const {offer,dialogOpen, preMessage, link} = this.state;
 		const {businessStore, couponsStore} = this.props;
 console.log(couponsStore);
-		var shareUrl = "whatsapp://send?text=" + (preMessage || offer.preMessage) + " http://api.adfriend.co.il/coupon/";
+		var shareUrl = "whatsapp://send?text=" + (preMessage || offer.message) + " " + link;
 		var actions =  <a href={shareUrl}>Share</a>;
 
 		return (

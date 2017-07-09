@@ -21,7 +21,6 @@ export default class Coupon extends React.Component {
 
 	@observable
 	state = {
-		coupon: {},
 		expended: false,
 		chosenClient: {},
 		link: "",
@@ -29,72 +28,31 @@ export default class Coupon extends React.Component {
 	}
 
 	componentWillMount() {
-		const {coupon, couponsStore} = this.props;
-		this.state.coupon = coupon;
+		const {couponsStore, businessStore, coupon} = this.props;
 
-
+		console.log(coupon);
+		console.log(businessStore);
 	}
-
-
-	updateProperty(key, value) {
-		var {coupon} = this.state;
-		coupon[key] = value;
-	}
-
-	@autobind
-	onChange(event) {
-		this.updateProperty(event.target.name, event.target.value)
-	}
-
-
-	@autobind
-	handleSubmit() {
-		var {coupon} = this.state;
-		if (coupon) {
-			coupon.save();
-		}
-	};
-
-	@autobind
-	handleDestroy() {
-		var {coupon} = this.state;
-		if (coupon) {
-			coupon.remove();
-		}
-	};
-
-
-
-
-	@autobind
-	handleToggle(event, toggle) {
-		this.setState({expanded: toggle});
-	};
-
 
 
 
 	render() {
-		const {coupon} = this.state;
-		const {businessStore, couponsStore} = this.props;
+		const {businessStore, couponsStore, coupon} = this.props;
+		let client = businessStore.clientStore.clients.find(it=> (it.id == coupon.clientId));
 
 
 		return (
 
 			<Card style={{margin: '20px 0'}}>
 				<CardHeader
-					title={coupon.title}
+					title={<p>אל: {client.title}</p>}
 					actAsExpander={true}
-					showExpandableButton={true}
-					closeIcon={<FontIcon className="material-icons" style={{color: '#189d0e'}}>share</FontIcon>}
-					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
+					showExpandableButton={false}
 				/>
-				{/*<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>*/}
-					{/*<p>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YYYY')}</p>*/}
-					{/*<Link to={`/offer/${offer.id}`}>*/}
-						{/*<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>*/}
-					{/*</Link>*/}
-				{/*</CardActions>*/}
+				<CardActions style={{display: 'flex', justifyContent: 'space-between', padding: 16}}>
+					<p>נשלח בתאריך: </p>
+					<p>מספר צפיות: {coupon.watches}</p>
+				</CardActions>
 
 			</Card>
 
