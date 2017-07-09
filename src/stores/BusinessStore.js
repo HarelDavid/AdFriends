@@ -41,9 +41,8 @@ export default class BuisnessStore {
 		//if(!this.disableAuthObserver) {
 
             firebase.auth().onAuthStateChanged((user) => {
-                console.log("in")
                 if (user && !this.business) {
-                    this.login(user, user.refreshToken);
+                    return this.login(user, user.refreshToken)
                 } else {
                     this.initialize = true;
 
@@ -73,17 +72,18 @@ export default class BuisnessStore {
 	}
 
     handleLoginSuccess(result) {
+		return promise.resolve(() => {
       //  disableAuthObserver = true;
         var token = result.credential.accessToken;
         if(result.credential){
             var { user, credential } = result;
             return this.getProviderData(credential.accessToken);
             if(user){
-                this.login(user, credential);
-                return false;
+                return this.login(user, credential)
             }
         }
         return false;
+        })
 
     }
 
@@ -91,6 +91,8 @@ export default class BuisnessStore {
 
 
     login(currentUser, credentials){
+		debugger
+		var isFirstTime = null
 		return this.getBusiness(currentUser.uid)
 			.then((business) => {
 				if(!business) {

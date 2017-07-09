@@ -56,9 +56,13 @@ export default class Login extends Component {
 
         return firebase.auth().signInWithPopup(provider).then((result) => {
             return businessStore.handleLoginSuccess(result);
-        }).catch((error) => {
-            this.handelLoginFail(error);
-        });
+        })
+		.then(() => {
+            hashHistory.push('/offers');
+		})
+		.catch((error) => {
+			this.handelLoginFail(error);
+		});
     }
 
 
