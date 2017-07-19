@@ -69,10 +69,14 @@ export default class Login extends Component {
 	render() {
 		return (
 			<div>
-			<div>WELCOME , PLEASE LOGIN</div>
+			{/*<h2>להמשך אנא התחבר:</h2>*/}
 			<div>
-				<RaisedButton primary onClick={() => this.providerLogin(LOGIN_PROVIDERS.GOOGLE)}>Google Login</RaisedButton>
-				<RaisedButton primary onClick={() => this.providerLogin(LOGIN_PROVIDERS.FACEBOOK)}>facebook Login</RaisedButton>
+				{/*<RaisedButton primary onClick={() => this.providerLogin(LOGIN_PROVIDERS.GOOGLE)}>Google Login</RaisedButton>*/}
+				<RaisedButton onClick={() => this.providerLogin(LOGIN_PROVIDERS.FACEBOOK)}
+							  backgroundColor="#3e60aa" labelColor="#ffffff" labelStyle={{fontSize: 22, color: '#fff'}}
+							  style={{width: 260, margin: '40px auto', display: 'block', borderRadius: 30, overflow: 'hidden'}}>
+					התחבר עם פייסבוק
+				</RaisedButton>
 			</div>
 			</div>
 		);
