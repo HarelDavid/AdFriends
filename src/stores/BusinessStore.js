@@ -91,7 +91,6 @@ export default class BuisnessStore {
 
 
     login(currentUser, credentials){
-		debugger
 		var isFirstTime = null
 		return this.getBusiness(currentUser.uid)
 			.then((business) => {

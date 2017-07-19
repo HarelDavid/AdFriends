@@ -169,17 +169,17 @@ class OfferEntry extends React.Component {
                             <TextField name="terms" value={offer.terms} onChange={this.onChange}/>
                             <ReactTooltip id="terms"/>
                         </div>
-                        <div className="row">
-                            <label>Friend Gift<span data-tip={tooltip.giftFriend} data-for='giftFriend'>?</span></label>
-                            <TextField name="offerGift" value={offer.offerGift} onChange={this.onChange}/>
-                            <ReactTooltip id="giftFriend"/>
-                        </div>
-                        <div className="row">
-                            <label>Client Gift<span data-tip={tooltip.giftClient} data-for='giftClient'>?</span></label>
-                            <TextField name="clientGift" value={offer.clientGift} onChange={this.onChange}/>
-                            <ReactTooltip id="giftClient"/>
+                        {/*<div className="row">*/}
+                            {/*<label>Friend Gift<span data-tip={tooltip.giftFriend} data-for='giftFriend'>?</span></label>*/}
+                            {/*<TextField name="offerGift" value={offer.offerGift} onChange={this.onChange}/>*/}
+                            {/*<ReactTooltip id="giftFriend"/>*/}
+                        {/*</div>*/}
+                        {/*<div className="row">*/}
+                            {/*<label>Client Gift<span data-tip={tooltip.giftClient} data-for='giftClient'>?</span></label>*/}
+                            {/*<TextField name="clientGift" value={offer.clientGift} onChange={this.onChange}/>*/}
+                            {/*<ReactTooltip id="giftClient"/>*/}
 
-                        </div>
+                        {/*</div>*/}
                         <div className="row">
                             <label>Ending Date<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
                             <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={function() {return moment(offer.endingDate).format('DD-MM-YYYY')}}/>

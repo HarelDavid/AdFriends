@@ -59,8 +59,7 @@ export default class NavigationBar extends React.Component {
 					title="Add Friend"
 					iconElementLeft={!this.isMobile() && <div className="menu-hamburger"></div>}
 					onLeftIconButtonTouchTap={() => this.handleSideMenuToggle()}
-					iconElementRight={businessStore.isLoggedIn ? <FlatButton label="Log Out" onClick={this.logout}/> :
-						<Link to='/'><FlatButton label="Log In"/></Link>}
+					iconElementRight={businessStore.isLoggedIn && <FlatButton label="Log Out" labelStyle={{color: '#fff'}} onClick={this.logout}/> }
 				/>
                 {businessStore.isLoggedIn &&
 				<Drawer docked={!this.isMobile()} open={this.isMobile() ? NavOpen : true}

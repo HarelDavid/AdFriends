@@ -78,7 +78,6 @@ export default class Offer extends React.Component {
 	@autobind
 	createLink() {
 
-		debugger
 		const {offer} = this.state;
 		var {chosenClient}  = this.state;
 		var {businessStore, couponsStore}  = this.props;
@@ -151,7 +150,7 @@ export default class Offer extends React.Component {
 		const {businessStore, couponsStore} = this.props;
 console.log(couponsStore);
 		var shareUrl = "whatsapp://send?text=" + (preMessage || offer.message) + " " + link;
-		var actions =  <a href={shareUrl}>Share</a>;
+		var actions =  <a href={shareUrl} className="whatsup-share-button">שתף</a>;
 
 		return (
 
