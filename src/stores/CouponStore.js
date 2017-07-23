@@ -13,23 +13,28 @@ export default class CouponStore {
 
 	}
 
-	init(business){
-		this.couponRef = firebase.database().ref('coupons');
-		this.couponRef.orderByChild("businessId").equalTo(business.id)
-			.once('value').then((snapshot) => {
-			var coupons = [];
-			var couponsObj = snapshot.val();
-			for (var key in couponsObj) {
-				if (couponsObj.hasOwnProperty(key)) {
-					var coupon  = couponsObj[key];
-					var couponModel = new CouponModel();
-					couponModel.convertFromDB(coupon)
-					coupons.push(couponModel);
+	init(business, isNew) {
+	if (isNew){
+			this.coupons = [];
+	}
+	else {
+			this.couponRef = firebase.database().ref('coupons');
+			this.couponRef.orderByChild("businessId").equalTo(business.id)
+				.once('value').then((snapshot) => {
+				var coupons = [];
+				var couponsObj = snapshot.val();
+				for (var key in couponsObj) {
+					if (couponsObj.hasOwnProperty(key)) {
+						var coupon = couponsObj[key];
+						var couponModel = new CouponModel();
+						couponModel.convertFromDB(coupon)
+						coupons.push(couponModel);
+					}
 				}
-			}
 
-			this.coupons = coupons;
-		});
+				this.coupons = coupons;
+			});
+		}
 
 	}
 

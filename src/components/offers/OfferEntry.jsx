@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
 import {hashHistory} from 'react-router';
+import Promise from "bluebird";
 import autobind from 'autobind-decorator'
 import ImageUploader from'react-firebase-image-uploader';
 import * as firebase from 'firebase';
@@ -14,6 +15,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import Paper from 'material-ui/Paper';
+
 
 import style from './style.scss';
 Object.assign(style)
@@ -138,10 +140,6 @@ class OfferEntry extends React.Component {
         return (
             <div>
 
-
-                <a href="whatsapp://send?text=test">Share</a>
-
-
                 <Paper style={{marginTop: 20}}>
                     <form className="addItemForm">
 
@@ -208,7 +206,7 @@ class OfferEntry extends React.Component {
                             />
                         </label>
 
-                        <img src={offer.imageUrl} />
+                        <div style={{}} src={offer.imageUrl} />
 
                         <RaisedButton secondary={true} style={{color: 'white', margin: '10px 0'}}
                                       onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>שמור</RaisedButton>

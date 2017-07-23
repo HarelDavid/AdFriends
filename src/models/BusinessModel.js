@@ -12,6 +12,11 @@ export default class BusinessModel {
 	@observable businessType;
 	@observable description;
 
+	@observable picture;
+	@observable firstName;
+	@observable lastName;
+	@observable email;
+
 
 	constructor(data) {
 		if(data) {
@@ -26,6 +31,11 @@ export default class BusinessModel {
 			this.description =  data.description || "";
             this.offers = data.offers || [];
             this.clients = data.clients || [];
+			this.picture = data.picture || "";
+			this.firstName = data.firstName || "";
+			this.lastName = data.lastName || "";
+			this.email = data.email || "";
+
 		}
 	}
 
@@ -43,6 +53,13 @@ export default class BusinessModel {
 		this.offers = businessDB.offers;
 		this.clients = businessDB.clients;
 
+
+		this.picture = businessDB.picture;
+		this.firstName = businessDB.firstName;
+		this.lastName = businessDB.lastName;
+		this.email = businessDB.email;
+
+
     }
 
     convertToDB() {
@@ -56,6 +73,13 @@ export default class BusinessModel {
         this.website ? businessDB.website = this.website : "";
         this.facebook ? businessDB.facebook = this.facebook : "";
         this.businessType ? businessDB.businessType = this.businessType : "";
+        this.picture ? businessDB.picture = this.picture : "";
+        this.firstName ? businessDB.firstName = this.firstName : "";
+        this.lastName ? businessDB.lastName = this.lastName : "";
+        this.email ? businessDB.email = this.email : "";
+
+
+
 
         return businessDB;
     }

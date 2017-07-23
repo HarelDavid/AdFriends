@@ -7,8 +7,8 @@ import {hashHistory } from 'react-router'
 import * as firebase from 'firebase';
 
 const LOGIN_PROVIDERS = {
-    FACEBOOK: 'facebook',
-    GOOGLE: 'google'
+	FACEBOOK: 'facebook',
+	GOOGLE: 'google'
 }
 
 
@@ -37,18 +37,19 @@ export default class BuisnessStore {
 	}
 
 
-    startObserve(){
-		//if(!this.disableAuthObserver) {
+	startObserve(){
 
-            firebase.auth().onAuthStateChanged((user) => {
-                if (user && !this.business) {
-                    return this.login(user, user.refreshToken)
-                } else {
-                    this.initialize = true;
+		firebase.auth().onAuthStateChanged((user) => {
+			if(!this.disableAuthObserver) {
+				if (user && !this.business) {
+					return this.login(user, user.refreshToken)
+				} else {
+					this.initialize = true;
 
-                }
-            })
-    }
+				}
+			}
+		})
+	}
 
 
 	@computed get isLoggedIn(){
@@ -62,49 +63,50 @@ export default class BuisnessStore {
 
 
 	getProviderData(accessToken){
-		return FB.api('/me',
-			{fields: "id,last_name,first_name,picture,email"},{access_token:accessToken},
-			function(response) {
-				console.log('API response', response);
 
-			}
-		);
+		return FB.api('/me', 'get', { access_token: accessToken, fields: 'id,last_name,first_name,gender,picture,email' }, (response) => {
+			return response;
+		});
+
 	}
 
-    handleLoginSuccess(result) {
-		return promise.resolve(() => {
-      //  disableAuthObserver = true;
-        var token = result.credential.accessToken;
-        if(result.credential){
-            var { user, credential } = result;
-            return this.getProviderData(credential.accessToken);
-            if(user){
-                return this.login(user, credential)
-            }
-        }
-        return false;
-        })
+	handleLoginSuccess(result) {
+		var { user, credential } = result;
+		this.disableAuthObserver = true
+		return Promise.resolve()
+		.then(() => {
+			if(credential) {
+				return FB.api('/me', 'get', { access_token: credential.accessToken, fields: 'id,last_name,first_name,gender,picture,email' }, (providerData) => {
+					return this.login(user, providerData)
+				});
+			}
+		})
+		.then(() => {
+			this.disableAuthObserver = false
+		})
 
-    }
+	}
 
 
 
 
-    login(currentUser, credentials){
+	login(currentUser, providerData){
 		var isFirstTime = null
 		return this.getBusiness(currentUser.uid)
 			.then((business) => {
 				if(!business) {
-                    var business = this.addNewBusiness(currentUser, credentials);
-                    this.init(business);
-                }
-                else {
+					this.addNewBusiness(currentUser, providerData)
+						.then((business) => {
+							this.init(business);
+						})
+
+				}
+				else {
 					var businessModel = new BusinessModel();
 					businessModel.convertFromDB(business);
 					businessModel.store = this;
 					this.init(businessModel);
 				}
-                hashHistory.push('/offers');
 			})
 	}
 
@@ -120,7 +122,7 @@ export default class BuisnessStore {
 
 	}
 
-    getBusiness(id){
+	getBusiness(id){
 		return firebase.database().ref('/business/' + id).once('value').then(function(snapshot) {
 			return  snapshot.val();
 		});
@@ -136,11 +138,19 @@ export default class BuisnessStore {
 	}
 
 
-	addNewBusiness(currentUser, credentials) {
+	addNewBusiness(currentUser, providerData) {
 		var business = new BusinessModel(currentUser);
-		return firebase.database().ref('/business').child(currentUser.uid).set(business);
-        business.store = this;
-		return business;
+		business.picture =providerData.picture || ""
+		business.firstName =providerData.first_name || ""
+		business.lastName =providerData.last_name || ""
+		business.email =providerData.email || ""
+		var businessModelDB = business.convertToDB();
+		return firebase.database().ref('/business').child(currentUser.uid).set(businessModelDB)
+			.then(() => {
+
+				business.store = this;
+				return business;
+			})
 
 	}
 
