@@ -88,7 +88,7 @@ export default class Login extends Component {
 									  overflow: 'hidden',
 									  color: '#fff'
 								  }}/>
-					{/*<RaisedButton onClick={() => this.providerLogin(LOGIN_PROVIDERS.GOOGLE)}
+					<RaisedButton onClick={() => this.providerLogin(LOGIN_PROVIDERS.GOOGLE)}
 					 backgroundColor="#ff5a60" labelColor="#ffffff"
 					 labelStyle={{fontSize: 18, color: '#fff'}} label="Google Login"
 					 style={{
@@ -98,7 +98,7 @@ export default class Login extends Component {
 					 borderRadius: 30,
 					 overflow: 'hidden',
 					 color: '#fff'
-					 }}/>*/}
+					 }}/>
 
 				</div>
 			</div>

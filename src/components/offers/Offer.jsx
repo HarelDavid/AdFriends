@@ -9,6 +9,7 @@ import {Creatable} from 'react-select';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import ClientModel from '../../models/ClientModel'
@@ -121,9 +122,13 @@ export default class Offer extends React.Component {
 	@autobind
 	openDialog(){
 		this.createLink();
-
 		this.setState({dialogOpen: true});
 	}
+
+	@autobind
+	handleClose()  {
+		this.setState({dialogOpen: false});
+	};
 
 
 
@@ -142,15 +147,30 @@ export default class Offer extends React.Component {
 	}
 
 
+	isMobile() {
+		let mql = window.matchMedia('(max-width: 920px)');
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && mql.matches) {
+			return true;
+		}
+		return false;
+	}
+
 
 
 
 	render() {
 		const {offer,dialogOpen, preMessage, link} = this.state;
 		const {businessStore, couponsStore} = this.props;
-console.log(couponsStore);
 		var shareUrl = "whatsapp://send?text=" + (preMessage || offer.message) + " " + link;
-		var actions =  <a href={shareUrl} className="whatsup-share-button">שתף</a>;
+		var actions =  [<FlatButton
+				label="סגור"
+				primary={true}
+				onTouchTap={this.handleClose}
+			/>,
+			<RaisedButton backgroundColor="#25D366">
+			<a href={shareUrl} style={{color: '#fff', fontSize: '18px', textDecoration: 'none'}} className="whatsup-share-button">
+				<FontIcon className="material-icons" style={{color: '#fff', fontSize: 18, verticalAlign: 'sub'}}>share</FontIcon>  שתף</a>
+		</RaisedButton>];
 
 		return (
 
@@ -159,7 +179,7 @@ console.log(couponsStore);
 					title={offer.title}
 					actAsExpander={true}
 					showExpandableButton={true}
-					closeIcon={<FontIcon className="material-icons" style={{color: '#189d0e'}}>share</FontIcon>}
+					closeIcon={<FontIcon className="material-icons">share</FontIcon>}
 					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -185,15 +205,16 @@ console.log(couponsStore);
 								modal={false}
 								open={this.state.dialogOpen}
 								onRequestClose={this.handleClose}
+								contentStyle={{width: '80%'}}
 							>
-								<TextField multiLine={true} name="preMessage"
+								<TextField multiLine={true} name="preMessage" hintText="שלח הודעה ללקוח"
 										   onChange={this.updatePreMessage}/>
 								{/*<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>*/}
 							</Dialog>
 							}
 						</div>
-						{/*{this.state.link &&*/}
-						{/*<Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}*/}
+						{this.state.link &&
+						<Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}
 					</div>
 				</CardText>
 			</Card>

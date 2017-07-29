@@ -44,7 +44,7 @@ class OfferEntry extends React.Component {
 
         if (offerId) {
             this.state.offer = offerStore.offers.find((it) => it.id == offerId);
-            // this.state.offer.endingDate = new Date(this.state.offer.endingDate);
+            this.state.offer.endingDate = new Date(this.state.offer.endingDate);
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
@@ -136,7 +136,7 @@ class OfferEntry extends React.Component {
             return null;
         }
 
-
+console.log(offer)
         return (
             <div>
 
@@ -206,7 +206,15 @@ class OfferEntry extends React.Component {
                             />
                         </label>
 
-                        <div style={{}} src={offer.imageUrl} />
+						{offer.imageUrl &&
+                        <div style={{
+							backgroundImage: `url(${offer.imageUrl})`,
+							backgroundSize: 'contain',
+                            backgroundRepeat: 'no-repeat',
+							width: '100%',
+							height: '250px'
+						}}/>
+						}
 
                         <RaisedButton secondary={true} style={{color: 'white', margin: '10px 0'}}
                                       onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>שמור</RaisedButton>

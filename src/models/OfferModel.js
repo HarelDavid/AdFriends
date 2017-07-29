@@ -60,7 +60,7 @@ export default class OfferModel {
 		this.code ? offerDB.code = this.code : "";
 		// this.dateCreated ? offerDB.dateCreated = this.dateCreated : "";
 		this.couponLinks ? offerDB.couponLinks = this.couponLinks.toJS() : "";
-		this.endingDate ? offerDB.endingDate = this.endingDate.getTime() : "";
+		this.endingDate ? offerDB.endingDate = this.endingDate : "";
 
 		return offerDB;
 	}
