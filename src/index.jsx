@@ -8,13 +8,29 @@ import CouponStore from './stores/CouponStore';
 
 import * as firebase from 'firebase';
 
-var configFirebase = {
-	apiKey: "AIzaSyDieUaSUVR8dTDTsWb-UVkCXzkAn04G9KE",
-	authDomain: "adfriend-73789.firebaseapp.com",
-	databaseURL: "https://adfriend-73789.firebaseio.com",
-	storageBucket: "adfriend-73789.appspot.com",
-	messagingSenderId: "640171697438"
-};
+const isProd = process.env.NODE_ENV === 'production'
+var configFirebase;
+if ( !isProd ) {
+    configFirebase = {
+        apiKey: "AIzaSyDieUaSUVR8dTDTsWb-UVkCXzkAn04G9KE",
+        authDomain: "adfriend-73789.firebaseapp.com",
+        databaseURL: "https://adfriend-73789.firebaseio.com",
+        storageBucket: "adfriend-73789.appspot.com",
+        messagingSenderId: "640171697438"
+    };
+}
+else {
+    configFirebase  = {
+        apiKey: "AIzaSyA9hrvUvs6uBVvO2ianh5IQQp7qFjQB4OY",
+        authDomain: "adfriendprod.firebaseapp.com",
+        databaseURL: "https://adfriendprod.firebaseio.com",
+        projectId: "adfriendprod",
+        storageBucket: "adfriendprod.appspot.com",
+        messagingSenderId: "370997730739"
+    };
+
+}
+
 firebase.initializeApp(configFirebase);
 
 

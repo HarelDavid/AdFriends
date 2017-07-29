@@ -53,6 +53,7 @@ export default class CouponModel {
 		couponDB.watches = this.watches || 0;
 		couponDB.realized = this.realized || false;
 		couponDB.message = this.message || "";
+		couponDB.bussineData = this.bussineData || {};
 
 		return couponDB;
 	}
