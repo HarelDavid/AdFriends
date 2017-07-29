@@ -82,7 +82,7 @@ export default class CouponStore {
 	save(coupon) {
 
 		if(!coupon.id){
-			var couponId = Utils.uuid();
+			var couponId = `${coupon.offer.id}_${coupon.clientId}`
 			coupon.id = couponId;
 			coupon.store = this;
 		}

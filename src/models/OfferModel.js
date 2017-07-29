@@ -1,4 +1,5 @@
 import {observable} from 'mobx';
+import moment from 'moment';
 
 export default class OfferModel {
 	store;
@@ -23,7 +24,7 @@ export default class OfferModel {
 			this.imageUrl = data.imageUrl || "";
 			this.preMessage = data.preMessage || "";
 			this.terms = data.terms || "";
-			this.endingDate = data.endingDate || "";
+			this.endingDate = data.endingDate ? data.endingDate :   "";
 			this.code = data.code || "";
 			// this.dateCreated = data.dateCreated || "";
 			this.couponLinks = data.couponLinks || [];
@@ -56,10 +57,10 @@ export default class OfferModel {
 		this.imageUrl ? offerDB.imageUrl = this.imageUrl : "";
 		this.preMessage ? offerDB.preMessage = this.preMessage : "";
 		this.terms ? offerDB.terms = this.terms : "";
-		this.endingDate ? offerDB.endingDate = this.endingDate : new Date();
 		this.code ? offerDB.code = this.code : "";
 		// this.dateCreated ? offerDB.dateCreated = this.dateCreated : "";
 		this.couponLinks ? offerDB.couponLinks = this.couponLinks.toJS() : "";
+		this.endingDate ? offerDB.endingDate = this.endingDate.getTime() : "";
 
 		return offerDB;
 	}
