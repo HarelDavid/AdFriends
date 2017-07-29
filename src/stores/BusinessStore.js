@@ -97,7 +97,8 @@ export default class BuisnessStore {
 				if(!business) {
 					this.addNewBusiness(currentUser, providerData)
 						.then((business) => {
-							this.init(business);
+							this.init(business)
+                             hashHistory.push('/settings');
 						})
 
 				}
@@ -106,6 +107,7 @@ export default class BuisnessStore {
 					businessModel.convertFromDB(business);
 					businessModel.store = this;
 					this.init(businessModel);
+                    hashHistory.push('/offers');
 				}
 			})
 	}

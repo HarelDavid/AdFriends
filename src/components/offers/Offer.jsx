@@ -86,6 +86,11 @@ export default class Offer extends React.Component {
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
 		coupon.message = this.state.preMessage || offer.message;
+        coupon.bussineData = {}
+        coupon.bussineData.email =  businessStore.business.email
+        coupon.bussineData.firstName =  businessStore.business.firstName
+        coupon.bussineData.lastName =  businessStore.business.lastName
+        coupon.bussineData.imageUrl =  businessStore.business.imageUrl
 		coupon.save();
 		this.state.link = coupon.link;
 		offer.couponLinks.push(coupon.link);
