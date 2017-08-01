@@ -71,6 +71,7 @@ class OfferEntry extends React.Component {
 
     @autobind
     onChangeDate(event, date) {
+        debugger
         this.updateProperty('endingDate', date)
     }
 
