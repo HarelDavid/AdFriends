@@ -56,7 +56,6 @@ export default class Settings extends React.Component {
 
         var business = businessStore.business;
 
-        console.log(business);
 
         return (
             <div className="Settings">
