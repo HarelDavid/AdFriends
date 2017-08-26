@@ -114,9 +114,22 @@ class OfferEntry extends React.Component {
         console.error(error);
     }
 
+    drawImage(url){
+		var canvas = document.getElementById('canvas'),
+		ctx = canvas.getContext('2d');
+		img = new Image();
+		img.src = url;
+		img.onload = function(){
+			ctx.drawImage(img, 100, 100);
+		}
+    }
+
     @autobind
     handleUploadSuccess(filename) {
         var {offer} = this.state;
+
+        this.drawImage(offer.imageUrl)
+
         this.setState({avatar: filename, progress: 100, isUploading: false});
         var imagesRef = firebase.storage().ref('images').child(filename);
         firebase.storage().ref('images').child(filename).getDownloadURL().then(url => offer.imageUrl = url);
@@ -186,11 +199,6 @@ class OfferEntry extends React.Component {
                             {/*<ReactTooltip id="code"/>*/}
 
                         {/*</div>*/}
-                        <div className={style.urls}>
-                            {offer.urls && offer.urls.map((url) =>
-                                <div>{url}</div>
-                            )}
-                        </div>
 
                         <label>
                             <ImageUploader
@@ -204,7 +212,7 @@ class OfferEntry extends React.Component {
                         </label>
 
 						{offer.imageUrl &&
-                        <div style={{
+                        <canvas id="canvas" style={{
 							backgroundImage: `url(${offer.imageUrl})`,
 							backgroundSize: 'contain',
                             backgroundRepeat: 'no-repeat',
