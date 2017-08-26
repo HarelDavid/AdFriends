@@ -56,7 +56,7 @@ export default class NavigationBar extends React.Component {
 		return (
 			<div  className="NavigationBar">
 				<AppBar
-					title="Add Friend"
+					title="AdFriend"
 					iconElementLeft={!this.isMobile() && <div className="menu-hamburger"></div>}
 					onLeftIconButtonTouchTap={() => this.handleSideMenuToggle()}
 					iconElementRight={businessStore.isLoggedIn && <FlatButton label="Log Out" labelStyle={{color: '#fff'}} onClick={this.logout}/> }

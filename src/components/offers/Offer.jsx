@@ -30,7 +30,7 @@ export default class Offer extends React.Component {
 		link: "",
 		client: {},
 		dialogOpen: false,
-		preMessage: ''
+		message: ''
 	}
 
 	componentWillMount() {
@@ -86,7 +86,7 @@ export default class Offer extends React.Component {
 		coupon.businessId = businessStore.business.id;
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
-		coupon.message = this.state.preMessage || offer.message;
+		coupon.message = this.state.message || offer.preMessage;
         coupon.bussineData = {}
         coupon.bussineData.email =  businessStore.business.email
         coupon.bussineData.firstName =  businessStore.business.firstName
@@ -164,9 +164,9 @@ export default class Offer extends React.Component {
 
 
 	render() {
-		const {offer,dialogOpen, preMessage, link} = this.state;
+		const {offer,dialogOpen, message, link} = this.state;
 		const {businessStore, couponsStore} = this.props;
-		var shareUrl = "whatsapp://send?text=" + (preMessage || offer.message) + " " + link;
+		var shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
 		var actions =  [<FlatButton
 				label="סגור"
 				primary={true}
@@ -188,7 +188,7 @@ export default class Offer extends React.Component {
 					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
-					<p>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YYYY')}</p>
+					<p>בתוקף עד: {moment(offer.endingDate*1000).format('DD/MM/YYYY')}</p>
 					<Link to={`/offer/${offer.id}`}>
 						<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
 					</Link>
@@ -210,9 +210,8 @@ export default class Offer extends React.Component {
 								modal={false}
 								open={this.state.dialogOpen}
 								onRequestClose={this.handleClose}
-								contentStyle={{width: '80%'}}
-							>
-								<TextField multiLine={true} name="preMessage" hintText="שלח הודעה ללקוח"
+								contentStyle={{width: '80%'}}>
+								<TextField label="הודעה ללקוח" multiLine={true} name="message" defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
 										   onChange={this.updatePreMessage}/>
 								{/*<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>*/}
 							</Dialog>

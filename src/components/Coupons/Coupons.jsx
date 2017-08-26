@@ -18,6 +18,7 @@ export default class Coupons extends React.Component {
 		var {businessStore, couponsStore} = this.props.route;
 
 		couponsStore.init(businessStore.business);
+		console.log(couponsStore);
 	}
 
 
@@ -35,13 +36,18 @@ export default class Coupons extends React.Component {
             <div className="offers-wrapper">
                 <h1>קופונים</h1>
 
-                <div className="offers-list">
+                <table className="offers-list">
+					<tr>
+						<th>נשלח אל</th>
+						<th>מס׳ צפיות</th>
+						<th>מס׳ מימושים</th>
+						<th>קישור</th>
+					</tr>
                     {couponsStore.coupons.map((coupon) => (
                             <Coupon couponsStore={couponsStore} businessStore={businessStore} className="coupon" key={coupon.id} coupon={coupon}/>
-
                         )
                     )}
-                </div>
+                </table>
             </div>
 
 

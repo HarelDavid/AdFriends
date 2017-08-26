@@ -107,7 +107,8 @@ export default class BuisnessStore {
 					businessModel.convertFromDB(business);
 					businessModel.store = this;
 					this.init(businessModel);
-                    hashHistory.push('/offers');
+                    // hashHistory.push('/offers');
+
 				}
 			})
 	}
@@ -142,18 +143,16 @@ export default class BuisnessStore {
 
 	addNewBusiness(currentUser, providerData) {
 		var business = new BusinessModel(currentUser);
-		business.picture =providerData.picture || ""
-		business.firstName =providerData.first_name || ""
-		business.lastName =providerData.last_name || ""
-		business.email =providerData.email || ""
+		business.picture = providerData.picture || ""
+		business.firstName = providerData.first_name || ""
+		business.lastName = providerData.last_name || ""
+		business.email = providerData.email || ""
 		var businessModelDB = business.convertToDB();
 		return firebase.database().ref('/business').child(currentUser.uid).set(businessModelDB)
 			.then(() => {
-
 				business.store = this;
 				return business;
 			})
-
 	}
 
 

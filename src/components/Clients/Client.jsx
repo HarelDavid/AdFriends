@@ -50,9 +50,7 @@ export default class Client extends React.Component {
                     actAsExpander={true}
                     showExpandableButton={true}
                 />
-                <CardActions>
-                    <IconButton onTouchTap={()=>this.handleClientDelete(client)}><FontIcon className="material-icons" style={{color: 'red'}}>delete_forever</FontIcon></IconButton>
-                </CardActions>
+
                 <CardText expandable={true}>
                     {client.couponLinks.length > 0 && client.couponLinks.map((coupon) => {
                        return <div key={coupon.id}><a href={coupon + '/preview'}>הצעה</a></div>
