@@ -50,7 +50,6 @@ export default class Coupon extends React.Component {
 					showExpandableButton={false}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between', padding: 16}}>
-					<p style={{marginRight: 0}}>נשלח בתאריך: </p>
 					<p>מספר צפיות: {coupon.watches}</p>
 				</CardActions>
 
