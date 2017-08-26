@@ -30,7 +30,7 @@ export default class Offer extends React.Component {
 		link: "",
 		client: {},
 		dialogOpen: false,
-		preMessage: ''
+		message: ''
 	}
 
 	componentWillMount() {
@@ -86,7 +86,7 @@ export default class Offer extends React.Component {
 		coupon.businessId = businessStore.business.id;
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
-		coupon.message = this.state.preMessage || offer.message;
+		coupon.message = this.state.message || offer.preMessage;
         coupon.bussineData = {}
         coupon.bussineData.email =  businessStore.business.email
         coupon.bussineData.firstName =  businessStore.business.firstName
@@ -164,9 +164,9 @@ export default class Offer extends React.Component {
 
 
 	render() {
-		const {offer,dialogOpen, preMessage, link} = this.state;
+		const {offer,dialogOpen, message, link} = this.state;
 		const {businessStore, couponsStore} = this.props;
-		var shareUrl = "whatsapp://send?text=" + (preMessage || offer.message) + " " + link;
+		var shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
 		var actions =  [<FlatButton
 				label="סגור"
 				primary={true}
@@ -211,7 +211,7 @@ export default class Offer extends React.Component {
 								open={this.state.dialogOpen}
 								onRequestClose={this.handleClose}
 								contentStyle={{width: '80%'}}>
-								<TextField multiLine={true} name="preMessage" hintText="שלח הודעה ללקוח"
+								<TextField label="הודעה ללקוח" multiLine={true} name="message" defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
 										   onChange={this.updatePreMessage}/>
 								{/*<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>*/}
 							</Dialog>
