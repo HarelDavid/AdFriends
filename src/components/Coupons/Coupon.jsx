@@ -43,17 +43,21 @@ export default class Coupon extends React.Component {
 
 		return (
 
-			<Card style={{margin: '20px 0'}}>
-				<CardHeader
-					title={<p>אל: {client.title}</p>}
-					actAsExpander={true}
-					showExpandableButton={false}
-				/>
-				<CardActions style={{display: 'flex', justifyContent: 'space-between', padding: 16}}>
-					<p>מספר צפיות: {coupon.watches}</p>
-				</CardActions>
+			<tr style={{borderBottom: '1px solid #cbcbcb'}}>
+				<td>
+					{client.title}
+				</td>
+				<td>
+					{coupon.watches}
+				</td>
+				<td>
+					{coupon.realized}
+				</td>
+				<td>
+					<a target="_blank" href={coupon.link}>{coupon.offer.title}</a>
+				</td>
 
-			</Card>
+			</tr>
 
 		);
 	}

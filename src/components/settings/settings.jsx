@@ -42,7 +42,7 @@ export default class Settings extends React.Component {
         if (business) {
             business.save();
         }
-        hashHistory.push('/');
+        hashHistory.push('/#offers');
     };
 
     render() {

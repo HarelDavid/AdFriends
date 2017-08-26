@@ -44,7 +44,7 @@ class OfferEntry extends React.Component {
 
         if (offerId) {
             this.state.offer = offerStore.offers.find((it) => it.id == offerId);
-            this.state.offer.endingDate = new Date(this.state.offer.endingDate);
+            this.state.offer.endingDate = new Date(this.state.offer.endingDate*1000);
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
@@ -76,19 +76,16 @@ class OfferEntry extends React.Component {
     }
 
 
-    @autobind
-    handleSubmit() {
-        var {offer} = this.state;
-        if (offer) {
-            offer.save();
-        }
-    };
+	toTimestamp(date){
+		var parsedDate = Date.parse(date);
+		return parsedDate/1000;
+	}
 
     @autobind
     handleNewOfferKeyDown(e) {
         e.preventDefault();
         var {offer} = this.state;
-        // offer['endingDate'] = offer['endingDate'].toISOString();
+        offer['endingDate'] = this.toTimestamp(offer['endingDate']);
         offer.save();
         hashHistory.push('/offers');
         this.clearForm();
@@ -137,7 +134,6 @@ class OfferEntry extends React.Component {
             return null;
         }
 
-console.log(offer)
         return (
             <div>
 
@@ -145,26 +141,26 @@ console.log(offer)
                     <form className="addItemForm">
 
                         <div className="row">
-                            <label>Title <span data-tip={tooltip.title} data-for='title'>?</span></label>
+                            <label>שם המבצע <span data-tip={tooltip.title} data-for='title'>?</span></label>
                             <TextField name="title" defaultValue={offer.title} onChange={this.onChange}/>
                             <ReactTooltip id="title"/>
                         </div>
                         <div className="row">
-                            <label>Description <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
+                            <label>תיאור <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
                             <TextField multiLine={true} name="description" defaultValue={offer.description}
                                        onChange={this.onChange}/>
                             <ReactTooltip id="desc"/>
 
                         </div>
-                        {/*<div className="row">*/}
-                            {/*<label>Message to Client:<span data-tip={tooltip.message}*/}
-                                                           {/*data-for='message'>?</span></label>*/}
-                            {/*<TextField multiLine={true} name="preMessage" value={offer.preMessage}*/}
-                                       {/*onChange={this.onChange}/>*/}
-                            {/*<ReactTooltip id="message"/>*/}
-                        {/*</div>*/}
                         <div className="row">
-                            <label>Terms<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
+                            <label>הודעה ללקוח<span data-tip={tooltip.message}
+                                                           data-for='message'>?</span></label>
+                            <TextField multiLine={true} name="preMessage" value={offer.preMessage}
+                                       onChange={this.onChange}/>
+                            <ReactTooltip id="message"/>
+                        </div>
+                        <div className="row">
+                            <label>תנאים<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
                             <TextField name="terms" value={offer.terms} onChange={this.onChange}/>
                             <ReactTooltip id="terms"/>
                         </div>
@@ -180,7 +176,7 @@ console.log(offer)
 
                         {/*</div>*/}
                         <div className="row">
-                            <label>Ending Date<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
+                            <label>בתוקף עד<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
                             <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={function() {return moment(offer.endingDate).format('DD-MM-YYYY')}}/>
                             <ReactTooltip id="endDate"/>
                         </div>

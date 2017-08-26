@@ -29,8 +29,8 @@ export default class Login extends Component {
 	componentDidMount() {
 		var {businessStore} = this.props.route;
 
-		businessStore.isLoggedIn && hashHistory.push('/#/offers/');
-		console.log(businessStore.isLoggedIn);
+		// businessStore.isLoggedIn && hashHistory.push('/#/offers/');
+		// console.log(businessStore.isLoggedIn);
 	}
 
 
