@@ -48,6 +48,12 @@ class OfferEntry extends React.Component {
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
+
+        console.log(this.state.offer)
+    }
+
+    componentDidMount(){
+		this.state.offer.imageUrl && this.drawImage(this.state.offer.imageUrl);
     }
 
 
@@ -116,24 +122,29 @@ class OfferEntry extends React.Component {
 
     drawImage(url){
 		var canvas = document.getElementById('canvas'),
-		ctx = canvas.getContext('2d');
+		ctx = canvas.getContext('2d'),
 		img = new Image();
 		img.src = url;
 		img.onload = function(){
-			ctx.drawImage(img, 100, 100);
+		    var ratio = img.width/canvas.width;
+			ctx.drawImage(img, 0, 0, img.width,    img.height,
+				0, 0, canvas.width, img.height/ratio);
+
 		}
+		this.state.imageUrl = canvas.toDataURL('image/jpeg');
     }
 
     @autobind
     handleUploadSuccess(filename) {
         var {offer} = this.state;
-
-        this.drawImage(offer.imageUrl)
-
         this.setState({avatar: filename, progress: 100, isUploading: false});
         var imagesRef = firebase.storage().ref('images').child(filename);
-        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => offer.imageUrl = url);
-    };
+        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.drawImage(url));
+        //TODO: first place on canvas then save to db
+
+	};
+
+
 
     @autobind
     goBack() {
@@ -211,15 +222,12 @@ class OfferEntry extends React.Component {
                             />
                         </label>
 
-						{offer.imageUrl &&
+
                         <canvas id="canvas" style={{
-							backgroundImage: `url(${offer.imageUrl})`,
-							backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat',
 							width: '100%',
 							height: '250px'
 						}}/>
-						}
+
 
                         <RaisedButton secondary={true} style={{color: 'white', margin: '10px 0'}}
                                       onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>שמור</RaisedButton>
