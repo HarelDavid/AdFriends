@@ -180,12 +180,12 @@ class OfferEntry extends React.Component {
                             <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={function() {return moment(offer.endingDate).format('DD-MM-YYYY')}}/>
                             <ReactTooltip id="endDate"/>
                         </div>
-                        <div className="row">
-                            <label>Code<span data-tip={tooltip.code} data-for='code'>?</span></label>
-                            <TextField name="code" value={offer.code} onChange={this.onChange}/>
-                            <ReactTooltip id="code"/>
+                        {/*<div className="row">*/}
+                            {/*<label>Code<span data-tip={tooltip.code} data-for='code'>?</span></label>*/}
+                            {/*<TextField name="code" value={offer.code} onChange={this.onChange}/>*/}
+                            {/*<ReactTooltip id="code"/>*/}
 
-                        </div>
+                        {/*</div>*/}
                         <div className={style.urls}>
                             {offer.urls && offer.urls.map((url) =>
                                 <div>{url}</div>

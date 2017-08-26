@@ -188,7 +188,7 @@ export default class Offer extends React.Component {
 					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
-					<p>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YYYY')}</p>
+					<p>בתוקף עד: {moment(offer.endingDate*1000).format('DD/MM/YYYY')}</p>
 					<Link to={`/offer/${offer.id}`}>
 						<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
 					</Link>
@@ -210,8 +210,7 @@ export default class Offer extends React.Component {
 								modal={false}
 								open={this.state.dialogOpen}
 								onRequestClose={this.handleClose}
-								contentStyle={{width: '80%'}}
-							>
+								contentStyle={{width: '80%'}}>
 								<TextField multiLine={true} name="preMessage" hintText="שלח הודעה ללקוח"
 										   onChange={this.updatePreMessage}/>
 								{/*<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>*/}
