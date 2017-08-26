@@ -45,6 +45,24 @@ export default class Settings extends React.Component {
         hashHistory.push('/');
     };
 
+    @autobind
+    handleProgress(progress) {
+        this.setState({progress});
+    }
+
+    @autobind
+    handleUploadError(error) {
+        this.setState({isUploading: false});
+        console.error(error);
+    }
+
+    @autobind
+    handleUploadSuccess(filename) {
+        this.setState({avatar: filename, progress: 100, isUploading: false});
+        var imagesRef = firebase.storage().ref('images').child(filename);
+        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.updateProperty('imageUrl', url));
+    };
+
     render() {
 
         var {businessStore} = this.props.route;

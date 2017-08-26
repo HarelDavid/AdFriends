@@ -19,7 +19,8 @@ export default class ClientEntry extends React.Component {
     @observable
     state = {
         client: new ClientModel({store: this.props.clientStore}),
-        error: false
+        error: false,
+        imageUrl
 
     }
 
