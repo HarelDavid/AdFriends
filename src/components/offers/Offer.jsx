@@ -218,7 +218,7 @@ export default class Offer extends React.Component {
 							}
 						</div>
 						{this.state.link &&
-						<Link to={this.state.link}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></Link>}
+						<a target="_blank"  href={`${this.state.link}?preview=true`}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></a>}
 					</div>
 				</CardText>
 			</Card>

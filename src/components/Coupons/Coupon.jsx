@@ -29,9 +29,6 @@ export default class Coupon extends React.Component {
 
 	componentWillMount() {
 		const {couponsStore, businessStore, coupon} = this.props;
-
-		console.log(coupon);
-		console.log(businessStore);
 	}
 
 
@@ -54,7 +51,7 @@ export default class Coupon extends React.Component {
 					{coupon.realized}
 				</td>
 				<td>
-					<a target="_blank" href={coupon.link}>{coupon.offer.title}</a>
+					<a target="_blank" href={`${coupon.link}?preview=true`}>{coupon.offer.title}</a>
 				</td>
 
 			</tr>
