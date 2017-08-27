@@ -74,7 +74,10 @@
     width: 100%;
     top: 0;
     z-index: 99;
-    button {
+    @media #{$media-higher-than-mobile} {
+      width:calc(100% - 255px);
+    }
+      button {
       margin-right: -10px !important;
       margin-left: 10px !important;
     }

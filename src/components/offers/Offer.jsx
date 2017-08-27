@@ -176,7 +176,7 @@ export default class Offer extends React.Component {
 
 		return (
 
-			<Card style={{margin: '20px 0'}}>
+			<Card style={{margin: '20px 0'}} className="offerBox">
 				<CardHeader
 					title={offer.title}
 					actAsExpander={true}

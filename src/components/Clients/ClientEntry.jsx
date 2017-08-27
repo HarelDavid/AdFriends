@@ -19,8 +19,7 @@ export default class ClientEntry extends React.Component {
     @observable
     state = {
         client: new ClientModel({store: this.props.clientStore}),
-        error: false,
-        imageUrl
+        error: false
 
     }
 
@@ -70,12 +69,7 @@ export default class ClientEntry extends React.Component {
         console.error(error);
     }
 
-    @autobind
-    handleUploadSuccess(filename) {
-        this.setState({avatar: filename, progress: 100, isUploading: false});
-        var imagesRef = firebase.storage().ref('images').child(filename);
-        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({imageUrl: url}));
-    };
+
 
 
     render() {
