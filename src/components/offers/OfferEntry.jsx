@@ -128,11 +128,13 @@ class OfferEntry extends React.Component {
     handleUploadSuccess(filename) {
         var {offer} = this.state;
 
-        this.drawImage(offer.imageUrl)
 
         this.setState({avatar: filename, progress: 100, isUploading: false});
         var imagesRef = firebase.storage().ref('images').child(filename);
-        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => offer.imageUrl = url);
+        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => {
+            offer.imageUrl = url;
+            this.drawImage(offer.imageUrl)
+        });
     };
 
     @autobind
