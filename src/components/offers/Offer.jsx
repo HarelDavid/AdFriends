@@ -40,13 +40,14 @@ export default class Offer extends React.Component {
 
 		this.state.client = new ClientModel({store: this.props.businessStore.clientStore})
 
+
 		return couponsStore.getCouponsByOfferId(offer.id)
 			.then((res) => {
 				return res
 			})
 
-
 	}
+
 
 
 	updateProperty(key, value) {
@@ -87,11 +88,11 @@ export default class Offer extends React.Component {
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
 		coupon.message = this.state.message || offer.preMessage;
-        coupon.bussineData = {}
-        coupon.bussineData.email =  businessStore.business.email
-        coupon.bussineData.firstName =  businessStore.business.firstName
-        coupon.bussineData.lastName =  businessStore.business.lastName
-        coupon.bussineData.imageUrl =  businessStore.business.imageUrl
+		coupon.bussineData = {}
+		coupon.bussineData.email = businessStore.business.email
+		coupon.bussineData.firstName = businessStore.business.firstName
+		coupon.bussineData.lastName = businessStore.business.lastName
+		coupon.bussineData.imageUrl = businessStore.business.imageUrl
 		coupon.save();
 		this.state.link = coupon.link;
 		offer.couponLinks.push(coupon.link);
@@ -125,16 +126,15 @@ export default class Offer extends React.Component {
 	};
 
 	@autobind
-	openDialog(){
+	openDialog() {
 		this.createLink();
 		this.setState({dialogOpen: true});
 	}
 
 	@autobind
-	handleClose()  {
+	handleClose() {
 		this.setState({dialogOpen: false});
 	};
-
 
 
 	handleNewClient() {
@@ -160,26 +160,34 @@ export default class Offer extends React.Component {
 		return false;
 	}
 
-
+	formatDate(){
+		return moment(this.props.offer.endingDate*1000).format('DD-MM-YYYY');
+	}
 
 
 	render() {
-		const {offer,dialogOpen, message, link} = this.state;
+		const {offer, dialogOpen, message, link} = this.state;
 		const {businessStore, couponsStore} = this.props;
 		var shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
-		var actions =  [<FlatButton
-				label="סגור"
-				primary={true}
-				onTouchTap={this.handleClose}
-			/>,
+		var actions = [<FlatButton
+			label="סגור"
+			primary={true}
+			onTouchTap={this.handleClose}
+		/>,
 			<RaisedButton backgroundColor="#25D366">
-			<a href={shareUrl} style={{color: '#fff', fontSize: '18px', textDecoration: 'none'}} className="whatsup-share-button">
-				<FontIcon className="material-icons" style={{color: '#fff', fontSize: 18, verticalAlign: 'sub'}}>share</FontIcon>  שתף</a>
-		</RaisedButton>];
+				<a href={shareUrl} style={{color: '#fff', fontSize: '18px', textDecoration: 'none'}}
+				   className="whatsup-share-button">
+					<FontIcon className="material-icons" style={{color: '#fff', fontSize: 18, verticalAlign: 'sub'}}>share</FontIcon>
+					שתף</a>
+			</RaisedButton>];
+
+
+		var offerBoxClass = "offerBox";
+		console.log(moment(offer.endingDate).isAfter(moment()))
 
 		return (
 
-			<Card style={{margin: '20px 0'}} className="offerBox">
+			<Card style={{margin: '20px 0'}} className={offerBoxClass}>
 				<CardHeader
 					title={offer.title}
 					actAsExpander={true}
@@ -188,7 +196,7 @@ export default class Offer extends React.Component {
 					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
-					<p>בתוקף עד: {moment(offer.endingDate*1000).format('DD/MM/YYYY')}</p>
+					<p>בתוקף עד: {this.formatDate()}</p>
 					<Link to={`/offer/${offer.id}`}>
 						<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
 					</Link>
@@ -211,14 +219,16 @@ export default class Offer extends React.Component {
 								open={this.state.dialogOpen}
 								onRequestClose={this.handleClose}
 								contentStyle={{width: '80%'}}>
-								<TextField label="הודעה ללקוח" multiLine={true} name="message" defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
+								<TextField label="הודעה ללקוח" multiLine={true} name="message"
+										   defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
 										   onChange={this.updatePreMessage}/>
 								{/*<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>*/}
 							</Dialog>
 							}
 						</div>
 						{this.state.link &&
-						<a target="_blank"  href={`${this.state.link}?preview=true`}><RaisedButton secondary>תצוגה מקדימה</RaisedButton></a>}
+						<a target="_blank" href={`${this.state.link}?preview=true`}><RaisedButton secondary>תצוגה
+							מקדימה</RaisedButton></a>}
 					</div>
 				</CardText>
 			</Card>

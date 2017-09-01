@@ -43,8 +43,9 @@ class OfferEntry extends React.Component {
 
 
         if (offerId) {
-            this.state.offer = offerStore.offers.find((it) => it.id == offerId);
-            this.state.offer.endingDate = new Date(this.state.offer.endingDate*1000);
+            var offer = offerStore.offers.find((it) => it.id == offerId);
+            offer.endingDate = new Date(offer.endingDate*1000);
+            this.state.offer = offer;
         } else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
@@ -145,6 +146,9 @@ class OfferEntry extends React.Component {
 	};
 
 
+    formatDate(date){
+		return moment(date).format('DD-MM-YYYY');
+    }
 
     @autobind
     goBack() {
@@ -153,6 +157,7 @@ class OfferEntry extends React.Component {
 
     render() {
         var {offer} = this.state;
+        var offerProps = this.props.offer;
         var {route} = this.props;
         if (!firebase.storage || !route.businessStore.isInitialized) {
             return null;
@@ -201,7 +206,7 @@ class OfferEntry extends React.Component {
                         {/*</div>*/}
                         <div className="row">
                             <label>בתוקף עד<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={function() {return moment(offer.endingDate).format('DD-MM-YYYY')}}/>
+                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={this.formatDate}/>
                             <ReactTooltip id="endDate"/>
                         </div>
                         {/*<div className="row">*/}
