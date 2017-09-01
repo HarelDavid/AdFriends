@@ -138,19 +138,22 @@ class OfferEntry extends React.Component {
     @autobind
     handleUploadSuccess(filename) {
         var {offer} = this.state;
+
+
         this.setState({avatar: filename, progress: 100, isUploading: false});
         var imagesRef = firebase.storage().ref('images').child(filename);
-        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.drawImage(url));
-        //TODO: first place on canvas then save to db
+        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => {
+            offer.imageUrl = url;
+            this.drawImage(offer.imageUrl)
+        });
+    };
 
-	};
-
-
-    formatDate(date){
+	formatDate(date){
 		return moment(date).format('DD-MM-YYYY');
-    }
+	}
 
-    @autobind
+
+	@autobind
     goBack() {
         hashHistory.push('/offers');
     }
