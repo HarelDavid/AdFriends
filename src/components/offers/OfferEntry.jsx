@@ -50,7 +50,7 @@ class OfferEntry extends React.Component {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
 
-        console.log(this.state.offer)
+        console.log(moment(this.state.offer.endingDate))
     }
 
     componentDidMount(){
@@ -203,7 +203,7 @@ class OfferEntry extends React.Component {
                         {/*</div>*/}
                         <div className="row">
                             <label>בתוקף עד<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={(date)=> this.formatDate(date)}/>
+                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={this.formatDate}/>
                             <ReactTooltip id="endDate"/>
                         </div>
                         {/*<div className="row">*/}

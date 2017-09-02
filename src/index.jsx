@@ -10,7 +10,6 @@ import * as firebase from 'firebase';
 
 const isProd = process.env.NODE_ENV === 'production'
 var configFirebase;
-alert("isProd" + isProd)
 if ( !isProd ) {
     configFirebase = {
         apiKey: "AIzaSyDieUaSUVR8dTDTsWb-UVkCXzkAn04G9KE",

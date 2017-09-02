@@ -191,16 +191,19 @@ export default class Offer extends React.Component {
 			primary={true}
 			onTouchTap={this.handleClose}
 		/>,
+			<a target="_blank" href={`${this.state.link}?preview=true`}>
+				<FlatButton label="תצוגה מקדימה" style={{marginTop: 20}} secondary />
+			</a>,
 			<RaisedButton backgroundColor="#25D366">
 				{this.isMobile() ?
-					<a href={shareUrl} style={{color: '#fff', fontSize: '18px', textDecoration: 'none'}}
+					<a href={shareUrl} style={{color: '#fff', textDecoration: 'none'}}
 					   className="whatsup-share-button">
 						<FontIcon className="material-icons"
-								  style={{color: '#fff', fontSize: 18, verticalAlign: 'sub'}}>share</FontIcon>
+								  style={{color: '#fff', fontSize: 16, marginLeft: 4,verticalAlign: 'sub'}}>share</FontIcon>
 						שתף</a>
 					:
-					<span style={{color: 'white'}} onClick={()=> this.copyTextToClipboard(link)}><FontIcon className="material-icons"
-								 style={{color: '#fff', fontSize: 18, verticalAlign: 'sub'}}>share</FontIcon> שתף</span>
+					<span style={{color: '#fff'}} onClick={()=> this.copyTextToClipboard(link)}><FontIcon className="material-icons"
+								 style={{color: '#fff', fontSize: 16, marginLeft: 4, verticalAlign: 'middle'}}>share</FontIcon> שתף</span>
 				}
 			</RaisedButton>];
 
@@ -254,18 +257,16 @@ export default class Offer extends React.Component {
 								modal={false}
 								open={this.state.dialogOpen}
 								onRequestClose={this.handleClose}
-								contentStyle={{width: '80%'}}>
+								contentStyle={{width: '90%'}}>
+
 								<TextField label="הודעה ללקוח" multiLine={true} name="message"
 										   defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
 										   onChange={this.updatePreMessage}/>
 								<b style={{float: 'left'}}>{shareMsg}</b>
-								{/*<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>*/}
 							</Dialog>
 							}
 						</div>
-						{this.state.link &&
-						<a target="_blank" href={`${this.state.link}?preview=true`}><RaisedButton secondary>תצוגה
-							מקדימה</RaisedButton></a>}
+
 					</div>
 				</CardText>
 			</Card>
