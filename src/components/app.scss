@@ -184,3 +184,12 @@
   padding: 3px 15px;
 
 }
+
+
+
+.offerBox.isOVerDue {
+  background: $grey-bg;
+  .offerDate {
+    color: red;
+  }
+}

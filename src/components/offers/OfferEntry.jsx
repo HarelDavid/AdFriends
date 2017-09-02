@@ -45,13 +45,12 @@ class OfferEntry extends React.Component {
         if (offerId) {
             var offer = offerStore.offers.find((it) => it.id == offerId);
             this.state.offer = offer;
-			// this.state.offer.endingDate = moment(offer.endingDate);
-console.log(this.state.offer.endingDate)
+
 		} else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
 
-        console.log(this.state.offer)
+        console.log(moment(this.state.offer.endingDate))
     }
 
     componentDidMount(){
@@ -79,8 +78,7 @@ console.log(this.state.offer.endingDate)
 
     @autobind
     onChangeDate(event, date) {
-        debugger
-        this.updateProperty('endingDate', date)
+        this.updateProperty('endingDate', moment(date).valueOf())
     }
 
 
@@ -88,9 +86,7 @@ console.log(this.state.offer.endingDate)
     @autobind
     handleNewOfferKeyDown(e) {
         e.preventDefault();
-        var {offer} = this.state;
-        offer.endingDate = moment(offer.endingDate).valueOf();
-        offer.save();
+		this.state.offer.save();
         hashHistory.push('/offers');
         this.clearForm();
 
@@ -150,6 +146,12 @@ console.log(this.state.offer.endingDate)
         hashHistory.push('/offers');
     }
 
+    @autobind
+	formatDate(date){
+	    console.log(moment(date))
+		return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+	}
+
     render() {
         var {offer} = this.state;
         var offerProps = this.props.offer;
@@ -201,7 +203,7 @@ console.log(this.state.offer.endingDate)
                         {/*</div>*/}
                         <div className="row">
                             <label>בתוקף עד<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={function() {return moment(offer.endingDate).format('DD-MM-YYYY')}}/>
+                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={(date)=> this.formatDate(date)}/>
                             <ReactTooltip id="endDate"/>
                         </div>
                         {/*<div className="row">*/}

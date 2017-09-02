@@ -37,7 +37,6 @@ export default class Offer extends React.Component {
 		const {offer, couponsStore} = this.props;
 
 		this.state.offer = offer;
-		this.state.offer.endingDate = moment(this.props.offer.endingDate);
 
 		this.clientStore = this.props.businessStore.clientStore;
 		this.state.client = new ClientModel({store: this.props.businessStore.clientStore})
@@ -63,13 +62,6 @@ export default class Offer extends React.Component {
 	}
 
 
-	@autobind
-	handleSubmit() {
-		var {offer} = this.state;
-		if (offer) {
-			offer.save();
-		}
-	};
 
 	@autobind
 	handleDestroy() {
@@ -121,18 +113,19 @@ export default class Offer extends React.Component {
 
 	@autobind
 	handleToggle(event, toggle) {
-		this.setState({expanded: toggle});
+		this.state.expanded = toggle;
 	};
 
 	@autobind
 	openDialog() {
 		this.createLink();
-		this.setState({dialogOpen: true});
+		this.state.dialogOpen = true;
 	}
 
 	@autobind
 	handleClose() {
-		this.setState({dialogOpen: false});
+		this.state.dialogOpen = false;
+
 	};
 
 
@@ -147,7 +140,7 @@ export default class Offer extends React.Component {
 
 	@autobind
 	updatePreMessage(event) {
-		this.setState({preMessage: event.target.value});
+		this.state.preMessage = event.target.value;
 	}
 
 
@@ -177,12 +170,24 @@ export default class Offer extends React.Component {
 					שתף</a>
 			</RaisedButton>];
 
+		var isOVerDue = moment(offer.endingDate).isBefore(new Date());
 
-		var offerBoxClass = "offerBox";
+
+		var offerBoxStyle = null;
+		var offerBoxDateStyle = null;
+		if(isOVerDue) {
+			offerBoxStyle = {
+				background: "repeating-linear-gradient(45deg,#fff,rgba(0, 0, 0, 0.1) 10px,#fff 10px,rgba(0, 0, 0, 0.1) 20px)",
+				opacity: 0.7
+			};
+			offerBoxDateStyle = {
+				color: 'red'
+			}
+		}
 
 		return (
 
-			<Card style={{margin: '20px 0'}} className={offerBoxClass}>
+			<Card style={offerBoxStyle}>
 				<CardHeader
 					title={offer.title}
 					actAsExpander={true}
@@ -191,7 +196,7 @@ export default class Offer extends React.Component {
 					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
-					<p>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YY')}</p>
+					<p style={offerBoxDateStyle}>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YY')}</p>
 					<Link to={`/offer/${offer.id}`}>
 						<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
 					</Link>

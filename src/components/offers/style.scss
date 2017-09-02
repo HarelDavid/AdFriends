@@ -119,3 +119,14 @@ ul.list {
   background: #25D366;
   color: #fff;
 }
+
+.isOVerDue {
+  background: $grey-bg;
+  .offerDate {
+    color: red;
+  }
+}
+
+body {
+  background: red;
+}
