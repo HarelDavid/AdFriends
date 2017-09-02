@@ -30,7 +30,8 @@ export default class Offer extends React.Component {
 		link: "",
 		client: {},
 		dialogOpen: false,
-		message: ''
+		message: '',
+		shareMsg: ''
 	}
 
 	componentWillMount() {
@@ -138,7 +139,7 @@ export default class Offer extends React.Component {
 
 	@autobind
 	updatePreMessage(event) {
-		this.state.preMessage = event.target.value;
+		this.state.message = event.target.value;
 	}
 
 
@@ -151,8 +152,38 @@ export default class Offer extends React.Component {
 	}
 
 
+	@autobind
+	copyTextToClipboard(text) {
+		var textArea = document.createElement("textarea");
+
+		textArea.style.position = 'fixed';
+		textArea.style.top = 0;
+		textArea.style.left = 0;
+		textArea.style.width = '2em';
+		textArea.style.height = '2em';
+		textArea.style.padding = 0;
+		textArea.style.border = 'none';
+		textArea.style.outline = 'none';
+		textArea.style.boxShadow = 'none';
+		textArea.style.background = 'transparent';
+		textArea.value = text;
+		document.body.appendChild(textArea);
+		textArea.select();
+		try {
+			var successful = document.execCommand('copy');
+			var msg = successful ? 'successful' : 'unsuccessful';
+			this.state.shareMsg = 'לינק לקופון הועתק'
+			console.log('Copying text command was ' + msg);
+		} catch (err) {
+			this.state.shareMsg = 'ארעה שגיאה, אנא נסה מאוחר יותר'
+			console.log('Oops, unable to copy');
+		}
+		document.body.removeChild(textArea);
+	}
+
+
 	render() {
-		const {offer, dialogOpen, message, link} = this.state;
+		const {offer, dialogOpen, message, link, shareMsg} = this.state;
 		const {businessStore, couponsStore} = this.props;
 		var shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
 		var actions = [<FlatButton
@@ -161,10 +192,16 @@ export default class Offer extends React.Component {
 			onTouchTap={this.handleClose}
 		/>,
 			<RaisedButton backgroundColor="#25D366">
-				<a href={shareUrl} style={{color: '#fff', fontSize: '18px', textDecoration: 'none'}}
-				   className="whatsup-share-button">
-					<FontIcon className="material-icons" style={{color: '#fff', fontSize: 18, verticalAlign: 'sub'}}>share</FontIcon>
-					שתף</a>
+				{this.isMobile() ?
+					<a href={shareUrl} style={{color: '#fff', fontSize: '18px', textDecoration: 'none'}}
+					   className="whatsup-share-button">
+						<FontIcon className="material-icons"
+								  style={{color: '#fff', fontSize: 18, verticalAlign: 'sub'}}>share</FontIcon>
+						שתף</a>
+					:
+					<span style={{color: 'white'}} onClick={()=> this.copyTextToClipboard(link)}><FontIcon className="material-icons"
+								 style={{color: '#fff', fontSize: 18, verticalAlign: 'sub'}}>share</FontIcon> שתף</span>
+				}
 			</RaisedButton>];
 
 		var isOVerDue = moment(offer.endingDate).isBefore(new Date());
@@ -221,6 +258,7 @@ export default class Offer extends React.Component {
 								<TextField label="הודעה ללקוח" multiLine={true} name="message"
 										   defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
 										   onChange={this.updatePreMessage}/>
+								<b style={{float: 'left'}}>{shareMsg}</b>
 								{/*<RaisedButton secondary onClick={this.createLink}>שלח</RaisedButton>*/}
 							</Dialog>
 							}
