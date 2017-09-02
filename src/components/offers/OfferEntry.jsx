@@ -44,9 +44,10 @@ class OfferEntry extends React.Component {
 
         if (offerId) {
             var offer = offerStore.offers.find((it) => it.id == offerId);
-            offer.endingDate = new Date(offer.endingDate*1000);
             this.state.offer = offer;
-        } else {
+			// this.state.offer.endingDate = moment(offer.endingDate);
+console.log(this.state.offer.endingDate)
+		} else {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
 
@@ -83,16 +84,12 @@ class OfferEntry extends React.Component {
     }
 
 
-	toTimestamp(date){
-		var parsedDate = Date.parse(date);
-		return parsedDate/1000;
-	}
 
     @autobind
     handleNewOfferKeyDown(e) {
         e.preventDefault();
         var {offer} = this.state;
-        offer['endingDate'] = this.toTimestamp(offer['endingDate']);
+        offer.endingDate = moment(offer.endingDate).valueOf();
         offer.save();
         hashHistory.push('/offers');
         this.clearForm();
@@ -147,11 +144,6 @@ class OfferEntry extends React.Component {
             this.drawImage(offer.imageUrl)
         });
     };
-
-	formatDate(date){
-		return moment(date).format('DD-MM-YYYY');
-	}
-
 
 	@autobind
     goBack() {
@@ -209,7 +201,7 @@ class OfferEntry extends React.Component {
                         {/*</div>*/}
                         <div className="row">
                             <label>בתוקף עד<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={this.formatDate}/>
+                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={function() {return moment(offer.endingDate).format('DD-MM-YYYY')}}/>
                             <ReactTooltip id="endDate"/>
                         </div>
                         {/*<div className="row">*/}

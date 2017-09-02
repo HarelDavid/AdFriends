@@ -35,11 +35,12 @@ export default class Offer extends React.Component {
 
 	componentWillMount() {
 		const {offer, couponsStore} = this.props;
+
 		this.state.offer = offer;
+		this.state.offer.endingDate = moment(this.props.offer.endingDate);
+
 		this.clientStore = this.props.businessStore.clientStore;
-
 		this.state.client = new ClientModel({store: this.props.businessStore.clientStore})
-
 
 		return couponsStore.getCouponsByOfferId(offer.id)
 			.then((res) => {
@@ -54,6 +55,7 @@ export default class Offer extends React.Component {
 		var {offer} = this.state;
 		offer[key] = value;
 	}
+
 
 	@autobind
 	onChange(event) {
@@ -157,9 +159,6 @@ export default class Offer extends React.Component {
 		return false;
 	}
 
-	formatDate(){
-		return moment(this.props.offer.endingDate*1000).format('DD-MM-YYYY');
-	}
 
 
 	render() {
@@ -180,7 +179,6 @@ export default class Offer extends React.Component {
 
 
 		var offerBoxClass = "offerBox";
-		console.log(moment(offer.endingDate).isAfter(moment()))
 
 		return (
 
@@ -193,7 +191,7 @@ export default class Offer extends React.Component {
 					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
-					<p>בתוקף עד: {this.formatDate()}</p>
+					<p>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YY')}</p>
 					<Link to={`/offer/${offer.id}`}>
 						<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
 					</Link>
