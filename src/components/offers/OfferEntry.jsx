@@ -50,7 +50,7 @@ class OfferEntry extends React.Component {
             this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
         }
 
-        console.log(moment(this.state.offer.endingDate))
+        console.log(this.state.offer)
     }
 
     componentDidMount(){

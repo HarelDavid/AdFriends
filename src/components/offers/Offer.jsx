@@ -49,7 +49,6 @@ export default class Offer extends React.Component {
 	}
 
 
-
 	updateProperty(key, value) {
 		var {offer} = this.state;
 		offer[key] = value;
@@ -60,7 +59,6 @@ export default class Offer extends React.Component {
 	onChange(event) {
 		this.updateProperty(event.target.name, event.target.value)
 	}
-
 
 
 	@autobind
@@ -82,7 +80,7 @@ export default class Offer extends React.Component {
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
 		coupon.message = this.state.message || offer.preMessage;
-        coupon.bussineData =  businessStore.business.convertToDB()
+		coupon.bussineData = businessStore.business.convertToDB()
 
 		coupon.save();
 		this.state.link = coupon.link;
@@ -117,13 +115,9 @@ export default class Offer extends React.Component {
 	};
 
 	@autobind
-	openDialog(isOVerDue) {
-		if(isOVerDue) {
-			alert('תוקף הקופון פג')
-		} else {
-			this.createLink();
-			this.state.dialogOpen = true;
-		}
+	openDialog() {
+		this.createLink();
+		this.state.dialogOpen = true;
 	}
 
 	@autobind
@@ -157,7 +151,6 @@ export default class Offer extends React.Component {
 	}
 
 
-
 	render() {
 		const {offer, dialogOpen, message, link} = this.state;
 		const {businessStore, couponsStore} = this.props;
@@ -179,9 +172,9 @@ export default class Offer extends React.Component {
 
 		var offerBoxStyle = {margin: '20px 0'};
 		var offerBoxDateStyle = null;
-		var offerBoxShareStyle = null;
-		if(isOVerDue) {
-			offerBoxStyle = { ...offerBoxStyle,
+		if (isOVerDue) {
+			offerBoxStyle = {
+				...offerBoxStyle,
 				background: "repeating-linear-gradient(45deg,#fff,rgba(0, 0, 0, 0.1) 20px,#fff 20px,rgba(0, 0, 0, 0.1) 20px)",
 				opacity: 0.7
 			};
@@ -215,7 +208,8 @@ export default class Offer extends React.Component {
 							onChange={this.handleClientChoose}
 						/>
 						<div>
-							<RaisedButton secondary onClick={(isOVerDue)=> this.openDialog(isOVerDue)}>שלח קופון</RaisedButton>
+							<RaisedButton secondary onClick={this.openDialog}>שלח
+								קופון</RaisedButton>
 							{dialogOpen &&
 							<Dialog
 								title="שלח קופון ללקוח"

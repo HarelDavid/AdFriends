@@ -71,7 +71,7 @@ export default class NavigationBar extends React.Component {
 
 					<MenuItem><NavItem onTouchTap={() => this.handleSideMenuToggle()} to='/offers'>מבצעים</NavItem></MenuItem>
 					<MenuItem><NavItem onTouchTap={() => this.handleSideMenuToggle()} to='/coupons'>קופונים</NavItem></MenuItem>
-					<MenuItem><NavItem onTouchTap={() => this.handleSideMenuToggle()} to='/clients'>לקוחות</NavItem></MenuItem>
+					{/*<MenuItem><NavItem onTouchTap={() => this.handleSideMenuToggle()} to='/clients'>לקוחות</NavItem></MenuItem>*/}
 					<MenuItem><NavItem onTouchTap={() => this.handleSideMenuToggle()} to='/settings'>הגדרות</NavItem></MenuItem>
 				</Drawer>
                 }
