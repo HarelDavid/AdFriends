@@ -216,7 +216,7 @@ export default class Offer extends React.Component {
 		if (isOVerDue) {
 			offerBoxStyle = {
 				...offerBoxStyle,
-				background: "repeating-linear-gradient(45deg,#fff,rgba(0, 0, 0, 0.1) 20px,#fff 20px,rgba(0, 0, 0, 0.1) 20px)",
+				background: "repeating-linear-gradient( 45deg,#fff,#fff 20px,#f6f6f6 20px,#f6f6f6 30px)",
 				opacity: 0.7
 			};
 			offerBoxDateStyle = {

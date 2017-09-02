@@ -7,8 +7,10 @@ import autobind from 'autobind-decorator'
 import {Link} from 'react-router'
 import FontIcon from 'material-ui/FontIcon';
 import RaisedButton from 'material-ui/RaisedButton';
+import {sortBy} from 'lodash';
 
 import './style.scss';
+
 
 
 @observer
@@ -18,8 +20,9 @@ export default class Coupons extends React.Component {
 		var {businessStore, couponsStore} = this.props.route;
 
 		couponsStore.init(businessStore.business);
-		console.log(couponsStore);
 	}
+
+
 
 
     render() {
@@ -30,11 +33,11 @@ export default class Coupons extends React.Component {
 		    return null
         }
 
-
         return (
 
             <div className="offers-wrapper">
                 <h1>קופונים</h1>
+
 
                 <table className="offers-list">
 					<tr>
@@ -43,7 +46,7 @@ export default class Coupons extends React.Component {
 						<th>מס׳ מימושים</th>
 						<th>קישור</th>
 					</tr>
-                    {couponsStore.coupons.map((coupon) => (
+                    {sortBy(couponsStore.coupons, 'offerId').map((coupon) => (
                             <Coupon couponsStore={couponsStore} businessStore={businessStore} className="coupon" key={coupon.id} coupon={coupon}/>
                         )
                     )}
