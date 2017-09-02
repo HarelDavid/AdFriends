@@ -139,7 +139,7 @@ export default class Offer extends React.Component {
 
 	@autobind
 	updatePreMessage(event) {
-		this.state.preMessage = event.target.value;
+		this.state.message = event.target.value;
 	}
 
 
