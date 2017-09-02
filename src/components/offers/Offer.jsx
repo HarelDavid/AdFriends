@@ -179,6 +179,7 @@ export default class Offer extends React.Component {
 			console.log('Oops, unable to copy');
 		}
 		document.body.removeChild(textArea);
+		window.open('http://web.whatsapp.com', '_blank');
 	}
 
 
