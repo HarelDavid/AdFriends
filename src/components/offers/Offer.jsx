@@ -173,15 +173,19 @@ export default class Offer extends React.Component {
 		var isOVerDue = moment(offer.endingDate).isBefore(new Date());
 
 
-		var offerBoxStyle = null;
+		var offerBoxStyle = {margin: '20px 0'};
 		var offerBoxDateStyle = null;
+		var offerBoxShareStyle = null;
 		if(isOVerDue) {
-			offerBoxStyle = {
-				background: "repeating-linear-gradient(45deg,#fff,rgba(0, 0, 0, 0.1) 10px,#fff 10px,rgba(0, 0, 0, 0.1) 20px)",
+			offerBoxStyle = { ...offerBoxStyle,
+				background: "repeating-linear-gradient(45deg,#fff,rgba(0, 0, 0, 0.1) 20px,#fff 20px,rgba(0, 0, 0, 0.1) 20px)",
 				opacity: 0.7
 			};
 			offerBoxDateStyle = {
 				color: 'red'
+			}
+			offerBoxShareStyle = {
+				pointerEvents: 'none'
 			}
 		}
 
@@ -193,10 +197,10 @@ export default class Offer extends React.Component {
 					actAsExpander={true}
 					showExpandableButton={true}
 					closeIcon={<FontIcon className="material-icons">share</FontIcon>}
-					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
+					openIcon={<FontIcon className="material-icons" style={offerBoxShareStyle}>expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
-					<p style={offerBoxDateStyle}>בתוקף עד: {moment(offer.endingDate).format('DD/MM/YY')}</p>
+					<p style={offerBoxDateStyle}>{isOVerDue ? 'פג תוקף ' : 'בתוקף עד: '}{moment(offer.endingDate).format('DD/MM/YY')}</p>
 					<Link to={`/offer/${offer.id}`}>
 						<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
 					</Link>
