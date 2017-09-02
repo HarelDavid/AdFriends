@@ -117,9 +117,13 @@ export default class Offer extends React.Component {
 	};
 
 	@autobind
-	openDialog() {
-		this.createLink();
-		this.state.dialogOpen = true;
+	openDialog(isOVerDue) {
+		if(isOVerDue) {
+			alert('תוקף הקופון פג')
+		} else {
+			this.createLink();
+			this.state.dialogOpen = true;
+		}
 	}
 
 	@autobind
@@ -184,9 +188,6 @@ export default class Offer extends React.Component {
 			offerBoxDateStyle = {
 				color: 'red'
 			}
-			offerBoxShareStyle = {
-				pointerEvents: 'none'
-			}
 		}
 
 		return (
@@ -195,9 +196,9 @@ export default class Offer extends React.Component {
 				<CardHeader
 					title={offer.title}
 					actAsExpander={true}
-					showExpandableButton={true}
+					showExpandableButton={!isOVerDue}
 					closeIcon={<FontIcon className="material-icons">share</FontIcon>}
-					openIcon={<FontIcon className="material-icons" style={offerBoxShareStyle}>expand_less</FontIcon>}
+					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
 				/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
 					<p style={offerBoxDateStyle}>{isOVerDue ? 'פג תוקף ' : 'בתוקף עד: '}{moment(offer.endingDate).format('DD/MM/YY')}</p>
@@ -214,7 +215,7 @@ export default class Offer extends React.Component {
 							onChange={this.handleClientChoose}
 						/>
 						<div>
-							<RaisedButton secondary onClick={this.openDialog}>שלח קופון</RaisedButton>
+							<RaisedButton secondary onClick={(isOVerDue)=> this.openDialog(isOVerDue)}>שלח קופון</RaisedButton>
 							{dialogOpen &&
 							<Dialog
 								title="שלח קופון ללקוח"
