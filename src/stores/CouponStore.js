@@ -80,7 +80,6 @@ export default class CouponStore {
 
 	//add or update
 	save(coupon) {
-
 		if(!coupon.id){
 			var couponId = `${coupon.offer.id}_${coupon.clientId}`
 			coupon.id = couponId;

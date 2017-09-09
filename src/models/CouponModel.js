@@ -38,6 +38,7 @@ export default class CouponModel {
 		this.realized = couponDB.realized || false;
 		this.id = couponDB.id;
 		this.message = couponDB.message;
+		this.bussineData = couponDB.bussineData;
 
 	}
 
