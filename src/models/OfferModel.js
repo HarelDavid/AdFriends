@@ -41,7 +41,7 @@ export default class OfferModel {
 		this.imageUrl = offerDB.imageUrl;
 		this.preMessage = offerDB.preMessage;
 		this.terms = offerDB.terms;
-		this.endingDate = offerDB.endingDate;
+		this.endingDate = offerDB.endingDate ? new Date(offerDB.endingDate) : "";
 		this.code = offerDB.code;
 		// this.dateCreated = offerDB.dateCreated;
 		this.couponLinks = offerDB.couponLinks || [];
@@ -60,7 +60,7 @@ export default class OfferModel {
 		this.code ? offerDB.code = this.code : "";
 		// this.dateCreated ? offerDB.dateCreated = this.dateCreated : "";
 		this.couponLinks ? offerDB.couponLinks = this.couponLinks.toJS() : "";
-		this.endingDate ? offerDB.endingDate = this.endingDate : "";
+		this.endingDate ? offerDB.endingDate = this.endingDate.getTime() : "";
 
 		return offerDB;
 	}
