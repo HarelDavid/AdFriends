@@ -40,9 +40,10 @@ export default class Settings extends React.Component {
     save() {
         var {business} = this.state;
         if (business) {
-            business.save();
+            business.save()
+            hashHistory.push('/offers');
         }
-        hashHistory.push('/#offers');
+
     };
 
     @autobind
