@@ -105,7 +105,7 @@ export default class Offer extends React.Component {
 		if (clientOption && clientOption.className) {
 			this.state.chosenClient = clientOption;
 			this.state.client.title = clientOption.value;
-			this.handleNewClient(clientOption);
+			this.handleNewClient(clientOption)
 		} else {
 			this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
 		}
