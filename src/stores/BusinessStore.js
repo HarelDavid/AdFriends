@@ -137,16 +137,16 @@ export default class BuisnessStore {
 
         var businessModelDB = businessModel.convertToDB();
         return Promise.all([
-            firebase.database().ref('/business').child(businessModelDB.id).child('address').set(businessModelDB.address),
-            firebase.database().ref('/business').child(businessModelDB.id).child('businessType').set(businessModelDB.businessType),
-            firebase.database().ref('/business').child(businessModelDB.id).child('description').set(businessModelDB.description),
-            firebase.database().ref('/business').child(businessModelDB.id).child('email').set(businessModelDB.email),
-            firebase.database().ref('/business').child(businessModelDB.id).child('facebook').set(businessModelDB.facebook),
-            firebase.database().ref('/business').child(businessModelDB.id).child('firstName').set(businessModelDB.firstName),
-            firebase.database().ref('/business').child(businessModelDB.id).child('imageUrl').set(businessModelDB.imageUrl),
-            firebase.database().ref('/business').child(businessModelDB.id).child('phone').set(businessModelDB.phone),
-            firebase.database().ref('/business').child(businessModelDB.id).child('picture').set(businessModelDB.picture),
-            firebase.database().ref('/business').child(businessModelDB.id).child('title').set(businessModelDB.title)]
+            firebase.database().ref('/business').child(businessModelDB.id).child('address').set(businessModelDB.address || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('businessType').set(businessModelDB.businessType || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('description').set(businessModelDB.description || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('email').set(businessModelDB.email || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('facebook').set(businessModelDB.facebook || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('firstName').set(businessModelDB.firstName || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('imageUrl').set(businessModelDB.imageUrl || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('phone').set(businessModelDB.phone || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('picture').set(businessModelDB.picture || ""),
+            firebase.database().ref('/business').child(businessModelDB.id).child('title').set(businessModelDB.title || "")]
 
         ).then(() => {
             return firebase.database().ref('coupons').orderByChild("businessId").equalTo(businessModel.id).once("value").then((snapshot) => {
