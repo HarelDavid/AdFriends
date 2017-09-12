@@ -20,6 +20,9 @@ const muiTheme = getMuiTheme({
     appBar: {
         height: 50,
     },
+	TextField: {
+        height: 'auto'
+    }
 });
 
 @observer

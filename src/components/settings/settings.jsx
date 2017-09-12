@@ -63,6 +63,16 @@ export default class Settings extends React.Component {
         firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.updateProperty('imageUrl', url));
     };
 
+    @autobind
+	checkUrlPrefix(e) {
+		let prefix = 'http://' || 'https://';
+		let website = e.target.value.trim();
+
+		if (website.substr(0, prefix.length) !== prefix) {
+			this.updateProperty(e.target.name, prefix + website)
+		}
+	}
+
     render() {
 
         var {businessStore} = this.props.route;
@@ -87,7 +97,7 @@ export default class Settings extends React.Component {
                             <TextField name="description" defaultValue={business.description} multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
                             <TextField name="businessType" defaultValue={business.businessType} onChange={this.onChange} hintText="סוג בית עסק"/>
                             <TextField name="phone" defaultValue={business.phone}  onChange={this.onChange} hintText="מספר טלפון"/>
-                            <TextField name="website" defaultValue={business.website} onChange={this.onChange} hintText="אתר אינטרנט"/>
+                            <TextField name="website" defaultValue={business.website} onBlur={this.checkUrlPrefix} hintText="אתר אינטרנט"/>
                             <TextField name="facebook" defaultValue={business.facebook} onChange={this.onChange} hintText="דף פייסבוק"/>
 
                             <ImageUploader

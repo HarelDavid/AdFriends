@@ -20,6 +20,7 @@ export default class Coupons extends React.Component {
 		var {businessStore, couponsStore} = this.props.route;
 
 		couponsStore.init(businessStore.business);
+		console.log('f')
 	}
 
 
