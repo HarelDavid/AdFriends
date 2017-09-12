@@ -31,7 +31,8 @@ export default class Offer extends React.Component {
 		client: {},
 		dialogOpen: false,
 		message: '',
-		shareMsg: ''
+		shareMsg: '',
+        clientError:''
 	}
 
 	componentWillMount() {
@@ -104,10 +105,11 @@ export default class Offer extends React.Component {
 		if (clientOption && clientOption.className) {
 			this.state.chosenClient = clientOption;
 			this.state.client.title = clientOption.value;
-			this.handleNewClient(clientOption);
+			this.handleNewClient(clientOption)
 		} else {
 			this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
 		}
+        this.state.clientError = '';
 	}
 
 	@autobind
@@ -115,10 +117,17 @@ export default class Offer extends React.Component {
 		this.state.expanded = toggle;
 	};
 
+
 	@autobind
 	openDialog() {
-		this.createLink();
-		this.state.dialogOpen = true;
+        if(this.state.chosenClient.id) {
+            this.createLink();
+           	this.state.clientError = '';
+            this.state.dialogOpen = true;
+        }
+        else{
+            this.state.clientError = 'בחר לקוח';
+		}
 	}
 
 	@autobind
@@ -184,7 +193,7 @@ export default class Offer extends React.Component {
 
 
 	render() {
-		const {offer, dialogOpen, message, link, shareMsg} = this.state;
+		const {offer, dialogOpen, message, link, shareMsg, clientError} = this.state;
 		const {businessStore, couponsStore} = this.props;
 		var shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
 		var actions = [<FlatButton
@@ -222,6 +231,7 @@ export default class Offer extends React.Component {
 			offerBoxDateStyle = {
 				color: 'red'
 			}
+
 		}
 
 		return (
@@ -248,6 +258,7 @@ export default class Offer extends React.Component {
 							options={this.getClientOption()}
 							onChange={this.handleClientChoose}
 						/>
+
 						<div>
 							<RaisedButton secondary onClick={this.openDialog}>שלח
 								קופון</RaisedButton>
@@ -268,7 +279,9 @@ export default class Offer extends React.Component {
 							}
 						</div>
 
+
 					</div>
+					<div style={{color: 'red'}}>{clientError}</div>
 				</CardText>
 			</Card>
 
