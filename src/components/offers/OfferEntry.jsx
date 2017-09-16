@@ -123,8 +123,9 @@ class OfferEntry extends React.Component {
 		img.src = url;
 		img.onload = function () {
 			var ratio = img.width / canvas.width;
+			canvas.height = img.height / ratio;
 			ctx.drawImage(img, 0, 0, img.width, img.height,
-				0, 0, canvas.width, img.height / ratio);
+				0, 0, canvas.width, canvas.height);
 		}
 
 	}
@@ -144,22 +145,30 @@ class OfferEntry extends React.Component {
 		return this.convertToImage(file)
 			.then(image => {
 				this.drawImage(image.src);
-				this.state.offer.imageUrl = canvas.toDataURL('image/jpg');
-				this.saveThumbnail(this.state.offer.imageUrl, file.name);
-			}).finally((image) => {
-				this.state.uploading = false;
+			}).finally(() => {
+				setTimeout(() => {
+					this.state.offer.imageUrl = canvas.toDataURL('image/jpeg');
+					this.state.uploading = false;
+					this.saveThumbnail(file);
+				}, 500)
+
 			})
 	};
 
 
-	saveThumbnail(src, filename) {
+	saveThumbnail(file) {
 		// this.setState({avatar: filename, progress: 100, isUploading: false});
-		var imagesRef = firebase.storage().ref('images').child(filename);
+		var storageRef = firebase.storage().ref('images').child(file.name);
 
-		var uploadTask = imagesRef.putString(src, 'data_url');
+		storageRef.child(file.name).put(file).then((snapshot)=>{
+			console.log(snapshot.downloadURL);
+			this.state.offer.thumbnail = snapshot.downloadURL
+		})
 
-		this.state.offer.thumbnail = uploadTask.snapshot.downloadURL;
 
+		// firebase.storage().ref('images').child(file.name).getDownloadURL().then(url =>
+		// 	this.state.offer.thumbnail = url
+		// );
 
 	}
 
@@ -241,7 +250,7 @@ class OfferEntry extends React.Component {
 
 						<label>
 							{/*<ImageUploader*/}
-							{/*name="avatar"*/}
+							{/*name="offer-image"*/}
 							{/*storageRef={firebase.storage().ref('images')}*/}
 							{/*onUploadStart={this.handleUploadStart}*/}
 							{/*onUploadError={this.handleUploadError}*/}
