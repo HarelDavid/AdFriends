@@ -78,7 +78,7 @@ class OfferEntry extends React.Component {
 
     @autobind
     onChangeDate(event, date) {
-        this.updateProperty('endingDate', moment(date).valueOf())
+        this.updateProperty('endingDate', date)
     }
 
 
@@ -173,8 +173,7 @@ class OfferEntry extends React.Component {
 
     @autobind
 	formatDate(date){
-	    console.log(moment(date))
-		return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+        return moment(date).format('DD/MM/YY')
 	}
 
     render() {
