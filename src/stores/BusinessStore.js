@@ -1,6 +1,7 @@
 import {observable, computed} from 'mobx';
 import BusinessModel from '../models/BusinessModel';
 import OfferStore from '../stores/OfferStore';
+import CouponModel from '../models/CouponModel'
 import ClientStore from '../stores/ClientStore';
 import CouponStore from '../stores/CouponStore';
 import {hashHistory } from 'react-router'
@@ -136,7 +137,26 @@ export default class BuisnessStore {
 		var businessModelDB = businessModel.convertToDB();
 		businessModelDB.offers = this.offerStore.offers.map(o => o.convertToDB())
 		businessModelDB.clients = this.clientStore.clients.map(o => o.convertToDB())
-		return firebase.database().ref('/business').child(businessModelDB.id).set(businessModelDB);
+		return firebase.database().ref('/business').child(businessModelDB.id).set(businessModelDB).
+			then(() => {
+            businessModel.convertToDB();
+                return firebase.database().ref('coupons').orderByChild("businessId").equalTo(businessModel.id).once("value").then((snapshot) => {
+                    var couponsObj = snapshot.val();
+                    if(couponsObj) {
+                        for (var key in couponsObj) {
+                            businessModelDB = businessModel.convertToDB();
+                            if (couponsObj.hasOwnProperty(key)) {
+                                var coupon = couponsObj[key];
+                                var couponModel = new CouponModel();
+                                couponModel.convertFromDB(coupon);
+                                couponModel.bussineData = businessModelDB;
+                                var couponStore = new CouponStore();
+                                couponStore.save(couponModel)
+                            }
+                        }
+                    }
+                })
+            })
 
 	}
 

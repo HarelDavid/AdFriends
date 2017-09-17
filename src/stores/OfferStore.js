@@ -1,5 +1,7 @@
 import {observable, computed} from 'mobx'
 import OfferModel from '../models/OfferModel'
+import CouponModel from '../models/CouponModel'
+import CouponStore from './CouponStore'
 import * as Utils from '../utils';
 import * as firebase from 'firebase';
 
@@ -43,7 +45,26 @@ export default class OfferStore {
 		}
 		this.offers.push(offer);
 		var offerDB = offer.convertToDB();
-		this.offersRef.child(offerDB.id).set(offerDB);
+		this.offersRef.child(offerDB.id).set(offerDB)
+			.then(() => {
+                return firebase.database().ref('coupons').orderByChild("offerId").equalTo(offer.id).once("value").then((snapshot) => {
+                    var couponsObj = snapshot.val();
+                    if(couponsObj) {
+                        for (var key in couponsObj) {
+                            if (couponsObj.hasOwnProperty(key)) {
+                                var coupon = couponsObj[key];
+                                var couponModel = new CouponModel();
+                                couponModel.convertFromDB(coupon);
+                                delete offerDB["couponLinks"]
+                                couponModel.offer = offerDB;
+                                var couponStore = new CouponStore();
+                                couponStore.save(couponModel);
+                            }
+                        }
+                    }
+                })
+
+			})
 	}
 
 
