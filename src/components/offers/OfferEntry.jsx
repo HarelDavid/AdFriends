@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 import {hashHistory} from 'react-router';
 import Promise from "bluebird";
 import autobind from 'autobind-decorator'
-import ImageUploader from'react-firebase-image-uploader';
+import ImageUploader from 'react-firebase-image-uploader';
 import * as firebase from 'firebase';
 import OfferModel from '../../models/OfferModel'
 import {observable, computed, action, extendObservable, toJS, autorun} from 'mobx';
@@ -123,23 +123,48 @@ class OfferEntry extends React.Component {
 		    var ratio = img.width/canvas.width;
 			ctx.drawImage(img, 0, 0, img.width,    img.height,
 				0, 0, canvas.width, img.height/ratio);
-
 		}
-		this.state.imageUrl = canvas.toDataURL('image/jpeg');
     }
 
     @autobind
-    handleUploadSuccess(filename) {
+    handleUploadSuccess(e) {
         var {offer} = this.state;
 
+		e.persist();
+		let file = e.target.files[0];
 
-        this.setState({avatar: filename, progress: 100, isUploading: false});
-        var imagesRef = firebase.storage().ref('images').child(filename);
-        firebase.storage().ref('images').child(filename).getDownloadURL().then(url => {
-            offer.imageUrl = url;
-            this.drawImage(offer.imageUrl)
-        });
-    };
+		if(!file.type.match('image.*')){
+		    alert('Please upload an image')
+        }
+
+		return this.convertToImage(file)
+			.then(image => {
+			    this.state.offer.imageUrl = image.src;
+				this.drawImage(image.src);
+			})
+
+	};
+
+    convertToImage(file) {
+	return new Promise((resolve, reject) => {
+		var reader = new FileReader();
+		reader.readAsDataURL(file);
+
+		reader.addEventListener("load", (ev) => {
+			var img = new Image();
+			img.src = ev.target.result;
+
+			img.addEventListener("load", () => {
+				resolve(img);
+			});
+
+		});
+
+		reader.addEventListener("error", () => {
+			reject(reader.error);
+		});
+	})
+}
 
 	@autobind
     goBack() {
@@ -173,7 +198,7 @@ class OfferEntry extends React.Component {
                         </div>
                         <div className="row">
                             <label>תיאור <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
-                            <TextField multiLine={true} name="description" defaultValue={offer.description}
+                            <TextField multiLine name="description" defaultValue={offer.description}
                                        onChange={this.onChange}/>
                             <ReactTooltip id="desc"/>
 
@@ -181,13 +206,13 @@ class OfferEntry extends React.Component {
                         <div className="row">
                             <label>הודעה ללקוח<span data-tip={tooltip.message}
                                                            data-for='message'>?</span></label>
-                            <TextField multiLine={true} name="preMessage" value={offer.preMessage}
+                            <TextField multiLine name="preMessage" value={offer.preMessage}
                                        onChange={this.onChange}/>
                             <ReactTooltip id="message"/>
                         </div>
                         <div className="row">
                             <label>תנאים<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
-                            <TextField name="terms" value={offer.terms} onChange={this.onChange}/>
+                            <TextField name="terms" multiLine value={offer.terms} onChange={this.onChange}/>
                             <ReactTooltip id="terms"/>
                         </div>
                         {/*<div className="row">*/}
@@ -203,7 +228,7 @@ class OfferEntry extends React.Component {
                         {/*</div>*/}
                         <div className="row">
                             <label>בתוקף עד<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-                            <DatePicker name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={(date)=> this.formatDate(date)}/>
+                            <DatePicker autoOk name="endingDate" value={offer.endingDate} onChange={this.onChangeDate} formatDate={this.formatDate}/>
                             <ReactTooltip id="endDate"/>
                         </div>
                         {/*<div className="row">*/}
@@ -214,14 +239,15 @@ class OfferEntry extends React.Component {
                         {/*</div>*/}
 
                         <label>
-                            <ImageUploader
-                                name="avatar"
-                                storageRef={firebase.storage().ref('images')}
-                                onUploadStart={this.handleUploadStart}
-                                onUploadError={this.handleUploadError}
-                                onUploadSuccess={this.handleUploadSuccess}
-                                onProgress={this.handleProgress}
-                            />
+                            {/*<ImageUploader*/}
+                                {/*name="avatar"*/}
+                                {/*storageRef={firebase.storage().ref('images')}*/}
+                                {/*onUploadStart={this.handleUploadStart}*/}
+                                {/*onUploadError={this.handleUploadError}*/}
+                                {/*onUploadSuccess={this.handleUploadSuccess}*/}
+                                {/*onProgress={this.handleProgress}*/}
+                            {/*/>*/}
+                            <input type="file" onChange={this.handleUploadSuccess} />
                         </label>
 
 
