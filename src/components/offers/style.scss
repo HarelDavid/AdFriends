@@ -120,13 +120,17 @@ ul.list {
   color: #fff;
 }
 
-.isOVerDue {
-  background: $grey-bg;
-  .offerDate {
-    color: red;
-  }
+
+
+.general-loader {
+  border: 4px solid #585D91;
+  color: #50BAB4;
+  background: $grey-light;
+
 }
 
-body {
-  background: red;
+@keyframes loader {
+
+
+
 }

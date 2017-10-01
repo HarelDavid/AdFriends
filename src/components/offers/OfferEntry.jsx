@@ -15,10 +15,9 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import Paper from 'material-ui/Paper';
+import ImageEditor from '../imageEditor/image-editor';
 
-
-import style from './style.scss';
-Object.assign(style)
+import './style.scss';
 
 var tooltip = require('json!./info.json');
 
@@ -46,7 +45,7 @@ class OfferEntry extends React.Component {
 		if (offerId) {
 			var offer = offerStore.offers.find((it) => it.id == offerId);
 			this.state.offer = offer;
-
+			this.state.imageToEdit = offer.imageUrl;
 		} else {
 			this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
 		}
@@ -55,8 +54,8 @@ class OfferEntry extends React.Component {
 	}
 
 	componentDidMount() {
-		this.state.offer.imageUrl && this.drawImage(this.state.offer.imageUrl);
-		this.state.canvas = document.getElementById('canvas');
+		// this.state.offer.imageUrl && this.drawImage(this.state.offer.imageUrl);
+		// this.state.canvas = document.getElementById('canvas');
 
 	}
 
@@ -100,98 +99,7 @@ class OfferEntry extends React.Component {
 	}
 
 
-	@autobind
-	handleUploadStart() {
-		this.setState({isUploading: true, progress: 0});
-	}
 
-	@autobind
-	handleProgress(progress) {
-		this.setState({progress});
-	}
-
-	@autobind
-	handleUploadError(error) {
-		this.setState({isUploading: false});
-		console.error(error);
-	}
-
-	drawImage(url) {
-		var canvas = document.getElementById('canvas'),
-			ctx = canvas.getContext('2d'),
-			img = new Image();
-		img.src = url;
-		img.onload = function () {
-			var ratio = img.width / canvas.width;
-			canvas.height = img.height / ratio;
-			ctx.drawImage(img, 0, 0, img.width, img.height,
-				0, 0, canvas.width, canvas.height);
-		}
-
-	}
-
-	@autobind
-	handleUploadSuccess(e) {
-
-		e.persist();
-		let file = e.target.files[0],
-			{canvas} = this.state;
-
-		if (!file.type.match('image.*')) {
-			alert('Please upload an image')
-		}
-
-
-		return this.convertToImage(file)
-			.then(image => {
-				this.drawImage(image.src);
-			}).finally(() => {
-				setTimeout(() => {
-					this.state.offer.imageUrl = canvas.toDataURL('image/jpeg');
-					this.state.uploading = false;
-					this.saveThumbnail(file);
-				}, 500)
-
-			})
-	};
-
-
-	saveThumbnail(file) {
-		// this.setState({avatar: filename, progress: 100, isUploading: false});
-		var storageRef = firebase.storage().ref('images').child(file.name);
-
-		storageRef.child(file.name).put(file).then((snapshot)=>{
-			console.log(snapshot.downloadURL);
-			this.state.offer.thumbnail = snapshot.downloadURL
-		})
-
-
-		// firebase.storage().ref('images').child(file.name).getDownloadURL().then(url =>
-		// 	this.state.offer.thumbnail = url
-		// );
-
-	}
-
-	convertToImage(file) {
-		return new Promise((resolve, reject) => {
-			var reader = new FileReader();
-			reader.readAsDataURL(file);
-
-			reader.addEventListener("load", (ev) => {
-				var img = new Image();
-				img.src = ev.target.result;
-
-				img.addEventListener("load", () => {
-					resolve(img);
-				});
-
-			});
-
-			reader.addEventListener("error", () => {
-				reject(reader.error);
-			});
-		})
-	}
 
 	@autobind
 	goBack() {
@@ -204,7 +112,7 @@ class OfferEntry extends React.Component {
 	}
 
 	render() {
-		var {offer} = this.state;
+		var {offer, imageToEdit} = this.state;
 		var offerProps = this.props.offer;
 		var {route} = this.props;
 		if (!firebase.storage || !route.businessStore.isInitialized) {
@@ -248,23 +156,8 @@ class OfferEntry extends React.Component {
 							<ReactTooltip id="endDate"/>
 						</div>
 
-						<label>
-							{/*<ImageUploader*/}
-							{/*name="offer-image"*/}
-							{/*storageRef={firebase.storage().ref('images')}*/}
-							{/*onUploadStart={this.handleUploadStart}*/}
-							{/*onUploadError={this.handleUploadError}*/}
-							{/*onUploadSuccess={this.handleUploadSuccess}*/}
-							{/*onProgress={this.handleProgress}*/}
-							{/*/>*/}
-							<input type="file" onChange={this.handleUploadSuccess}/>
-						</label>
 
-
-						<canvas id="canvas" style={{
-							width: '100%',
-							height: '250px'
-						}}/>
+						<ImageEditor src={offer.imageUrl}/>
 
 
 						<RaisedButton secondary={true} style={{color: 'white', margin: '10px 0'}}
@@ -278,6 +171,6 @@ class OfferEntry extends React.Component {
 	}
 }
 
-export default CSSModules(OfferEntry, style);
+export default OfferEntry;
 
 
