@@ -1,0 +1,57 @@
+@import '../../styles/globals.scss';
+
+
+:global {
+
+  .ImageEditor {
+    //box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    padding: 20px 0;
+
+    canvas {
+      max-width: 100%;
+    }
+
+    .ImageEditor-upload {
+      margin: 15px 0;
+      position: relative;
+      input {
+        color: transparent;
+      }
+      &:after {
+        content: "Choose image";
+        color: white;
+        background: $secondary;
+        padding: 3px 15px;
+        font-size: 1rem;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        border-radius: 3px;
+      }
+    }
+
+    .ImageEditor-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      max-width: 320px;
+      margin: 0 auto;
+      .material-icons {
+        color: white !important;
+        border-radius: 100%;
+        background: $secondary;
+        width: 30px;
+        height: 30px;
+        display: flex !important;
+        @include flex-column-center;
+      }
+    }
+    .Slider {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+  }
+
+}

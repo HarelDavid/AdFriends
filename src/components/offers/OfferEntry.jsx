@@ -156,15 +156,15 @@ class OfferEntry extends React.Component {
 							<ReactTooltip id="endDate"/>
 						</div>
 
+					</form>
 
 						<ImageEditor src={offer.imageUrl}/>
 
 
-						<RaisedButton secondary={true} style={{color: 'white', margin: '10px 0'}}
+						<RaisedButton secondary={true} style={{color: "white", width: '95%', margin: '10px auto'}}
 									  onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>שמור</RaisedButton>
 
 
-					</form>
 				</Paper>
 			</div>
 		)

@@ -5,6 +5,7 @@ import autobind from 'autobind-decorator'
 import classname from 'classnames';
 import AvatarEditor from 'react-avatar-editor'
 import Slider from '../slider'
+import FontIcon from 'material-ui/FontIcon'
 
 import './style.scss';
 
@@ -118,15 +119,23 @@ class ImageEditor extends React.Component {
 			<div className="ImageEditor">
 				<AvatarEditor
 					image={this.props.src}
-					width={300}
+					width={360}
 					height={250}
 					border={0}
-					color={[255, 255, 255, 0.6]} // RGBA
+					color={[255, 255, 255, 0.6]}
 					scale={scale}
 					rotate={degrees}
 				/>
-				<input type="file" onChange={this.handleUploadSuccess}/>
+
+				<div className="ImageEditor-actions">
+					<div className="ImageEditor-upload">
+						<input type="file" onChange={this.handleUploadSuccess}/>
+					</div>
+					<FontIcon className="material-icons" onTouchTap={this.rotate}>rotate_right</FontIcon>
+				</div>
+
 				<Slider center initPercentPosition={50} onChange={this.zoom}/>
+
 			</div>
 		);
 

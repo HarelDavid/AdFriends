@@ -22,6 +22,9 @@ const muiTheme = getMuiTheme({
     },
 	TextField: {
         height: 'auto'
+    },
+	RaisedButton: {
+        color: 'white'
     }
 });
 
