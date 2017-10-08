@@ -1,3 +1,5 @@
+import dataUrlToBlob from 'dataurl-to-blob'
+
 export function	uuid() {
 	/*jshint bitwise:false */
 	var i, random;
@@ -41,18 +43,16 @@ export function convertToImage(file) {
 	})
 }
 
-
-export function dataURItoFile(data) {
+export function dataURItoFile(data, filename) {
 	let file = null;
-	let {fileName} = this.props;
 	try {
-		file = new File([dataURLtoBlob(data)], `${fileName}.jpg`, {type: 'image/jpeg'});
+		file = new File([dataUrlToBlob(data)], `${filename}`, {type: 'image/jpeg'});
 	}
 	catch (ex) {
 		// on iphone 5, safari, file object constructor doesn't work
 		// we use blob instead, but it doesn't have name propery so we create it
-		file = new Blob([dataURLtoBlob(data)], {type: 'image/jpeg'});
-		file.name = `${fileName}.jpg`;
+		file = new Blob([dataUrlToBlob(data)], {type: 'image/jpeg'});
+		file.name = `${filename}`;
 	}
 	return file;
 }

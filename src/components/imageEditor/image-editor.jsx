@@ -2,11 +2,14 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import {observable, action} from 'mobx';
 import autobind from 'autobind-decorator'
-import classname from 'classnames';
+import PropTypes from 'prop-types';
+
 import AvatarEditor from 'react-avatar-editor'
 import Slider from '../slider'
 import FontIcon from 'material-ui/FontIcon'
 import {convertToImage, dataURItoFile} from '../../utils';
+import * as firebase from 'firebase';
+import RaisedButton from 'material-ui/RaisedButton'
 
 import './style.scss';
 
@@ -14,11 +17,16 @@ import './style.scss';
 @observer
 class ImageEditor extends React.Component {
 
+	static PropTypes = {
+		src: PropTypes.string,
+		onUpload: PropTypes.func
+	}
+
 	@observable state = {
 		scale: 1,
 		degrees: 0,
 		src: '',
-		result: null
+		filename: ''
 	}
 
 	componentWillMount(){
@@ -66,16 +74,13 @@ class ImageEditor extends React.Component {
 			alert('Please upload an image');
 		}
 
+		this.state.filename = file.name;
 
 		return convertToImage(file)
 			.then(image => {
 				this.state.src = image.src;
 			})
-			.then(image => {
-				this.state.result = dataURItoFile(image.src);
-				console.log(this.state.result)
-			})
-			.finally( ()=> {
+			.then( ()=> {
 				console.log('finished')
 			})
 
@@ -87,15 +92,19 @@ class ImageEditor extends React.Component {
 		var storageRef = firebase.storage().ref('images').child(file.name);
 
 		storageRef.child(file.name).put(file).then((snapshot) => {
-			console.log(snapshot.downloadURL);
-			this.state.offer.thumbnail = snapshot.downloadURL
+			this.props.onUpload(snapshot.downloadURL);
 		})
 
 
-		// firebase.storage().ref('images').child(file.name).getDownloadURL().then(url =>
-		// 	this.state.offer.thumbnail = url
-		// );
+	}
 
+	uploadImage(){
+		var canvas = this.editor.getImageScaledToCanvas(),
+			data = canvas.toDataURL(),
+			resultFile = dataURItoFile(data, this.state.filename);
+
+		console.log(resultFile);
+		this.saveThumbnail(resultFile);
 	}
 
 
@@ -105,7 +114,7 @@ class ImageEditor extends React.Component {
 
 		return (
 			<div className="ImageEditor">
-				<AvatarEditor
+				<AvatarEditor ref={(ref)=> this.editor = ref}
 					image={this.state.src}
 					width={360}
 					height={250}
@@ -118,6 +127,7 @@ class ImageEditor extends React.Component {
 					<div className="ImageEditor-upload">
 						<input type="file" onChange={this.handleUploadSuccess}/>
 					</div>
+					<RaisedButton onClick={()=>this.uploadImage()}> שמור</RaisedButton>
 				</div>
 
 				<Slider center initPercentPosition={50} onChange={this.zoom}/>

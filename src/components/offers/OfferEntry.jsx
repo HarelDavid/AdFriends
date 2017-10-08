@@ -97,9 +97,6 @@ class OfferEntry extends React.Component {
 		this.setState({title: ""});
 	}
 
-
-
-
 	@autobind
 	goBack() {
 		hashHistory.push('/offers');
@@ -108,6 +105,10 @@ class OfferEntry extends React.Component {
 	@autobind
 	formatDate(date) {
 		return moment(date).format('DD/MM/YY')
+	}
+
+	setImageSrc(src){
+		this.state.offer.imageUrl = src;
 	}
 
 	render() {
@@ -157,7 +158,7 @@ class OfferEntry extends React.Component {
 
 					</form>
 
-						<ImageEditor src={offer.imageUrl}/>
+						<ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}  />
 
 
 						<RaisedButton secondary={true} style={{width: '95%', margin: '10px auto', display: 'block'}}
