@@ -19,3 +19,41 @@ export function pluralize(count, word) {
 	return count === 1 ? word : word + 's';
 }
 
+
+export function convertToImage(file) {
+	return new Promise((resolve, reject) => {
+		var reader = new FileReader();
+		reader.readAsDataURL(file);
+
+		reader.addEventListener("load", (ev) => {
+			var img = new Image();
+			img.src = ev.target.result;
+
+			img.addEventListener("load", () => {
+				resolve(img);
+			});
+
+		});
+
+		reader.addEventListener("error", () => {
+			reject(reader.error);
+		});
+	})
+}
+
+
+export function dataURItoFile(data) {
+	let file = null;
+	let {fileName} = this.props;
+	try {
+		file = new File([dataURLtoBlob(data)], `${fileName}.jpg`, {type: 'image/jpeg'});
+	}
+	catch (ex) {
+		// on iphone 5, safari, file object constructor doesn't work
+		// we use blob instead, but it doesn't have name propery so we create it
+		file = new Blob([dataURLtoBlob(data)], {type: 'image/jpeg'});
+		file.name = `${fileName}.jpg`;
+	}
+	return file;
+}
+

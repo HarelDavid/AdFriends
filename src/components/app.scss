@@ -173,25 +173,74 @@
     }
   }
 
-}
-
-//End global
-
-
-.whatsup-share-button {
-  color: #fff;
-  font-size: 20px;
-  padding: 3px 15px;
-
-}
-
-
-
-.offerBox.isOVerDue {
-  background: $grey-bg;
-  .offerDate {
-    color: red;
+  .Loader {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 60px;
+    height: 60px;
+    animation: spinBoxContainer ease 0.8s infinite;
+    .loader-box {
+      width: 25px;
+      height: 25px;
+      border-radius: 3px;
+      animation: spinBox ease 0.5s infinite;
+      &.box-1 {
+        background: $loader-1;
+      }
+      &.box-2 {
+        background: $loader-2;
+      }
+      &.box-3 {
+        background: $loader-3;
+      }
+      &.box-4 {
+        background: $loader-4;
+      }
+    }
   }
-}
+
+  .Loader-wrapper {
+    background: $grey-bg;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    @include flex-column-center;
+    position: fixed;
+    top: 0;
+    right: 0;
+  }
+
+
+}  //End global
+
+//
+//
+//@keyframes spinBox {
+//  0% {
+//    border-radius: 3px;
+//    transform: rotate(0deg);
+//  }
+//  100% {
+//    border-radius: 100%;
+//    transform: rotate(360deg);
+//  }
+//}
+//
+//@keyframes spinBoxContainer {
+//  0% {
+//    width: 60px;
+//    height: 60px;
+//    transform: rotate(0deg);
+//  }
+//  100% {
+//    border-radius: 100%;
+//    width: 120px;
+//    height: 120px;
+//    transform: rotate(0deg);
+//  }
+//}
 
 

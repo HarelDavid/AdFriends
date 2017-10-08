@@ -1,4 +1,3 @@
-import CSSModules from 'react-css-modules'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import DevTool from 'mobx-react-devtools'

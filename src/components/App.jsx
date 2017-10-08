@@ -44,7 +44,11 @@ export default class App extends React.Component {
             </MuiThemeProvider>
         )
             :
-            <div>loading</div>
+            <div className="Loader-wrapper">
+                LOADING
+            </div>
+
+
 
     }
 }

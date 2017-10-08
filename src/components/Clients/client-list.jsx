@@ -1,4 +1,3 @@
-import CSSModules from 'react-css-modules'
 import React from 'react';
 import {observer} from 'mobx-react';
 import Client from './Client'

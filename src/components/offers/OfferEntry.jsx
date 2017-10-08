@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
 import {hashHistory} from 'react-router';
 import Promise from "bluebird";
@@ -122,7 +121,7 @@ class OfferEntry extends React.Component {
 		return (
 			<div>
 
-				<Paper style={{marginTop: 20}}>
+				<Paper style={{marginTop: 20, paddingBottom: 20}}>
 					<form className="addItemForm">
 
 						<div className="row">
@@ -161,8 +160,8 @@ class OfferEntry extends React.Component {
 						<ImageEditor src={offer.imageUrl}/>
 
 
-						<RaisedButton secondary={true} style={{color: "white", width: '95%', margin: '10px auto'}}
-									  onTouchTap={(e) => this.handleNewOfferKeyDown(e)}>שמור</RaisedButton>
+						<RaisedButton secondary={true} style={{width: '95%', margin: '10px auto', display: 'block'}}
+									  onTouchTap={(e) => this.handleNewOfferKeyDown(e)}><span style={{color: "white"}}>שמור</span></RaisedButton>
 
 
 				</Paper>

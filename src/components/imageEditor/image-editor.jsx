@@ -6,6 +6,7 @@ import classname from 'classnames';
 import AvatarEditor from 'react-avatar-editor'
 import Slider from '../slider'
 import FontIcon from 'material-ui/FontIcon'
+import {convertToImage, dataURItoFile} from '../../utils';
 
 import './style.scss';
 
@@ -16,6 +17,12 @@ class ImageEditor extends React.Component {
 	@observable state = {
 		scale: 1,
 		degrees: 0,
+		src: '',
+		result: null
+	}
+
+	componentWillMount(){
+		this.state.src = this.props.src;
 	}
 
 	@autobind
@@ -53,24 +60,25 @@ class ImageEditor extends React.Component {
 
 		e.persist();
 		let file = e.target.files[0],
-			{canvas} = this.state;
+			reader  = new FileReader();
 
 		if (!file.type.match('image.*')) {
-			alert('Please upload an image')
+			alert('Please upload an image');
 		}
 
 
-		return this.convertToImage(file)
+		return convertToImage(file)
 			.then(image => {
-				this.state.offer.imageUrl = image.src;
-			}).finally(() => {
-				setTimeout(() => {
-					// this.state.offer.imageUrl = canvas.toDataURL('image/jpeg');
-					this.state.uploading = false;
-					// this.saveThumbnail(file);
-				}, 500)
-
+				this.state.src = image.src;
 			})
+			.then(image => {
+				this.state.result = dataURItoFile(image.src);
+				console.log(this.state.result)
+			})
+			.finally( ()=> {
+				console.log('finished')
+			})
+
 	};
 
 
@@ -90,26 +98,6 @@ class ImageEditor extends React.Component {
 
 	}
 
-	convertToImage(file) {
-		return new Promise((resolve, reject) => {
-			var reader = new FileReader();
-			reader.readAsDataURL(file);
-
-			reader.addEventListener("load", (ev) => {
-				var img = new Image();
-				img.src = ev.target.result;
-
-				img.addEventListener("load", () => {
-					resolve(img);
-				});
-
-			});
-
-			reader.addEventListener("error", () => {
-				reject(reader.error);
-			});
-		})
-	}
 
 
 	render() {
@@ -118,20 +106,18 @@ class ImageEditor extends React.Component {
 		return (
 			<div className="ImageEditor">
 				<AvatarEditor
-					image={this.props.src}
+					image={this.state.src}
 					width={360}
 					height={250}
 					border={0}
 					color={[255, 255, 255, 0.6]}
 					scale={scale}
-					rotate={degrees}
 				/>
 
 				<div className="ImageEditor-actions">
 					<div className="ImageEditor-upload">
 						<input type="file" onChange={this.handleUploadSuccess}/>
 					</div>
-					<FontIcon className="material-icons" onTouchTap={this.rotate}>rotate_right</FontIcon>
 				</div>
 
 				<Slider center initPercentPosition={50} onChange={this.zoom}/>
@@ -146,3 +132,5 @@ class ImageEditor extends React.Component {
 }
 
 export default ImageEditor;
+
+
