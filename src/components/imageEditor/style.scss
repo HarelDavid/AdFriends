@@ -9,6 +9,7 @@
 
     canvas {
       max-width: 100%;
+      touch-action: none;
     }
 
     .ImageEditor-upload {
