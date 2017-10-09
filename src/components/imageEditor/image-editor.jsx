@@ -115,19 +115,19 @@ class ImageEditor extends React.Component {
 		return (
 			<div className="ImageEditor">
 				<AvatarEditor ref={(ref)=> this.editor = ref}
-					image={this.state.src}
-					width={360}
-					height={250}
-					border={0}
-					color={[255, 255, 255, 0.6]}
-					scale={scale}
+							  image={this.state.src}
+							  width={360}
+							  height={250}
+							  border={0}
+							  color={[255, 255, 255, 0.6]}
+							  scale={scale}
 				/>
 
 				<div className="ImageEditor-actions">
 					<div className="ImageEditor-upload">
 						<input type="file" onChange={this.handleUploadSuccess}/>
 					</div>
-					<RaisedButton onClick={()=>this.uploadImage()}> שמור</RaisedButton>
+					<RaisedButton primary color="#fff" onClick={()=>this.uploadImage()}>שמור תמונה</RaisedButton>
 				</div>
 
 				<Slider center initPercentPosition={50} onChange={this.zoom}/>

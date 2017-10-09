@@ -12,7 +12,10 @@ import ReactTooltip from 'react-tooltip';
 import moment from 'moment';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
+import FontIcon from 'material-ui/FontIcon';
+import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
 import ImageEditor from '../imageEditor/image-editor';
 
@@ -107,12 +110,14 @@ class OfferEntry extends React.Component {
 		return moment(date).format('DD/MM/YY')
 	}
 
+	@autobind
 	setImageSrc(src){
 		this.state.offer.imageUrl = src;
 	}
 
+
 	render() {
-		var {offer, imageToEdit} = this.state;
+		var {offer} = this.state;
 		var offerProps = this.props.offer;
 		var {route} = this.props;
 		if (!firebase.storage || !route.businessStore.isInitialized) {
@@ -157,6 +162,9 @@ class OfferEntry extends React.Component {
 						</div>
 
 					</form>
+
+
+
 
 						<ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}  />
 
