@@ -3,7 +3,6 @@ import {observer} from 'mobx-react';
 import {observable, action} from 'mobx';
 import autobind from 'autobind-decorator'
 import PropTypes from 'prop-types';
-
 import AvatarEditor from 'react-avatar-editor'
 import Slider from '../slider'
 import FontIcon from 'material-ui/FontIcon'
@@ -110,7 +109,7 @@ class ImageEditor extends React.Component {
 
 
 	render() {
-		let {scale,degrees} = this.state;
+		let {scale} = this.state;
 
 		return (
 			<div className="ImageEditor">
@@ -120,17 +119,19 @@ class ImageEditor extends React.Component {
 							  height={250}
 							  border={0}
 							  color={[255, 255, 255, 0.6]}
-							  scale={scale}
-				/>
+							  scale={scale}/>
+
+				<p style={{direction: 'ltr'}}>Slide to rescale:</p>
+				<Slider center initPercentPosition={50} onChange={this.zoom}/>
 
 				<div className="ImageEditor-actions">
 					<div className="ImageEditor-upload">
 						<input type="file" onChange={this.handleUploadSuccess}/>
 					</div>
-					<RaisedButton primary color="#fff" onClick={()=>this.uploadImage()}>שמור תמונה</RaisedButton>
+					<RaisedButton secondary onTouchTap={()=>this.uploadImage()}><span style={{color: '#fff'}}>שמור תמונה</span></RaisedButton>
 				</div>
 
-				<Slider center initPercentPosition={50} onChange={this.zoom}/>
+
 
 			</div>
 		);

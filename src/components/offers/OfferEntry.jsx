@@ -163,13 +163,10 @@ class OfferEntry extends React.Component {
 
 					</form>
 
-
-
-
 						<ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}  />
 
 
-						<RaisedButton secondary={true} style={{width: '95%', margin: '10px auto', display: 'block'}}
+						<RaisedButton primary={true} style={{width: '95%', maxWidth: 320, margin: '10px auto', display: 'block'}}
 									  onTouchTap={(e) => this.handleNewOfferKeyDown(e)}><span style={{color: "white"}}>שמור</span></RaisedButton>
 
 
