@@ -7,6 +7,7 @@ export default class OfferModel {
 	@observable title;
 	@observable description;
 	@observable imageUrl;
+	@observable thumbnail;
 	@observable preMessage;
 	@observable terms;
 	@observable endingDate;
@@ -22,6 +23,7 @@ export default class OfferModel {
 			this.title = data.title || "";
 			this.description = data.description || "";
 			this.imageUrl = data.imageUrl || "";
+			this.thumbnail = data.thumbnail || "";
 			this.preMessage = data.preMessage || "";
 			this.terms = data.terms || "";
 			this.endingDate = data.endingDate ? data.endingDate :   "";
@@ -39,6 +41,7 @@ export default class OfferModel {
 		this.title = offerDB.title;
 		this.description = offerDB.description;
 		this.imageUrl = offerDB.imageUrl;
+		this.thumbnail = offerDB.thumbnail || "";
 		this.preMessage = offerDB.preMessage;
 		this.terms = offerDB.terms;
 		this.endingDate = offerDB.endingDate ? new Date(offerDB.endingDate) : "";
@@ -55,6 +58,7 @@ export default class OfferModel {
 		this.title ? offerDB.title = this.title : "";
 		this.description ? offerDB.description = this.description : "";
 		this.imageUrl ? offerDB.imageUrl = this.imageUrl : "";
+		this.thumbnail ? offerDB.thumbnail = this.thumbnail : "";
 		this.preMessage ? offerDB.preMessage = this.preMessage : "";
 		this.terms ? offerDB.terms = this.terms : "";
 		this.code ? offerDB.code = this.code : "";
@@ -103,6 +107,7 @@ export default class OfferModel {
 			title: this.title,
 			description: this.description,
 			imageUrl: this.imageUrl,
+			thumbnail: this.thumbnail,
 			key: this.key,
 			endingDate: this.endingDate,
 			// dateCreated: this.dateCreated,
@@ -118,6 +123,7 @@ export default class OfferModel {
 			title:object.title,
 			description:object.description,
 			imageUrl:object.imageUrl,
+			thumbnail: object.thumbnail,
 			endingDate: object.endingDate,
 			// dateCreated: object.dateCreated,
 			preMessage: object.preMessage,

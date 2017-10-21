@@ -1,5 +1,4 @@
 import React from 'react'
-import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import {Link} from 'react-router';

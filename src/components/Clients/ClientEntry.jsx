@@ -1,5 +1,4 @@
 import React from 'react';
-import CSSModules from 'react-css-modules'
 import {observer} from 'mobx-react';
 import autobind from 'autobind-decorator'
 import ImageUploader from'react-firebase-image-uploader';

@@ -6,6 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Content from './Content';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {grey800} from 'material-ui/styles/colors';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import  './app.scss';
 
@@ -20,6 +21,12 @@ const muiTheme = getMuiTheme({
     appBar: {
         height: 50,
     },
+	TextField: {
+        height: 'auto'
+    },
+	RaisedButton: {
+        color: 'white'
+    }
 });
 
 @observer
@@ -30,15 +37,19 @@ export default class App extends React.Component {
     render() {
         var {businessStore} = this.props.route;
 
-        return businessStore.isInitialized ? (
+        return (
 
             <MuiThemeProvider className="container" muiTheme={muiTheme}>
                 {/*<DevTool/>*/}
-                <Content businessStore={businessStore} children={this.props.children}/>
+				{businessStore.isInitialized ?
+                    <Content businessStore={businessStore} children={this.props.children}/>
+					:
+                    <div className="Loader-wrapper">
+                        <CircularProgress size={80} thickness={5} color="#50BAB4"/>
+                    </div>
+				}
             </MuiThemeProvider>
         )
-            :
-            <div>loading</div>
 
     }
 }
