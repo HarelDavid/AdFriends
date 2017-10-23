@@ -156,11 +156,8 @@ export default class BuisnessStore {
                             businessModelDB = businessModel.convertToDB();
                             if (couponsObj.hasOwnProperty(key)) {
                                 var coupon = couponsObj[key];
-                                var couponModel = new CouponModel();
-                                couponModel.convertFromDB(coupon);
-                                couponModel.bussineData = businessModelDB;
-                                var couponStore = new CouponStore();
-                                couponStore.save(couponModel)
+                                firebase.database().ref('coupons').child(coupon.id).child('bussineData').set(businessModelDB)
+
                             }
                         }
                     }

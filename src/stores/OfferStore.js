@@ -56,10 +56,10 @@ export default class OfferStore {
                                 var couponModel = new CouponModel();
                                 couponModel.convertFromDB(coupon);
                                 delete offerDB["couponLinks"]
-                                couponModel.offer = offerDB;
-                                var couponStore = new CouponStore();
-                                couponStore.save(couponModel);
-                            }
+								var coupon = couponsObj[key];
+								firebase.database().ref('coupons').child(coupon.id).child('offer').set(offerDB);
+
+                               }
                         }
                     }
                 })
