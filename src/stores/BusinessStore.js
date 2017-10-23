@@ -108,7 +108,7 @@ export default class BuisnessStore {
 					businessModel.convertFromDB(business);
 					businessModel.store = this;
 					this.init(businessModel);
-                    //hashHistory.push('/offers');
+                    hashHistory.push('/offers');
 
 				}
 			})
