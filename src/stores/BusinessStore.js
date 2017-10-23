@@ -116,9 +116,11 @@ export default class BuisnessStore {
 
 
 	logout(){
-		var _this = this;
 		return firebase.auth().signOut().then(() =>  {
-			_this .business = null;
+            this.business = null;
+            this.offerStore = new OfferStore();
+            this.clientStore = new ClientStore();
+            this.couponStore = new CouponStore();
 			hashHistory.push('/');
 
 			return;
