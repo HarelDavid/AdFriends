@@ -15,6 +15,7 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import ClientModel from '../../models/ClientModel'
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import './style.scss';
 
@@ -32,7 +33,7 @@ export default class Offer extends React.Component {
 		dialogOpen: false,
 		message: '',
 		shareMsg: '',
-        clientError:''
+		clientError: ''
 	}
 
 	componentWillMount() {
@@ -109,7 +110,7 @@ export default class Offer extends React.Component {
 		} else {
 			this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.value)
 		}
-        this.state.clientError = '';
+		this.state.clientError = '';
 	}
 
 	@autobind
@@ -120,13 +121,13 @@ export default class Offer extends React.Component {
 
 	@autobind
 	openDialog() {
-        if(this.state.chosenClient.id) {
-            this.createLink();
-           	this.state.clientError = '';
-            this.state.dialogOpen = true;
-        }
-        else{
-            this.state.clientError = 'בחר לקוח';
+		if (this.state.chosenClient.id) {
+			this.createLink();
+			this.state.clientError = '';
+			this.state.dialogOpen = true;
+		}
+		else {
+			this.state.clientError = 'בחר לקוח';
 		}
 	}
 
@@ -197,30 +198,36 @@ export default class Offer extends React.Component {
 		const {businessStore, couponsStore} = this.props;
 		var shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
 		var actions = [<FlatButton
-			label="סגור"
+			label="ביטול"
 			primary={true}
 			onTouchTap={this.handleClose}
 		/>,
 			<a target="_blank" href={`${this.state.link}?preview=true`}>
-				<FlatButton label="תצוגה מקדימה" style={{marginTop: 20}} secondary />
+				<RaisedButton label="תצוגה מקדימה" style={{marginTop: 20}} secondary/>
 			</a>,
 			<RaisedButton backgroundColor="#25D366">
 				{this.isMobile() ?
 					<a href={shareUrl} style={{color: '#fff', textDecoration: 'none'}}
 					   className="whatsup-share-button">
 						<FontIcon className="material-icons"
-								  style={{color: '#fff', fontSize: 16, marginLeft: 4,verticalAlign: 'sub'}}>share</FontIcon>
+								  style={{
+									  color: '#fff',
+									  fontSize: 16,
+									  marginLeft: 4,
+									  verticalAlign: 'sub'
+								  }}>share</FontIcon>
 						שתף</a>
 					:
-					<span style={{color: '#fff'}} onClick={()=> this.copyTextToClipboard(link)}><FontIcon className="material-icons"
-								 style={{color: '#fff', fontSize: 16, marginLeft: 4, verticalAlign: 'middle'}}>share</FontIcon> שתף</span>
+					<span style={{color: '#fff'}} onClick={() => this.copyTextToClipboard(link)}><FontIcon
+						className="material-icons"
+						style={{color: '#fff', fontSize: 16, marginLeft: 4, verticalAlign: 'middle'}}>share</FontIcon> שתף</span>
 				}
 			</RaisedButton>];
 
 		var isOVerDue = moment(offer.endingDate).isBefore(new Date());
 
 
-		var offerBoxStyle = {margin: '20px 0'};
+		var offerBoxStyle = {margin: '20px 0', maxWidth: 500};
 		var offerBoxDateStyle = null;
 		if (isOVerDue) {
 			offerBoxStyle = {
@@ -237,26 +244,25 @@ export default class Offer extends React.Component {
 		return (
 
 			<Card style={offerBoxStyle}>
-				<CardHeader
-					title={offer.title}
-					actAsExpander={true}
-					showExpandableButton={!isOVerDue}
-					closeIcon={<FontIcon className="material-icons">share</FontIcon>}
-					openIcon={<FontIcon className="material-icons">expand_less</FontIcon>}
-				/>
+				<CardHeader title={offer.title} style={{fontWeight: 'bold'}}/>
 				<CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
-					<p style={offerBoxDateStyle}>{isOVerDue ? 'פג תוקף ' : 'בתוקף עד: '}{moment(offer.endingDate).format('DD/MM/YY')}</p>
-					<Link to={`/offer/${offer.id}`}>
-						<IconButton><FontIcon className="material-icons">mode_edit</FontIcon></IconButton>
-					</Link>
+					<div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+						<p style={offerBoxDateStyle}>{isOVerDue ? 'פג תוקף ' : 'בתוקף עד: '}{moment(offer.endingDate).format('DD/MM/YY')}</p>
+						<Link to={`/offer/${offer.id}`} style={{textDecoration: 'none', marginLeft: 10}}>
+							<RaisedButton secondary label="ערוך"
+										  icon={<FontIcon className="material-icons" style={{fontSize: '1.2rem'}}>mode_edit</FontIcon>}/>
+						</Link>
+					</div>
+
 				</CardActions>
-				<CardText expandable={true}>
+				<CardText>
 					<div className="shareDialog">
 						<Creatable
 							name="form-field-name"
 							value={this.state.chosenClient.id}
 							options={this.getClientOption()}
 							onChange={this.handleClientChoose}
+							placeholder="שלח קופון"
 						/>
 
 						<div>
@@ -269,11 +275,12 @@ export default class Offer extends React.Component {
 								modal={false}
 								open={this.state.dialogOpen}
 								onRequestClose={this.handleClose}
-								contentStyle={{width: '90%'}}>
+								contentStyle={{width: '90%', maxWidth: 500}}
+								actionsContainerClassName="shareDialogActions">
 
 								<TextField label="הודעה ללקוח" multiLine={true} name="message"
 										   defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
-										   onChange={this.updatePreMessage}/>
+										   onChange={this.updatePreMessage} style={{minWidth: 300}}/>
 								<b style={{float: 'left'}}>{shareMsg}</b>
 							</Dialog>
 							}
