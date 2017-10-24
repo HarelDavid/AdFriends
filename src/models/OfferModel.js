@@ -69,15 +69,15 @@ export default class OfferModel {
 		return offerDB;
 	}
 
-	createLinks(clientsArray) {
-		clientsArray.forEach((client) => {
-			var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
-			this.couponLinks.push(offerClientLink);
-			client.offerLinks.push(offerClientLink);
-			client.save();
-		})
-		this.store.save(this);
-	}
+	// createLinks(clientsArray) {
+	// 	clientsArray.forEach((client) => {
+	// 		var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
+	// 		this.couponLinks.push(offerClientLink);
+	// 		client.offerLinks.push(offerClientLink);
+	// 		client.save();
+	// 	})
+	// 	this.store.save(this);
+	// }
 
 	createLink(client,bussinessId) {
 

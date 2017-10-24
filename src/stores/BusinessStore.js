@@ -108,7 +108,7 @@ export default class BuisnessStore {
 					businessModel.convertFromDB(business);
 					businessModel.store = this;
 					this.init(businessModel);
-                    //hashHistory.push('/offers');
+                    hashHistory.push('/offers');
 
 				}
 			})
@@ -116,9 +116,11 @@ export default class BuisnessStore {
 
 
 	logout(){
-		var _this = this;
 		return firebase.auth().signOut().then(() =>  {
-			_this .business = null;
+            this.business = null;
+            this.offerStore = new OfferStore();
+            this.clientStore = new ClientStore();
+            this.couponStore = new CouponStore();
 			hashHistory.push('/');
 
 			return;
@@ -156,11 +158,8 @@ export default class BuisnessStore {
                             businessModelDB = businessModel.convertToDB();
                             if (couponsObj.hasOwnProperty(key)) {
                                 var coupon = couponsObj[key];
-                                var couponModel = new CouponModel();
-                                couponModel.convertFromDB(coupon);
-                                couponModel.bussineData = businessModelDB;
-                                var couponStore = new CouponStore();
-                                couponStore.save(couponModel)
+                                firebase.database().ref('coupons').child(coupon.id).child('bussineData').set(businessModelDB)
+
                             }
                         }
                     }

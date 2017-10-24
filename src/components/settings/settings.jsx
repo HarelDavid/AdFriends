@@ -96,23 +96,23 @@ export default class Settings extends React.Component {
                             <TextField name="title" defaultValue={business.title} onChange={this.onChange} hintText="שם בית העסק"/>
                             <TextField name="address" defaultValue={business.address} onChange={this.onChange} hintText="כתובת"/>
                             <TextField name="description" defaultValue={business.description} multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
-                            <TextField name="businessType" defaultValue={business.businessType} onChange={this.onChange} hintText="סוג בית עסק"/>
+                            {/*<TextField name="businessType" defaultValue={business.businessType} onChange={this.onChange} hintText="סוג בית עסק"/>*/}
                             <TextField name="phone" defaultValue={business.phone}  onChange={this.onChange} hintText="מספר טלפון"/>
                             <TextField name="website" defaultValue={business.website} onBlur={this.checkUrlPrefix} hintText="אתר אינטרנט"/>
-                            <TextField name="facebook" defaultValue={business.facebook} onChange={this.onChange} hintText="דף פייסבוק"/>
+                            {/*<TextField name="facebook" defaultValue={business.facebook} onChange={this.onChange} hintText="דף פייסבוק"/>*/}
 
-                            <ImageUploader
-                                name="avatar"
-                                storageRef={firebase.storage().ref('images')}
-                                onUploadStart={this.handleUploadStart}
-                                onUploadError={this.handleUploadError}
-                                onUploadSuccess={this.handleUploadSuccess}
-                                onProgress={this.handleProgress}
-                            />
+                            {/*<ImageUploader*/}
+                                {/*name="avatar"*/}
+                                {/*storageRef={firebase.storage().ref('images')}*/}
+                                {/*onUploadStart={this.handleUploadStart}*/}
+                                {/*onUploadError={this.handleUploadError}*/}
+                                {/*onUploadSuccess={this.handleUploadSuccess}*/}
+                                {/*onProgress={this.handleProgress}*/}
+                            {/*/>*/}
 
-                            <Avatar style={{margin: '20px auto', display: 'block'}} size={100}
-                                    backgroundColor={pinkA200}
-                                    src={business.imageUrl}/>
+                            {/*<Avatar style={{margin: '20px auto', display: 'block'}} size={100}*/}
+                                    {/*backgroundColor={pinkA200}*/}
+                                    {/*src={business.imageUrl}/>*/}
                         </form>
 
                     </div>
