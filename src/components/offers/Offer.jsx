@@ -255,16 +255,16 @@ export default class Offer extends React.Component {
 					</div>
 
 				</CardActions>
-				<CardText>
+				<CardText style={{padding: '10px 16px 16px', borderTop: '1px solid #f7f7f7'}}>
+						<p style={{marginTop: 0}}>שלח קופון:</p>
 					<div className="shareDialog">
 						<Creatable
 							name="form-field-name"
 							value={this.state.chosenClient.id}
 							options={this.getClientOption()}
 							onChange={this.handleClientChoose}
-							placeholder="שלח קופון"
+							placeholder="הקלד שם לקוח"
 						/>
-
 						<div>
 							<RaisedButton secondary onClick={this.openDialog}>שלח
 								קופון</RaisedButton>
