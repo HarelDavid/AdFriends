@@ -76,19 +76,30 @@ export default class Offer extends React.Component {
 	@autobind
 	createLink() {
 
+
+
 		const {offer} = this.state;
 		var {chosenClient}  = this.state;
 		var {businessStore, couponsStore}  = this.props;
-		var coupon = new CouponModel({store: couponsStore});
+        var coupon = new CouponModel({store: couponsStore});
 		coupon.businessId = businessStore.business.id;
 		coupon.offer = offer.convertToDB();
 		coupon.clientId = chosenClient.id;
 		coupon.message = this.state.message || offer.preMessage;
 		coupon.bussineData = businessStore.business.convertToDB()
-		coupon.save();
+
+        if(!coupon.id){
+            var couponId = `${coupon.offer.id}_${coupon.clientId}`
+            coupon.id = couponId;
+        }
+        var hostData = 'http://coupon.adfriend.co.il';
+        var linkData = `/coupon/${coupon.id}`;
+        coupon.link = `${hostData}${linkData}`;
+
         return this.bit_url(coupon.link)
 			.then((res) => {
-            this.state.link = coupon.link = res.data.url;
+            this.state.link = coupon.shortLink = res.data.url;
+            coupon.save();
             offer.couponLinks.push(coupon.link);
             offer.save();
             chosenClient.couponLinks.push(coupon.link);

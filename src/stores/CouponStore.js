@@ -80,24 +80,15 @@ export default class CouponStore {
 
 	//add or update
 	save(coupon) {
-		if(!coupon.id){
-			var couponId = `${coupon.offer.id}_${coupon.clientId}`
-			coupon.id = couponId;
-			coupon.store = this;
-		}
 
-		var hostData = 'http://coupon.adfriend.co.il';
-		var linkData = `/coupon/${coupon.id}`;
-		var couponsLink = `${hostData}${linkData}`;
-		coupon.link = couponsLink;
-
-
+        coupon.store = this;
 		if(!this.coupons.find(it => it.id == coupon.id)) {
 			this.coupons.push(coupon);
 		}
 		var couponDB = coupon.convertToDB();
 		this.couponRef = firebase.database().ref('coupons');
 		this.couponRef.child(couponDB.id).child('link').set(coupon.link);
+        this.couponRef.child(couponDB.id).child('shortLink').set(coupon.shortLink);
         this.couponRef.child(couponDB.id).child('businessId').set(coupon.businessId);
         this.couponRef.child(couponDB.id).child('offer').set(coupon.offer);
         this.couponRef.child(couponDB.id).child('offerId').set(coupon.offerId);

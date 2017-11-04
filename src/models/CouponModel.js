@@ -23,6 +23,7 @@ export default class CouponModel {
 			this.store = data.store || {};
 			this.realized = data.realized || 0;
 			this.message = data.message || "";
+			this.shortLink = data.shortLink || "";
 		}
 
 	}
@@ -39,6 +40,7 @@ export default class CouponModel {
 		this.id = couponDB.id;
 		this.message = couponDB.message;
 		this.bussineData = couponDB.bussineData;
+		this.shortLink = couponDB.shortLink;
 
 	}
 
@@ -55,6 +57,7 @@ export default class CouponModel {
 		couponDB.realized = this.realized || 0;
 		couponDB.message = this.message || "";
 		couponDB.bussineData = this.bussineData || {};
+		couponDB.shortLink = this.shortLink || {};
 
 		return couponDB;
 	}
