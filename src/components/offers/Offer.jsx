@@ -2,6 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import {observable, expr} from 'mobx';
 import autobind from 'autobind-decorator'
+import jsonpP from 'jsonp-p';
 import classname from 'classnames';
 import {Link} from 'react-router';
 import CouponModel from '../../models/CouponModel'
@@ -83,15 +84,28 @@ export default class Offer extends React.Component {
 		coupon.clientId = chosenClient.id;
 		coupon.message = this.state.message || offer.preMessage;
 		coupon.bussineData = businessStore.business.convertToDB()
-
 		coupon.save();
-		this.state.link = coupon.link;
-		offer.couponLinks.push(coupon.link);
-		offer.save();
-		chosenClient.couponLinks.push(coupon.link);
-		chosenClient.save();
-
+        return this.bit_url(coupon.link)
+			.then((res) => {
+            this.state.link = coupon.link = res.data.url;
+            offer.couponLinks.push(coupon.link);
+            offer.save();
+            chosenClient.couponLinks.push(coupon.link);
+            chosenClient.save();
+            })
 	}
+
+    bit_url(url) {
+        var token="fa85478c7a3069c8ef46957dd6d7b27f6433cb93";
+        return jsonpP("https://api-ssl.bitly.com/v3/shorten?access_token="+token+"&longUrl="+url).promise
+        .then(response => {
+			return response
+        })
+        .catch(error => {
+			console.log(error)
+        });
+    }
+
 
 	getClientOption() {
 		return this.clientStore.clients.map((it) => {

@@ -97,9 +97,17 @@ export default class CouponStore {
 		}
 		var couponDB = coupon.convertToDB();
 		this.couponRef = firebase.database().ref('coupons');
-		this.couponRef.child(couponDB.id).set(couponDB);
-	}
+		this.couponRef.child(couponDB.id).child('link').set(coupon.link);
+        this.couponRef.child(couponDB.id).child('businessId').set(coupon.businessId);
+        this.couponRef.child(couponDB.id).child('offer').set(coupon.offer);
+        this.couponRef.child(couponDB.id).child('offerId').set(coupon.offerId);
+        this.couponRef.child(couponDB.id).child('link').set(coupon.link);
+        this.couponRef.child(couponDB.id).child('clientId').set(coupon.clientId);
+        this.couponRef.child(couponDB.id).child('bussineData').set(coupon.bussineData);
+        this.couponRef.child(couponDB.id).child('message').set(coupon.message);
+        this.couponRef.child(couponDB.id).child('id').set(coupon.id);
 
+	}
 
 
 	toJS() {
