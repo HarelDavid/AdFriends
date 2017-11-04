@@ -243,7 +243,7 @@ export default class Offer extends React.Component {
 								  }}>share</FontIcon>
 						שתף</a>
 					:
-					<span style={{color: '#fff'}} onClick={() => this.copyTextToClipboard(link)}><FontIcon
+					<span style={{color: '#fff'}} onClick={() => this.copyTextToClipboard(message  ? message +"  " + link :  offer.preMessage +"  " +  link)}><FontIcon
 						className="material-icons"
 						style={{color: '#fff', fontSize: 16, marginLeft: 4, verticalAlign: 'middle'}}>share</FontIcon> שתף</span>
 				}
