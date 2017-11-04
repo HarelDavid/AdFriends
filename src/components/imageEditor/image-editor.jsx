@@ -91,9 +91,10 @@ class ImageEditor extends React.Component {
 		var storageRef = firebase.storage().ref('images').child(file.name);
 
 		storageRef.child(file.name).put(file).then((snapshot) => {
-			this.props.onUpload(snapshot.downloadURL);
+			return this.props.onUpload(snapshot.downloadURL).then(()=>{
+				console.log('fdfs')
+			});
 		})
-
 
 	}
 
@@ -113,6 +114,7 @@ class ImageEditor extends React.Component {
 
 		return (
 			<div className="ImageEditor">
+				<p>גרור את התמונה למיקום הרצוי</p>
 				<AvatarEditor ref={(ref)=> this.editor = ref}
 							  image={this.state.src}
 							  width={360}
@@ -121,7 +123,7 @@ class ImageEditor extends React.Component {
 							  color={[255, 255, 255, 0.6]}
 							  scale={scale}/>
 
-				<p style={{direction: 'ltr'}}>Slide to rescale:</p>
+				<p>הקטן/הגדל את התמונה:</p>
 				<Slider center initPercentPosition={50} onChange={this.zoom}/>
 
 				<div className="ImageEditor-actions">
