@@ -10,7 +10,6 @@ import ClientOfferPreview from './components/preview/ClientOfferPreview'
 import settings from './components/settings/settings';
 import Coupons from './components/Coupons/Coupons';
 
-
 export default(stores) => {
 	return (
 
@@ -24,7 +23,6 @@ export default(stores) => {
 			<Route path="coupon/:couponId" component={ClientOfferPreview} couponsStore={stores.couponStore}/>
 			<Route path="coupon/:couponId/preview" component={ClientOfferPreview} businessStore={stores.businessStore}/>
 			<Route path="settings" component={settings} businessStore={stores.businessStore}/>
-
 		</Route>
 	)
 }

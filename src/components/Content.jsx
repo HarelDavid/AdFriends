@@ -18,12 +18,13 @@ export default class Content extends React.Component {
 
 
     render() {
-        var {businessStore} = this.props;
+        var {businessStore} = this.props,
+            contentWrapperClass =  businessStore.isLoggedIn ? 'contentWrapper' : 'contentWrapper logout';
 
 
-        return (
+		return (
 
-            <div>
+            <div className={contentWrapperClass}>
 
                 <NavigationBar businessStore={businessStore} />
 

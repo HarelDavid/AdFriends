@@ -24,18 +24,18 @@ module.exports = {
 	module: {
 
 		loaders: loaders.concat([{
-            test: /\.scss$/,
-            loaders: [
-                'style?sourceMap',
-                'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
-                'resolve-url',
-                'sass?sourceMap'
-            ]
+			test: /\.scss$/,
+			loaders: [
+				'style?sourceMap',
+				'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
+				'resolve-url',
+				'sass?sourceMap'
+			]
 		},
-            {
-                test: /\.(eot|svg|ttf|woff)$/,
-                loader: 'file?name=src/fonts/[name].[ext]'
-            }
+			{
+				test: /\.(eot|svg|ttf|woff)$/,
+				loader: 'file?name=src/fonts/[name].[ext]'
+			}
 		])
 	},
 	devServer: {

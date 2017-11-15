@@ -58,12 +58,6 @@
     }
   }
 
-  #root {
-    padding-top: 50px;
-    @media #{$media-higher-than-mobile}{
-      padding-right: 255px;
-    }
-  }
 
   .wrapper {
     padding: 0 15px 30px;
@@ -82,6 +76,23 @@
       margin-left: 10px !important;
     }
   }
+
+  .contentWrapper {
+    padding-top: 50px;
+    @media #{$media-higher-than-mobile}{
+      padding-right: 255px;
+      &.logout {
+        padding-right: 0;
+        .NavigationBar {
+          width: 100%;
+        }
+        .content {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
 
   .offers-wrapper {
     .offer-new {
