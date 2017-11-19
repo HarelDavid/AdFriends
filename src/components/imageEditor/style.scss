@@ -16,20 +16,25 @@
     .ImageEditor-upload {
       margin: 15px 0;
       position: relative;
+      text-align: center;
       input {
         color: transparent;
+        height: 36px;
       }
       &:after {
-        content: "Choose image";
+        content: "בחר תמונה";
         color: white;
         background: $secondary;
-        padding: 3px 15px;
-        font-size: 1rem;
+        padding: 3px 25px;
+        height: 36px;
+        border-radius: 2px;
         text-align: center;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+        width: 110px;
+        line-height: 36px;
         position: absolute;
         top: 0;
         right: 0;
-        border-radius: 3px;
         pointer-events: none;
       }
     }

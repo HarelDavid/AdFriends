@@ -75,9 +75,6 @@ export default class Offer extends React.Component {
 
 	@autobind
 	createLink() {
-
-
-
 		const {offer} = this.state;
 		var {chosenClient}  = this.state;
 		var {businessStore, couponsStore}  = this.props;
@@ -128,6 +125,7 @@ export default class Offer extends React.Component {
 
 	@autobind
 	handleClientChoose(clientOption) {
+		// console.log(clientOption, this.state.chosenClient)
 		if (clientOption && clientOption.className) {
 			this.state.chosenClient = clientOption;
 			this.state.client.title = clientOption.value;
@@ -285,7 +283,7 @@ export default class Offer extends React.Component {
 					<div className="shareDialog">
 						<Creatable
 							name="form-field-name"
-							value={this.state.chosenClient.id}
+							value={this.state.chosenClient.label}
 							options={this.getClientOption()}
 							onChange={this.handleClientChoose}
 							placeholder="הקלד שם לקוח"

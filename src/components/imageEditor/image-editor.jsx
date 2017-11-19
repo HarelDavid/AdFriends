@@ -9,7 +9,7 @@ import FontIcon from 'material-ui/FontIcon'
 import {convertToImage, dataURItoFile} from '../../utils';
 import * as firebase from 'firebase';
 import RaisedButton from 'material-ui/RaisedButton'
-
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 import './style.scss';
 
 
@@ -22,52 +22,39 @@ class ImageEditor extends React.Component {
 	}
 
 	@observable state = {
-		scale: 1,
-		degrees: 0,
+		// scale: 1,
+		// degrees: 0,
 		src: '',
-		filename: ''
+		filename: '',
+		loading: false
 	}
 
-	componentWillMount(){
+	componentWillMount() {
 		this.state.src = this.props.src;
 	}
 
-	@autobind
-	handleUploadStart() {
-		this.setState({isUploading: true, progress: 0});
-	}
 
-	@autobind
-	handleProgress(progress) {
-		this.setState({progress});
-	}
-
-	@autobind
-	handleUploadError(error) {
-		this.setState({isUploading: false});
-		console.error(error);
-	}
-
-	@autobind
-	@action
-	zoom(value) {
-		this.state.scale = value * 2 * 0.01;
-	}
+	// @autobind
+	// @action
+	// zoom(value) {
+	// 	this.state.scale = value * 2 * 0.01;
+	// }
+	//
+	//
+	// @autobind
+	// @action
+	// rotate() {
+	// 	this.state.degrees = (this.state.degrees + 90) % 360;
+	// }
 
 
 	@autobind
-	@action
-	rotate() {
-		this.state.degrees = (this.state.degrees + 90) % 360;
-	}
-
-
-	@autobind
-	handleUploadSuccess(e) {
-
+	handleBeforeUpload(e) {
 		e.persist();
+		this.state.loading = true;
+
 		let file = e.target.files[0],
-			reader  = new FileReader();
+			reader = new FileReader();
 
 		if (!file.type.match('image.*')) {
 			alert('Please upload an image');
@@ -79,8 +66,12 @@ class ImageEditor extends React.Component {
 			.then(image => {
 				this.state.src = image.src;
 			})
-			.then( ()=> {
-				console.log('finished')
+			.then(() => {
+				setTimeout(() => {
+					this.uploadImage();
+					this.state.loading = true;
+					console.log('Uploaded successfully')
+				}, 500)
 			})
 
 	};
@@ -91,14 +82,12 @@ class ImageEditor extends React.Component {
 		var storageRef = firebase.storage().ref('images').child(file.name);
 
 		storageRef.child(file.name).put(file).then((snapshot) => {
-			return this.props.onUpload(snapshot.downloadURL).then(()=>{
-				console.log('fdfs')
-			});
+			return this.props.onUpload(snapshot.downloadURL);
 		})
 
 	}
 
-	uploadImage(){
+	uploadImage() {
 		var canvas = this.editor.getImageScaledToCanvas(),
 			data = canvas.toDataURL(),
 			resultFile = dataURItoFile(data, this.state.filename);
@@ -108,31 +97,35 @@ class ImageEditor extends React.Component {
 	}
 
 
-
 	render() {
 		let {scale} = this.state;
 
 		return (
 			<div className="ImageEditor">
-				<p>גרור את התמונה למיקום הרצוי</p>
-				<AvatarEditor ref={(ref)=> this.editor = ref}
+				<div className="ImageEditor-upload">
+					<input type="file" onChange={this.handleBeforeUpload}/>
+				</div>
+				<AvatarEditor ref={(ref) => this.editor = ref}
 							  image={this.state.src}
 							  width={360}
 							  height={250}
 							  border={0}
 							  color={[255, 255, 255, 0.6]}
 							  scale={scale}/>
+				{this.state.loading && <RefreshIndicator
+					size={40}
+					left={10}
+					top={0}
+					status="loading"
 
-				<p>הקטן/הגדל את התמונה:</p>
-				<Slider center initPercentPosition={50} onChange={this.zoom}/>
+				/> }
+				{/*<p>הקטן/הגדל את התמונה:</p>*/}
+				{/*<Slider center initPercentPosition={50} onChange={this.zoom}/>*/}
 
 				<div className="ImageEditor-actions">
-					<div className="ImageEditor-upload">
-						<input type="file" onChange={this.handleUploadSuccess}/>
-					</div>
-					<RaisedButton secondary onTouchTap={()=>this.uploadImage()}><span style={{color: '#fff'}}>שמור תמונה</span></RaisedButton>
-				</div>
 
+					{/*<RaisedButton secondary onTouchTap={()=>this.uploadImage()}><span style={{color: '#fff'}}>שמור תמונה</span></RaisedButton>*/}
+				</div>
 
 
 			</div>

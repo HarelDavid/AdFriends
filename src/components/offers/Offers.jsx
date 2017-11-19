@@ -22,6 +22,7 @@ export default class Offers extends React.Component {
         var offerStore = businessStore.offerStore;
 
 
+
         return (
 
             <div className="offers-wrapper">
