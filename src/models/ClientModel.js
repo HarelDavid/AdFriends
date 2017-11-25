@@ -4,7 +4,6 @@ export default class ClientModel {
 	store;
 	id;
 	@observable title;
-	@observable label;
 	@observable description;
 	@observable imageUrl;
 	@observable friends;
@@ -14,7 +13,6 @@ export default class ClientModel {
 	constructor(data){
 		if(data) {
 			this.title = data.title || "";
-			this.label = data.label || "";
 			this.description = data.description || "";
 			this.imageUrl = data.imageUrl || "";
 			this.friends = data.friends || [];
@@ -26,7 +24,6 @@ export default class ClientModel {
 
 	convertFromDB(clientDB) {
 		this.title = clientDB.title;
-		this.label = clientDB.label;
 		this.description = clientDB.description;
 		this.imageUrl = clientDB.imageUrl;
 		this.id = clientDB.id;
@@ -37,7 +34,6 @@ export default class ClientModel {
 	convertToDB(clientDB) {
 		var clientDB = {}
 		clientDB.title = this.title || "";
-		clientDB.label = this.label || "";
 		clientDB.description = this.description || "";
 		clientDB.imageUrl = this.imageUrl || "";
 		clientDB.couponLinks = this.couponLinks ? this.couponLinks.toJS() : "";
@@ -63,7 +59,6 @@ export default class ClientModel {
 		return {
 			id: this.id,
 			title: this.title,
-			label: this.label,
 			description: this.description,
 			imageUrl: this.imageUrl,
 			key: this.key
@@ -71,6 +66,6 @@ export default class ClientModel {
 	}
 
 	static fromJS(store, object) {
-		return new ClientModel({store:store, id:object.id, title:object.title,  label:object.label, description:object.description,imageUrl:object.imageUrl});
+		return new ClientModel({store:store, id:object.id, title:object.title, description:object.description,imageUrl:object.imageUrl});
 	}
 }

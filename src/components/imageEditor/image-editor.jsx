@@ -98,20 +98,20 @@ class ImageEditor extends React.Component {
 
 
 	render() {
-		let {scale} = this.state;
+		let {scale, src} = this.state;
 
 		return (
 			<div className="ImageEditor">
 				<div className="ImageEditor-upload">
 					<input type="file" onChange={this.handleBeforeUpload}/>
 				</div>
-				<AvatarEditor ref={(ref) => this.editor = ref}
-							  image={this.state.src}
+				{src && <AvatarEditor ref={(ref) => this.editor = ref}
+							  image={src}
 							  width={360}
 							  height={250}
 							  border={0}
 							  color={[255, 255, 255, 0.6]}
-							  scale={scale}/>
+							  scale={scale}/>}
 				{this.state.loading && <RefreshIndicator
 					size={40}
 					left={10}

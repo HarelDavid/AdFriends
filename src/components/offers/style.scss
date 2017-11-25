@@ -143,5 +143,13 @@ ul.list {
       margin-right: 15px;
     }
   }
+
+  .has-value.is-clearable.Select--single > .Select-control .Select-value {
+    padding-right: 15px !important;
+  }
+  .Select-clear-zone {
+    display: none;
+    pointer-events: none;
+  }
 }
 
