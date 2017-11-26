@@ -1,12 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import Coupon from './Coupon'
-import {observable} from 'mobx';
-import classname from 'classnames';
-import autobind from 'autobind-decorator'
-import {Link} from 'react-router'
-import FontIcon from 'material-ui/FontIcon';
-import RaisedButton from 'material-ui/RaisedButton';
 import {sortBy} from 'lodash';
 
 import './style.scss';
@@ -20,7 +14,6 @@ export default class Coupons extends React.Component {
 		var {businessStore, couponsStore} = this.props.route;
 
 		couponsStore.init(businessStore.business);
-		console.log('f')
 	}
 
 

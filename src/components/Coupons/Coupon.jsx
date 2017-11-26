@@ -11,24 +11,15 @@ import './style.scss';
 @observer
 export default class Coupon extends React.Component {
 
-	@observable
-	state = {
-		expended: false,
-		chosenClient: {},
-		link: "",
-		client: {},
-	}
-
-	componentWillMount() {
-		const {couponsStore, businessStore, coupon} = this.props;
-	}
-
 
 
 	render() {
 		const {businessStore, coupon} = this.props;
 		let client = businessStore.clientStore.clients.find(it=> (it.id == coupon.clientId));
-console.log(coupon)
+
+		if(!client) {
+			return null;
+		}
 
 		return (
 

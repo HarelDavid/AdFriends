@@ -1,12 +1,10 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import Offer from './Offer'
-import {observable} from 'mobx';
-import classname from 'classnames';
-import autobind from 'autobind-decorator'
 import {Link} from 'react-router'
 import FontIcon from 'material-ui/FontIcon';
 import RaisedButton from 'material-ui/RaisedButton';
+import {sortBy} from 'lodash';
 
 import './style.scss';
 
@@ -35,7 +33,7 @@ export default class Offers extends React.Component {
                             <RaisedButton primary={true} label="צור הצעה חדשה" icon={<FontIcon className="material-icons">event_note</FontIcon>}  />
                         </Link>
                 <div className="offers-list">
-                    {offerStore.offers.map((offer,idx) => (
+                    {sortBy(offerStore.offers, 'endingDate').map((offer,idx) => (
                             <Offer couponsStore={couponsStore} businessStore={businessStore} className="offer" key={offer.id} offer={offer}/>
                         )
                     )}
