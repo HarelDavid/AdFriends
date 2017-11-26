@@ -76,12 +76,12 @@ export default class Offer extends React.Component {
     @autobind
     createLink() {
         const {offer} = this.state;
-        var {chosenClient} = this.state;
+        var {chosenClient, client} = this.state;
         var {businessStore, couponsStore} = this.props;
         var coupon = new CouponModel({store: couponsStore});
         coupon.businessId = businessStore.business.id;
         coupon.offer = offer.convertToDB();
-        coupon.clientId = chosenClient.id;
+        chosenClient.id ? coupon.clientId = chosenClient.id : coupon.clientId = client.id;
         coupon.message = this.state.message || offer.preMessage;
         coupon.bussineData = businessStore.business.convertToDB()
 
@@ -125,30 +125,26 @@ export default class Offer extends React.Component {
 
     @autobind
     handleClientChoose(clientOption) {
-        console.log(clientOption, this.state.chosenClient)
-
         this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.id)
         this.state.chosenClient.label = this.state.chosenClient.title;
-
         this.state.clientError = '';
+        console.log(clientOption, this.state.chosenClient)
+
     }
 
     @autobind
     onNewOptionClick(clientOption) {
-        console.log(clientOption, this.state.chosenClient)
-
         this.state.chosenClient = clientOption;
         this.state.client.title = clientOption.value;
         this.handleNewClient(clientOption);
         this.state.clientError = '';
-
     }
 
 
     @autobind
     handleToggle(event, toggle) {
         this.state.expanded = toggle;
-    };
+    }
 
 
     @autobind

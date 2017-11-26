@@ -30,7 +30,6 @@ export default class ClientStore {
 
 	//add or update
 	save(client) {
-
 		if(!client.id){
 			var clientId = Utils.uuid();
 			client.id = clientId;
@@ -39,7 +38,7 @@ export default class ClientStore {
 		if(!this.clients.find(it => it.id == client.id)) {
 			this.clients.push(client);
 		}
-		var  clientDB =  client.convertToDB();
+		var clientDB =  client.convertToDB();
 		this.clientsRef.child(clientDB.id).set(clientDB);
 	}
 
