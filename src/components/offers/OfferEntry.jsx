@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
 import {hashHistory} from 'react-router';
-import Promise from "bluebird";
+
 import autobind from 'autobind-decorator'
-import ImageUploader from 'react-firebase-image-uploader';
 import * as firebase from 'firebase';
 import OfferModel from '../../models/OfferModel'
 import {observable, computed, action, extendObservable, toJS, autorun} from 'mobx';
@@ -12,10 +11,7 @@ import ReactTooltip from 'react-tooltip';
 import moment from 'moment';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
-import FontIcon from 'material-ui/FontIcon';
-import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
 import ImageEditor from '../imageEditor/image-editor';
 

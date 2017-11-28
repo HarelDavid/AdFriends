@@ -6,10 +6,8 @@ import autobind from 'autobind-decorator'
 import classname from 'classnames';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Avatar from 'material-ui/Avatar';
 import Paper from 'material-ui/Paper';
-import {pinkA200} from 'material-ui/styles/colors';
-import ImageUploader from'react-firebase-image-uploader';
+import ImageEditor from '../imageEditor/image-editor';
 import * as firebase from 'firebase';
 
 @observer
@@ -69,7 +67,7 @@ export default class Settings extends React.Component {
 		let prefix = 'http://' || 'https://';
 		let website = e.target.value.trim();
 
-		if (website.substr(0, prefix.length) !== prefix) {
+		if (website && website.substr(0, prefix.length) !== prefix) {
 			this.updateProperty(e.target.name, prefix + website)
 		}
 	}
@@ -92,14 +90,16 @@ export default class Settings extends React.Component {
 
                 <Paper className="Settings-paper">
                     <div>
-                        <form>
+                        <form style={{display: 'flex', flexDirection: 'column'}}>
                             <TextField name="title" defaultValue={business.title} onChange={this.onChange} hintText="שם בית העסק"/>
                             <TextField name="address" defaultValue={business.address} onChange={this.onChange} hintText="כתובת"/>
                             <TextField name="description" defaultValue={business.description} multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
                             {/*<TextField name="businessType" defaultValue={business.businessType} onChange={this.onChange} hintText="סוג בית עסק"/>*/}
                             <TextField name="phone" defaultValue={business.phone}  onChange={this.onChange} hintText="מספר טלפון"/>
-                            <TextField name="website" defaultValue={business.website} onBlur={this.checkUrlPrefix} hintText="אתר אינטרנט"/>
-                            {/*<TextField name="facebook" defaultValue={business.facebook} onChange={this.onChange} hintText="דף פייסבוק"/>*/}
+                            <TextField name="website" defaultValue={business.website} onBlur={this.checkUrlPrefix} hintText="לינק (אתר, דף פייסבוק)"/>
+
+
+                            {/*<ImageEditor src={business.imageUrl} onUpload={this.setImageSrc}  />*/}
 
                             {/*<ImageUploader*/}
                                 {/*name="avatar"*/}
