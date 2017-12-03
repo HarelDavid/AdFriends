@@ -24,152 +24,166 @@ const ENTER_KEY = 13;
 @observer
 class OfferEntry extends React.Component {
 
-	@observable
-	state = {
-		offer: {},
-		canvas: null
-	}
+    @observable
+    state = {
+        offer: {},
+        canvas: null
+    }
 
-	static PropTypes = {
-		offer: PropTypes.object
-	}
+    static PropTypes = {
+        offer: PropTypes.object
+    }
 
-	componentWillMount() {
+    componentWillMount() {
 
-		var {offerStore} = this.props.route.businessStore;
-		const offerId = this.props.params.offerId;
-
-
-		if (offerId) {
-			var offer = offerStore.offers.find((it) => it.id == offerId);
-			this.state.offer = offer;
-			this.state.imageToEdit = offer.imageUrl;
-		} else {
-			this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
-		}
-
-		console.log(this.state.offer)
-	}
-
-	componentDidMount() {
-		// this.state.offer.imageUrl && this.drawImage(this.state.offer.imageUrl);
-		// this.state.canvas = document.getElementById('canvas');
-
-	}
+        var {offerStore} = this.props.route.businessStore;
+        const offerId = this.props.params.offerId;
 
 
-	shouldComponentUpdate(nextProps, nextState) {
+        if (offerId) {
+            var offer = offerStore.offers.find((it) => it.id == offerId);
+            this.state.offer = offer;
+            this.state.imageToEdit = offer.imageUrl;
+        } else {
+            this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
+        }
 
-		if (this.state.offer !== nextState.offer) {
-			return true;
-		}
-		return false;
-	}
+        console.log(this.state.offer)
+    }
 
-	updateProperty(key, value) {
-		var {offer} = this.state;
-		offer[key] = value;
-	}
+    componentDidMount() {
+        // this.state.offer.imageUrl && this.drawImage(this.state.offer.imageUrl);
+        // this.state.canvas = document.getElementById('canvas');
 
-	@autobind
-	onChange(event) {
-		this.updateProperty(event.target.name, event.target.value)
-	}
-
-	@autobind
-	onChangeDate(event, date) {
-		this.updateProperty('endingDate', date)
-	}
+    }
 
 
-	@autobind
-	handleNewOfferKeyDown(e) {
-		e.preventDefault();
-		this.state.offer.save();
-		hashHistory.push('/offers');
-		this.clearForm();
+    shouldComponentUpdate(nextProps, nextState) {
 
-	};
+        if (this.state.offer !== nextState.offer) {
+            return true;
+        }
+        return false;
+    }
 
-	clearForm() {
-		this.setState({description: ""});
-		this.setState({title: ""});
-	}
+    updateProperty(key, value) {
+        var {offer} = this.state;
+        offer[key] = value;
+    }
 
-	@autobind
-	goBack() {
-		hashHistory.push('/offers');
-	}
+    @autobind
+    onChange(event) {
+        this.updateProperty(event.target.name, event.target.value)
+    }
 
-	@autobind
-	formatDate(date) {
-		return moment(date).format('DD/MM/YY')
-	}
-
-	@autobind
-	setImageSrc(src){
-		this.state.offer.imageUrl = src;
-	}
+    @autobind
+    onChangeDate(event, date) {
+        this.updateProperty('endingDate', date)
+    }
 
 
-	render() {
-		var {offer} = this.state;
-		var offerProps = this.props.offer;
-		var {route} = this.props;
-		if (!firebase.storage || !route.businessStore.isInitialized) {
-			return null;
-		}
+    @autobind
+    handleNewOfferKeyDown(e) {
+        e.preventDefault();
+        this.state.offer.save();
+        hashHistory.push('/offers');
+        this.clearForm();
 
-		return (
-			<div>
+    };
 
-				<Paper style={{marginTop: 20, paddingBottom: 20}}>
-					<form className="addItemForm">
+    clearForm() {
+        this.setState({description: ""});
+        this.setState({title: ""});
+    }
 
-						<div className="row">
-							<label>שם המבצע <span data-tip={tooltip.title} data-for='title'>?</span></label>
-							<TextField name="title" defaultValue={offer.title} onChange={this.onChange}/>
-							<ReactTooltip id="title"/>
-						</div>
-						<div className="row">
-							<label>תיאור <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
-							<TextField multiLine name="description" defaultValue={offer.description}
-									   onChange={this.onChange}/>
-							<ReactTooltip id="desc"/>
+    @autobind
+    goBack() {
+        hashHistory.push('/offers');
+    }
 
-						</div>
-						<div className="row">
-							<label>הודעה ללקוח<span data-tip={tooltip.message}
-													data-for='message'>?</span></label>
-							<TextField multiLine name="preMessage" value={offer.preMessage}
-									   onChange={this.onChange}/>
-							<ReactTooltip id="message"/>
-						</div>
-						<div className="row">
-							<label>תנאים<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
-							<TextField name="terms" multiLine value={offer.terms} onChange={this.onChange}/>
-							<ReactTooltip id="terms"/>
-						</div>
-						<div className="row">
-							<label>בתוקף עד<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
-							<DatePicker autoOk name="endingDate" value={offer.endingDate} onChange={this.onChangeDate}
-										formatDate={this.formatDate}/>
-							<ReactTooltip id="endDate"/>
-						</div>
+    @autobind
+    formatDate(date) {
+        return moment(date).format('DD/MM/YY')
+    }
 
-					</form>
-
-						<ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}  />
+    @autobind
+    setImageSrc(src) {
+        this.state.offer.imageUrl = src;
+    }
 
 
-						<RaisedButton primary={true} style={{width: '95%', maxWidth: 320, margin: '10px auto', display: 'block'}}
-									  onTouchTap={(e) => this.handleNewOfferKeyDown(e)}><span style={{color: "white"}}>שמור</span></RaisedButton>
 
 
-				</Paper>
-			</div>
-		)
-	}
+    render() {
+        var {offer} = this.state;
+        var offerProps = this.props.offer;
+        var {route} = this.props;
+        if (!firebase.storage || !route.businessStore.isInitialized) {
+            return null;
+        }
+
+        return (
+            <div>
+
+                <Paper style={{marginTop: 20, paddingBottom: 20}}>
+                    <form className="addItemForm">
+
+                        <div className="row">
+                            <label>שם המבצע <span data-tip={tooltip.title} data-for='title'>?</span></label>
+                            <TextField name="title" defaultValue={offer.title} onChange={this.onChange}/>
+                            <ReactTooltip id="title"/>
+                        </div>
+                        <div className="row">
+                            <label>תיאור <span data-tip={tooltip.desc} data-for='desc'>?</span></label>
+                            <TextField multiLine name="description" defaultValue={offer.description}
+                                       onChange={this.onChange}/>
+                            <ReactTooltip id="desc"/>
+
+                        </div>
+                        <div className="row">
+                            <label>הודעה ללקוח<span data-tip={tooltip.message}
+                                                    data-for='message'>?</span></label>
+                            <TextField multiLine name="preMessage" value={offer.preMessage}
+                                       onChange={this.onChange}/>
+                            <ReactTooltip id="message"/>
+                        </div>
+                        <div className="row">
+                            <label>תנאים<span data-tip={tooltip.terms} data-for='terms'>?</span></label>
+                            <TextField name="terms" multiLine value={offer.terms} onChange={this.onChange}/>
+                            <ReactTooltip id="terms"/>
+                        </div>
+                        <div className="row">
+                            <label>בתוקף עד<span data-tip={tooltip.endDate} data-for='endDate'>?</span></label>
+                            <DatePicker autoOk name="endingDate" value={offer.endingDate} onChange={this.onChangeDate}
+                                        formatDate={this.formatDate}/>
+                            <ReactTooltip id="endDate"/>
+                        </div>
+
+                    </form>
+
+                    <ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}/>
+
+
+                    <RaisedButton primary={true}
+                                  style={{width: '95%', maxWidth: 320, margin: '10px auto', display: 'block'}}
+                                  onTouchTap={(e) => this.handleNewOfferKeyDown(e)}><span
+                        style={{color: "white"}}>שמור</span></RaisedButton>
+
+
+                    <p>choose template:</p>
+
+                    <div>
+                        <a href="/offer/new-offer?t=1">template 1</a>
+                        <a href="/template/new/2">template 2</a>
+                        <a href="/template/new/3">template 3</a>
+                        <a href="/template/new/4">template 4</a>
+
+                    </div>
+
+                </Paper>
+            </div>
+        )
+    }
 }
 
 export default OfferEntry;
