@@ -17,7 +17,7 @@ body,html {
 
 
 input[type="text"], input[type="date"], input[type="text"], textarea {
-  border: 1px solid $grey-light;
+  border: 1px solid transparent;
   padding: 7px 10px;
   border-radius: 5px;
   width: 100%;
@@ -26,6 +26,12 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     min-width: 300px;
   }
 
+  &:focus {
+    border: 1px solid $grey-light;
+    + label {
+      opacity: 1;
+    }
+  }
 }
 
 

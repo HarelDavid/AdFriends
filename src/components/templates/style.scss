@@ -138,6 +138,8 @@ ul.list {
   }
 
 
+
+
   .shareDialogActions {
     > * {
       margin-right: 15px;
@@ -150,6 +152,17 @@ ul.list {
   .Select-clear-zone {
     display: none;
     pointer-events: none;
+  }
+}
+
+
+//Template
+:global {
+  .Template {
+    .row label {
+      opacity: 0;
+      transition: opacity ease 0.2s;
+    }
   }
 }
 

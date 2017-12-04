@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
 import {hashHistory} from 'react-router';
-
+import classname from 'classnames';
 import autobind from 'autobind-decorator'
 import * as firebase from 'firebase';
 import OfferModel from '../../models/OfferModel'
@@ -17,7 +17,7 @@ import ImageEditor from '../imageEditor/image-editor';
 
 import './style.scss';
 
-var templates = require('json!./info.json');
+const templates = require('json!./info.json');
 
 
 @observer
@@ -26,7 +26,7 @@ export default class Template extends React.Component {
 	@observable
 	state = {
 		offer: {},
-		canvas: null
+		templateData: null
 	}
 
 	static PropTypes = {
@@ -37,6 +37,7 @@ export default class Template extends React.Component {
 
 		var {offerStore} = this.props.route.businessStore;
 		const offerId = this.props.params.offerId;
+        const templateId = this.props.params.templateId;
 
 
 		if (offerId) {
@@ -45,15 +46,11 @@ export default class Template extends React.Component {
 			this.state.imageToEdit = offer.imageUrl;
 		} else {
 			this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
-		}
+			// this.state.offer.template = templateId;
+            this.state.templateData = templates[templateId];
+        }
 
-		console.log(this.state.offer)
-	}
-
-	componentDidMount() {
-		// this.state.offer.imageUrl && this.drawImage(this.state.offer.imageUrl);
-		// this.state.canvas = document.getElementById('canvas');
-
+		console.log(this.state.templateData)
 	}
 
 
@@ -112,15 +109,16 @@ export default class Template extends React.Component {
 
 
 	render() {
-		var {offer} = this.state;
-		var offerProps = this.props.offer;
-		var {route} = this.props;
+		let {offer, templateData} = this.state;
+		let {route, classname} = this.props;
 		if (!firebase.storage || !route.businessStore.isInitialized) {
 			return null;
 		}
 
+		let templateClass = classname('Template', {})
+
 		return (
-			<div>
+			<div className={templateClass}>
 
 				<Paper style={{marginTop: 20, paddingBottom: 20}}>
 
@@ -129,18 +127,23 @@ export default class Template extends React.Component {
 					<form className="addItemForm">
 
 						<div className="row">
-							<textarea type="text" name="title" defaultValue={offer.title} onChange={this.onChange}/>
+							<label htmlFor="title">כותרת</label>
+							<textarea type="text" name="title" defaultValue={offer.title || templateData.title} onChange={this.onChange}/>
 						</div>
 						<div className="row">
-							<textarea name="description" defaultValue={offer.description}
+							<label htmlFor="description">תיאור</label>
+
+							<textarea name="description" defaultValue={offer.description || templateData.description}
 									   onChange={this.onChange}/>
 						</div>
 						<div className="row">
-							<textarea name="terms" defaultValue={offer.terms} onChange={this.onChange}/>
+							<label htmlFor="terms">תנאים והגבלות</label>
+
+							<textarea name="terms" defaultValue={offer.terms || templateData.terms} onChange={this.onChange}/>
 						</div>
 						<div className="row">
 							<label>בתוקף עד</label>
-							<DatePicker autoOk name="endingDate" value={offer.endingDate} onChange={this.onChangeDate}
+							<DatePicker autoOk name="endingDate" value={offer.endingDate || (moment().add(2, 'M')).toDate()} onChange={this.onChangeDate}
 										formatDate={this.formatDate}/>
 						</div>
 

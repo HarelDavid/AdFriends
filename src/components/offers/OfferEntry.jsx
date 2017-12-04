@@ -172,11 +172,11 @@ class OfferEntry extends React.Component {
 
                     <p>choose template:</p>
 
-                    <div>
-                        <a href="/offer/new-offer?t=1">template 1</a>
-                        <a href="/template/new/2">template 2</a>
-                        <a href="/template/new/3">template 3</a>
-                        <a href="/template/new/4">template 4</a>
+                    <div style={{display: 'flex', justifyContent: 'space-around'}}>
+                        <a href="/#/template/new/1">template 1</a>
+                        <a href="/#/template/new/2">template 2</a>
+                        <a href="/#/template/new/3">template 3</a>
+                        <a href="/#/template/new/4">template 4</a>
 
                     </div>
 

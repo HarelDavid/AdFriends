@@ -22,7 +22,7 @@ export default(stores) => {
 			<Route path="offer/:offerId" component={OfferEntry}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
 
 
-			<Route path="template/new" component={template}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
+			<Route path="template/new/:templateId" component={template}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
 
 
 			<Route path="clients" component={Clients} businessStore={stores.businessStore}/>
