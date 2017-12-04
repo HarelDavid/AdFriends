@@ -120,25 +120,21 @@ ul.list {
   color: #fff;
 }
 
-
 :global {
   .preview-img {
     position: relative;
     img {
       width: 100%;
-      height:auto;
+      height: auto;
     }
     .edit-button {
       position: absolute;
       right: 15px;
       bottom: 15px;
       z-index: 1;
-      box-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
     }
   }
-
-
-
 
   .shareDialogActions {
     > * {
@@ -155,13 +151,26 @@ ul.list {
   }
 }
 
-
 //Template
 :global {
   .Template {
-    .row label {
-      opacity: 0;
-      transition: opacity ease 0.2s;
+    .row {
+      display: flex;
+      flex-direction: column-reverse;
+      label {
+        opacity: 0;
+        transition: opacity ease 0.2s;
+        color: $grey-dark;
+      }
+      textarea {
+        &:focus {
+          outline-color: $secondary;
+          border: 1px solid $grey-light;
+          + label {
+            opacity: 1;
+          }
+        }
+      }
     }
   }
 }

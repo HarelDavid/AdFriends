@@ -26,12 +26,7 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     min-width: 300px;
   }
 
-  &:focus {
-    border: 1px solid $grey-light;
-    + label {
-      opacity: 1;
-    }
-  }
+
 }
 
 

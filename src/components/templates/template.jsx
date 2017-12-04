@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {observer} from 'mobx-react';
 import {hashHistory} from 'react-router';
-import classname from 'classnames';
+import classNames from 'classnames';
 import autobind from 'autobind-decorator'
 import * as firebase from 'firebase';
 import OfferModel from '../../models/OfferModel'
@@ -110,12 +110,12 @@ export default class Template extends React.Component {
 
 	render() {
 		let {offer, templateData} = this.state;
-		let {route, classname} = this.props;
+		let {route, className} = this.props;
 		if (!firebase.storage || !route.businessStore.isInitialized) {
 			return null;
 		}
-
-		let templateClass = classname('Template', {})
+		let templateId = templates[this.props.params.templateId].id,
+			templateClass = classNames('Template', templateId)
 
 		return (
 			<div className={templateClass}>
@@ -127,24 +127,24 @@ export default class Template extends React.Component {
 					<form className="addItemForm">
 
 						<div className="row">
-							<label htmlFor="title">כותרת</label>
 							<textarea type="text" name="title" defaultValue={offer.title || templateData.title} onChange={this.onChange}/>
+							<label htmlFor="title">כותרת</label>
 						</div>
 						<div className="row">
-							<label htmlFor="description">תיאור</label>
 
 							<textarea name="description" defaultValue={offer.description || templateData.description}
 									   onChange={this.onChange}/>
+							<label htmlFor="description">תיאור</label>
 						</div>
 						<div className="row">
-							<label htmlFor="terms">תנאים והגבלות</label>
 
 							<textarea name="terms" defaultValue={offer.terms || templateData.terms} onChange={this.onChange}/>
+							<label htmlFor="terms">תנאים והגבלות</label>
 						</div>
 						<div className="row">
-							<label>בתוקף עד</label>
 							<DatePicker autoOk name="endingDate" value={offer.endingDate || (moment().add(2, 'M')).toDate()} onChange={this.onChangeDate}
 										formatDate={this.formatDate}/>
+							<label>בתוקף עד</label>
 						</div>
 
 					</form>
