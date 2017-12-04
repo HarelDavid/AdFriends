@@ -109,13 +109,14 @@ export default class Template extends React.Component {
 
 
 	render() {
-		let {offer, templateData} = this.state;
-		let {route, className} = this.props;
+		let {offer, templateData} = this.state,
+			{route, className} = this.props,
+			{templateId} = this.props.params;
 		if (!firebase.storage || !route.businessStore.isInitialized) {
 			return null;
 		}
-		let templateId = templates[this.props.params.templateId].id,
-			templateClass = classNames('Template', templateId)
+		let templateType = offer.templateId || (templateId && templates[templateId].id) || "1",
+			templateClass = classNames('Template', 'template-' + templateType)
 
 		return (
 			<div className={templateClass}>

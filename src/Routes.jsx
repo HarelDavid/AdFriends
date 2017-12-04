@@ -18,13 +18,8 @@ export default(stores) => {
 		<Route path="/"  component={App} businessStore={stores.businessStore}>
 			<IndexRoute component={Login} businessStore={stores.businessStore}    authStore={stores.authStore}/>
 			<Route path="offers" component={Offers}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
-			<Route path="offer/new-offer" component={OfferEntry}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
-			<Route path="offer/:offerId" component={OfferEntry}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
-
-
-			<Route path="template/new/:templateId" component={template}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
-
-
+			<Route path="offer/new/:templateId" component={template}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
+			<Route path="offer/:offerId" component={template}  businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
 			<Route path="clients" component={Clients} businessStore={stores.businessStore}/>
 			<Route path="coupons" component={Coupons} businessStore={stores.businessStore} couponsStore={stores.couponStore}/>
 			<Route path="coupon/:couponId" component={ClientOfferPreview} couponsStore={stores.couponStore}/>
