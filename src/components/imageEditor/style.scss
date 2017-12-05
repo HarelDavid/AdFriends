@@ -1,6 +1,5 @@
 @import '../../styles/globals.scss';
 
-
 :global {
 
   .ImageEditor {
@@ -10,9 +9,7 @@
     margin: auto;
     canvas {
       width: 100% !important;
-
       touch-action: none;
-
       clip-path: circle(169% at 34% -118%);
       @media #{$media-higher-than-mobile} {
         clip-path: circle(164% at 34% -118%);
@@ -39,7 +36,7 @@
         position: absolute !important;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
       }
     }
 
