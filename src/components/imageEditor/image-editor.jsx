@@ -69,7 +69,7 @@ class ImageEditor extends React.Component {
 			.then(() => {
 				setTimeout(() => {
 					this.uploadImage();
-					this.state.loading = true;
+					this.state.loading = false;
 					console.log('Uploaded successfully')
 				}, 500)
 			})
