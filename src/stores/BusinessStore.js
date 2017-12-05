@@ -149,7 +149,7 @@ export default class BuisnessStore {
             firebase.database().ref('/business').child(businessModelDB.id).child('phone').set(businessModelDB.phone || ""),
             firebase.database().ref('/business').child(businessModelDB.id).child('picture').set(businessModelDB.picture || ""),
             firebase.database().ref('/business').child(businessModelDB.id).child('title').set(businessModelDB.title || ""),
-            firebase.database().ref('/business').child(businessModelDB.id).child('website').set(businessModelDB.title || "")]
+            firebase.database().ref('/business').child(businessModelDB.id).child('website').set(businessModelDB.website || "")]
 
         ).then(() => {
             return firebase.database().ref('coupons').orderByChild("businessId").equalTo(businessModel.id).once("value").then((snapshot) => {
