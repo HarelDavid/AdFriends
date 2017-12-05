@@ -96,7 +96,7 @@ export default class Settings extends React.Component {
                             <TextField name="description" defaultValue={business.description} multiLine={true} onChange={this.onChange} hintText="תיאור בית עסק"/>
                             {/*<TextField name="businessType" defaultValue={business.businessType} onChange={this.onChange} hintText="סוג בית עסק"/>*/}
                             <TextField name="phone" defaultValue={business.phone}  onChange={this.onChange} hintText="מספר טלפון"/>
-                            <TextField name="website" defaultValue={business.website} onBlur={this.checkUrlPrefix} hintText="לינק (אתר, דף פייסבוק)"/>
+                            <TextField name="website" defaultValue={business.website}  onChange={this.onChange}  onBlur={this.checkUrlPrefix} hintText="לינק (אתר, דף פייסבוק)"/>
 
 
                             {/*<ImageEditor src={business.imageUrl} onUpload={this.setImageSrc}  />*/}
