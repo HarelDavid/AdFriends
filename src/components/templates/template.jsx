@@ -15,7 +15,7 @@ import DatePicker from 'material-ui/DatePicker';
 import Paper from 'material-ui/Paper';
 import ImageEditor from '../imageEditor/image-editor';
 import FontIcon from 'material-ui/FontIcon';
-
+import {merge} from 'lodash';
 
 import './style.scss';
 
@@ -75,7 +75,8 @@ export default class Template extends React.Component {
 
     @autobind
     onChange(event) {
-        this.updateProperty(event.target.name, event.target.value)
+        this.updateProperty(event.target.name, event.target.value);
+        this.updateHeight(event.target);
     }
 
     @autobind
@@ -87,11 +88,20 @@ export default class Template extends React.Component {
     @autobind
     handleNewOfferKeyDown(e) {
         e.preventDefault();
+
+        // console.log(merge(this.state.offer,this.state.templateData));
+        merge(this.state.offer,this.state.templateData);
+
         this.state.offer.save();
         hashHistory.push('/offers');
         this.clearForm();
 
     };
+
+    @autobind
+    updateHeight(el){
+        el.style.height = el.scrollHeight;
+    }
 
     clearForm() {
         this.setState({description: ""});
@@ -125,7 +135,7 @@ export default class Template extends React.Component {
 
         console.log(business)
 
-        let templateType = offer.templateId || (templateId && templates[templateId].id) || "1",
+        let templateType = offer.templateId || templateId || "0",
             templateClass = classNames('Template', 'template-' + templateType),
 
             isOVerDue = offer && moment(offer.endingDate).isBefore(new Date()),
@@ -136,7 +146,8 @@ export default class Template extends React.Component {
                 verticalAlign: 'middle',
                 marginRight: 10
             },
-            mapLink = 'https://maps.google.com/?q=' + business.address;
+            mapLink = 'https://maps.google.com/?q=' + business.address,
+            termsDefaultValue = offer.terms ? ('* ' + offer.terms) : (templateData.terms ? ('* ' + templateData.terms) : null);
 
 
         console.log(this.props)
@@ -146,7 +157,6 @@ export default class Template extends React.Component {
 
 
                 <div className="Coupon-img">
-                    {/*{offer.imageUrl ? <ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}  /> : <div className="no-image"/>}*/}
 
                     <ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}  />
 
@@ -157,13 +167,13 @@ export default class Template extends React.Component {
                 </div>
                 <div className="Coupon-title">
                     {/*h1*/}
-                    <div className="row">
+                    <div className="row h1">
                                 <textarea type="text" name="title" defaultValue={offer.title || templateData.title}
                                           onChange={this.onChange}/>
                         <label htmlFor="title">כותרת</label>
                     </div>
                     {/*h2*/}
-                    <div className="row">
+                    <div className="row h2">
 							<textarea name="description" defaultValue={offer.description || templateData.description}
                                       onChange={this.onChange}/>
                         <label htmlFor="description">תיאור</label>
@@ -173,16 +183,17 @@ export default class Template extends React.Component {
                     {/*p*/}
                     <div className="row"><FontIcon className="material-icons"
                                                    style={iconStyles}>date_range</FontIcon>
+                        <span>בתוקף עד</span>
+
                         <DatePicker autoOk name="endingDate"
                                     value={offer.endingDate || (moment().add(2, 'M')).toDate()}
                                     onChange={this.onChangeDate}
                                     formatDate={this.formatDate}/>
-                        <label>בתוקף עד</label>
                     </div>
                 </Paper>
                 <div className="row terms">
                             <textarea name="terms"
-                                      defaultValue={offer.terms || templateData.terms ? ('* ' + offer.terms || templateData.terms) : null}
+                                      defaultValue={termsDefaultValue}
                                       onChange={this.onChange}/>
                     <label htmlFor="terms">תנאים והגבלות</label>
                 </div>
@@ -214,7 +225,11 @@ export default class Template extends React.Component {
                     <a to="/terms" target="_blank" className="terms-link">כפוף לתנאי השימוש</a>
                 </div>
 
+                <div className="saveButtonHolder">
 
+                <RaisedButton primary={true} label="שמור" onTouchTap={(e) => this.handleNewOfferKeyDown(e)}
+                              style={{width: '95%', maxWidth: 320, margin: '10px auto', display: 'block'}}/>
+                </div>
             </div>
 
         )

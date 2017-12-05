@@ -102,16 +102,16 @@ class ImageEditor extends React.Component {
 
 		return (
 			<div className="ImageEditor">
-				<div className="ImageEditor-upload">
-					<input type="file" onChange={this.handleBeforeUpload}/>
-				</div>
-				{src && <AvatarEditor ref={(ref) => this.editor = ref}
+				{src ? <AvatarEditor ref={(ref) => this.editor = ref}
 							  image={src}
 							  width={360}
 							  height={250}
 							  border={0}
 							  color={[255, 255, 255, 0.6]}
-							  scale={scale}/>}
+							  scale={scale}/>
+				:
+					<div className="no-image"></div>
+				}
 				{this.state.loading && <RefreshIndicator
 					size={40}
 					left={10}
@@ -122,11 +122,15 @@ class ImageEditor extends React.Component {
 				{/*<p>הקטן/הגדל את התמונה:</p>*/}
 				{/*<Slider center initPercentPosition={50} onChange={this.zoom}/>*/}
 
-				<div className="ImageEditor-actions">
+				{/*<div className="ImageEditor-actions">*/}
 
 					{/*<RaisedButton secondary onTouchTap={()=>this.uploadImage()}><span style={{color: '#fff'}}>שמור תמונה</span></RaisedButton>*/}
-				</div>
+				{/*</div>*/}
 
+				<div className="ImageEditor-upload">
+					<input type="file" onChange={this.handleBeforeUpload}/>
+					<FontIcon className="material-icons" color="white">edit</FontIcon>
+				</div>
 
 			</div>
 		);
