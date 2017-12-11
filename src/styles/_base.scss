@@ -31,7 +31,9 @@ textarea {
 
 :global {
 
-
+  .Select-option {
+    padding: 3px 8px !important;
+  }
 
   .button {
     border:0;
@@ -60,9 +62,7 @@ textarea {
   }
 
 
-  .card {
-    @include card();
-  }
+
 
 
   .addItemForm {

@@ -12,7 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 import moment from 'moment';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import ClientModel from '../../models/ClientModel'
-import TextField from 'material-ui/TextField';
+import Share from '../share';
 import Dialog from 'material-ui/Dialog';
 
 import './style.scss';
@@ -30,7 +30,6 @@ export default class Offer extends React.Component {
         client: {},
         dialogOpen: false,
         message: '',
-        shareMsg: '',
         clientError: ''
     }
 
@@ -125,7 +124,7 @@ export default class Offer extends React.Component {
         this.state.chosenClient = this.clientStore.clients.find((it) => it.id == clientOption.id)
         this.state.chosenClient.label = this.state.chosenClient.title;
         this.state.clientError = '';
-        console.log(clientOption, this.state.chosenClient)
+        // console.log(clientOption, this.state.chosenClient)
 
     }
 
@@ -172,83 +171,17 @@ export default class Offer extends React.Component {
     }
 
 
-    @autobind
-    updatePreMessage(event) {
-        this.state.message = event.target.value;
-    }
-
-
-    isMobile() {
-        let mql = window.matchMedia('(max-width: 920px)');
-        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && mql.matches) {
-            return true;
-        }
-        return false;
-    }
-
-
-    @autobind
-    copyTextToClipboard(text) {
-        var textArea = document.createElement("textarea");
-
-        textArea.style.position = 'fixed';
-        textArea.style.top = 0;
-        textArea.style.left = 0;
-        textArea.style.width = '2em';
-        textArea.style.height = '2em';
-        textArea.style.padding = 0;
-        textArea.style.border = 'none';
-        textArea.style.outline = 'none';
-        textArea.style.boxShadow = 'none';
-        textArea.style.background = 'transparent';
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
-            this.state.shareMsg = 'לינק לקופון הועתק'
-            console.log('Copying text command was ' + msg);
-        } catch (err) {
-            this.state.shareMsg = 'ארעה שגיאה, אנא נסה מאוחר יותר'
-            console.log('Oops, unable to copy');
-        }
-        document.body.removeChild(textArea);
-        window.open('http://web.whatsapp.com', '_blank');
-    }
-
 
     render() {
-        const {offer, dialogOpen, message, link, shareMsg, clientError} = this.state;
-        const {businessStore, couponsStore} = this.props;
-        var shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
+        const {offer, dialogOpen, link, clientError} = this.state;
+
         var actions = [<FlatButton
             label="ביטול"
             primary={true}
             onTouchTap={this.handleClose}
-        />,
-            <a target="_blank" href={`${this.state.link}?preview=true`}>
-                <RaisedButton label="תצוגה מקדימה" style={{marginTop: 20}} secondary/>
-            </a>,
-            <RaisedButton backgroundColor="#25D366">
-                {this.isMobile() ?
-                    <a href={shareUrl} style={{color: '#fff', textDecoration: 'none'}}
-                       className="whatsup-share-button">
-                        <FontIcon className="material-icons"
-                                  style={{
-                                      color: '#fff',
-                                      fontSize: 16,
-                                      marginLeft: 4,
-                                      verticalAlign: 'sub'
-                                  }}>share</FontIcon>
-                        שתף</a>
-                    :
-                    <span style={{color: '#fff'}}
-                          onClick={() => this.copyTextToClipboard(message ? message + "  " + link : offer.preMessage + "  " + link)}><FontIcon
-                        className="material-icons"
-                        style={{color: '#fff', fontSize: 16, marginLeft: 4, verticalAlign: 'middle'}}>share</FontIcon> שתף</span>
-                }
-            </RaisedButton>];
+        />,<a target="_blank" href={`${this.state.link}?preview=true`}>
+            <RaisedButton label="תצוגה מקדימה" style={{marginTop: 20}} secondary/>
+        </a>];
 
         var isOVerDue = moment(offer.endingDate).isBefore(new Date());
 
@@ -305,10 +238,7 @@ export default class Offer extends React.Component {
                                 contentStyle={{width: '90%', maxWidth: 500}}
                                 actionsContainerClassName="shareDialogActions">
 
-                                <TextField label="הודעה ללקוח" multiLine={true} name="message"
-                                           defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
-                                           onChange={this.updatePreMessage} style={{minWidth: 300}}/>
-                                <b style={{float: 'left'}}>{shareMsg}</b>
+                               <Share offer={offer} link={link}/>
                             </Dialog>
                             }
                         </div>

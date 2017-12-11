@@ -1,0 +1,26 @@
+$base-font-size: 14px;
+
+@function calculateRem($size) {
+  $remSize: $size / $base-font-size;
+  @return $remSize * 1rem;
+}
+
+
+@mixin font-size($size) {
+  font-size: calculateRem($size)
+}
+
+
+
+@mixin flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column-center() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

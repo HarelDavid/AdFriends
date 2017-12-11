@@ -28,7 +28,6 @@ export default class Template extends React.Component {
     @observable
     state = {
         offer: {},
-        templateData: null,
         business: null
     }
 
@@ -49,14 +48,13 @@ export default class Template extends React.Component {
             this.state.offer = offer;
             this.state.imageToEdit = offer.imageUrl;
         } else if (templateId) {
-            this.state.offer = new OfferModel({store: this.props.route.businessStore.offerStore});
-            // this.state.offer.template = templateId;
-            this.state.templateData = templates[templateId];
+            let offer = new OfferModel({store: this.props.route.businessStore.offerStore});
+            this.state.offer = merge(offer,templates[templateId]);
         } else {
             hashHistory.push('/offers');
         }
 
-        console.log(this.state.templateData)
+        console.log(this.state.offer)
     }
 
 
@@ -90,7 +88,7 @@ export default class Template extends React.Component {
         e.preventDefault();
 
         // console.log(merge(this.state.offer,this.state.templateData));
-        merge(this.state.offer,this.state.templateData);
+        // merge(this.state.offer,this.state.templateData);
 
         this.state.offer.save();
         hashHistory.push('/offers');
@@ -124,16 +122,16 @@ export default class Template extends React.Component {
     }
 
 
-    render() {
-        let {offer, templateData, business} = this.state,
-            {route, className} = this.props,
 
+
+    render() {
+        let {offer, business} = this.state,
+            {route} = this.props,
             {templateId} = this.props.params;
+
         if (!firebase.storage || !route.businessStore.isInitialized) {
             return null;
         }
-
-        console.log(business)
 
         let templateType = offer.templateId || templateId || "0",
             templateClass = classNames('Template', 'template-' + templateType),
@@ -147,10 +145,9 @@ export default class Template extends React.Component {
                 marginRight: 10
             },
             mapLink = 'https://maps.google.com/?q=' + business.address,
-            termsDefaultValue = offer.terms ? ('* ' + offer.terms) : (templateData.terms ? ('* ' + templateData.terms) : null);
+            termsDefaultValue = offer.terms ? ('*' + offer.terms) : null;
 
 
-        console.log(this.props)
 
         return (
             <div className={templateClass}>
@@ -168,13 +165,13 @@ export default class Template extends React.Component {
                 <div className="Coupon-title">
                     {/*h1*/}
                     <div className="row h1">
-                                <textarea type="text" name="title" defaultValue={offer.title || templateData.title}
+                                <textarea type="text" name="title" defaultValue={offer.title}
                                           onChange={this.onChange}/>
                         <label htmlFor="title">כותרת</label>
                     </div>
                     {/*h2*/}
                     <div className="row h2">
-							<textarea name="description" defaultValue={offer.description || templateData.description}
+							<textarea name="description" defaultValue={offer.description}
                                       onChange={this.onChange}/>
                         <label htmlFor="description">תיאור</label>
                     </div>
@@ -183,7 +180,7 @@ export default class Template extends React.Component {
                     {/*p*/}
                     <div className="row"><FontIcon className="material-icons"
                                                    style={iconStyles}>date_range</FontIcon>
-                        <span>בתוקף עד</span>
+                        <span className="betokef">בתוקף עד:</span>
 
                         <DatePicker autoOk name="endingDate"
                                     value={offer.endingDate || (moment().add(2, 'M')).toDate()}

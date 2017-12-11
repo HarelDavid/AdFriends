@@ -1,0 +1,11 @@
+@import '../../styles/globals.scss';
+
+:global {
+
+    .Share {
+        @include flex-center;
+        > div:first-child {
+            flex: 1;
+        }
+    }
+}
