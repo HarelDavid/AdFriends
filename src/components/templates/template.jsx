@@ -150,8 +150,8 @@ export default class Template extends React.Component {
 
 
         return (
-            <div className={templateClass}>
 
+            <div className={templateClass}>
 
                 <div className="Coupon-img">
 
