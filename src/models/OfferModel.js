@@ -13,6 +13,7 @@ export default class OfferModel {
 	@observable endingDate;
 	@observable code;
 	@observable couponLinks;
+    @observable templateId;
 
 
 
@@ -30,7 +31,7 @@ export default class OfferModel {
 			this.code = data.code || "";
 			// this.dateCreated = data.dateCreated || "";
 			this.couponLinks = data.couponLinks || [];
-
+			this.templateId = data.templateId || "";
 		}
 	}
 
@@ -49,6 +50,7 @@ export default class OfferModel {
 		// this.dateCreated = offerDB.dateCreated;
 		this.couponLinks = offerDB.couponLinks || [];
 		this.id = offerDB.id;
+		this.templateId = offerDB.templateId || ""
 
 	}
 
@@ -65,20 +67,12 @@ export default class OfferModel {
 		// this.dateCreated ? offerDB.dateCreated = this.dateCreated : "";
 		this.couponLinks ? offerDB.couponLinks = this.couponLinks.toJS() : "";
 		this.endingDate ? offerDB.endingDate = this.endingDate.getTime() : "";
-
+		this.templateId ? offerDB.templateId = this.templateId : "";
 		return offerDB;
 	}
 
-	// createLinks(clientsArray) {
-	// 	clientsArray.forEach((client) => {
-	// 		var offerClientLink = `${window.location.hostname}?offerId=${this.id}&clientId=${client.id}`;
-	// 		this.couponLinks.push(offerClientLink);
-	// 		client.offerLinks.push(offerClientLink);
-	// 		client.save();
-	// 	})
-	// 	this.store.save(this);
-	// }
 
+	//??//
 	createLink(client,bussinessId) {
 
 
@@ -113,7 +107,8 @@ export default class OfferModel {
 			// dateCreated: this.dateCreated,
 			code: this.code,
 			preMessage: this.preMessage,
-			couponLinks: this.couponLinks
+			couponLinks: this.couponLinks,
+            templateId: this.templateId
 		};
 	}
 
@@ -127,7 +122,8 @@ export default class OfferModel {
 			endingDate: object.endingDate,
 			// dateCreated: object.dateCreated,
 			preMessage: object.preMessage,
-			couponLinks: object.couponLinks
+			couponLinks: object.couponLinks,
+            templateId: object.templateId
 
 		});
 	}

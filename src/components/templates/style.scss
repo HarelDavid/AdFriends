@@ -33,7 +33,41 @@
 
 //Template
 :global {
+
+  .Template-page {
+    background: white;
+    padding-bottom: 26px;
+    .shareDialog {
+      margin: 0 auto 20px;
+      padding: 15px 0 20px;
+      //border-bottom: 1px solid $grey-light;
+      max-width: 300px;
+    }
+    .Template-top {
+      padding: 15px 15px 0;
+      p {
+        margin: 5px 0;
+      }
+    }
+  }
+
+
+
   .Template {
+    width: 100%;
+    min-height: 100vh;
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    position: relative;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 4px 4px 11px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    border: 8px solid $grey-light;
     .row {
       display: flex;
       flex-direction: column-reverse;
@@ -54,22 +88,7 @@
         }
       }
     }
-  }
 
-  .Template {
-    width: 100%;
-    min-height: 100vh;
-    max-width: 400px;
-    margin: auto;
-    background: white;
-    position: relative;
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 4px 4px 11px rgba(0, 0, 0, 0.15);
-overflow: hidden;
 
 
     &.Coupon-expired {
@@ -83,17 +102,10 @@ overflow: hidden;
     .Coupon-img {
       width: 100%;
       position: relative;
-      overflow: hidden;
-      max-height: 0;
-      :local {
-        animation: slideIn 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.5s forwards;
-      }
+
       img {
         width: 100%;
-        clip-path: circle(169% at 34% -118%);
-        @media #{$media-higher-than-mobile} {
-          clip-path: circle(164% at 34% -118%);
-        }
+
       }
 
       .business-title {
@@ -101,7 +113,7 @@ overflow: hidden;
         top: 0;
         right: 0;
         padding: 15px;
-        z-index: 1;
+        z-index: 3;
         p {
           color: #fff;
           font-size: 18px;
@@ -208,10 +220,11 @@ overflow: hidden;
     .saveButtonHolder {
       position: fixed;
       bottom: 0;
+      left: 0;
       background: white;
       z-index: 9;
       width: 100%;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.05);
     }
 
     .terms-link {
@@ -232,12 +245,73 @@ overflow: hidden;
       opacity: 0;
       transform: translate3d(0, -7px, 0);
       :local {
-        animation: fadeIn 0.3s ease-in 0.6s forwards;
+        animation: fadeIn 0.6s ease-in 0.6s forwards;
       }
       //@include listAnimationDelay(60);
 
     }
   }
+
+
+  //templates types
+  .Template {
+
+    &.template-0 {
+      .Coupon-img {
+        overflow: hidden;
+        max-height: 0;
+        :local {
+          animation: slideIn 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.5s forwards;
+        }
+        img, .no-image, canvas {
+          clip-path: circle(169% at 34% -118%);
+          @media #{$media-higher-than-mobile} {
+            clip-path: circle(164% at 34% -118%);
+          }
+        }
+      }
+    }
+
+    &.template-1 {
+      .business-title {
+        opacity: 0;
+        :local {
+          animation: fadeFromBottom 0.6s cubic-bezier(0.65, 0.05, 0.36, 1) 0.2s both
+        }
+      }
+      .Coupon-img {
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          right:0;
+          width: 100%;
+          height: 100%;
+          background: white;
+          transform: scaleX(1);
+          transform-origin: left;
+          :local {
+            animation: scaleDownX 0.5s cubic-bezier(.645, .045, .355, 1) 0.5s both
+          }
+        }
+      }
+
+    }
+    //Business card
+    &.template-2 {
+      .Coupon-img {
+        max-height: 180px;
+        overflow: hidden;
+      }
+    }
+
+    &.template-3 {
+
+    }
+
+  }
+
+
 
 }
 //End global
@@ -250,7 +324,7 @@ overflow: hidden;
 
 @keyframes fadeIn {
   from {  opacity: 0;  }
-  to { opacity: 1;  }
+  to { opacity: 1; transform: translate3d(0,0,0);  }
 }
 
 @mixin listAnimationDelay($value) {
@@ -258,6 +332,29 @@ overflow: hidden;
     &:nth-of-type(#{$i}) {
       animation-delay: #{$value * $i}ms;
     }
+  }
+}
+
+
+@keyframes fadeFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleDownX {
+  from {
+    transform: scaleX(1)
+  }
+
+  to {
+    transform: scaleX(0)
   }
 }
 

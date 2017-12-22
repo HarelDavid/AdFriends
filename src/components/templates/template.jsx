@@ -16,6 +16,7 @@ import Paper from 'material-ui/Paper';
 import ImageEditor from '../imageEditor/image-editor';
 import FontIcon from 'material-ui/FontIcon';
 import {merge} from 'lodash';
+import Share from '../share';
 
 import './style.scss';
 
@@ -28,7 +29,8 @@ export default class Template extends React.Component {
     @observable
     state = {
         offer: {},
-        business: null
+        business: null,
+        isCallingCard: false
     }
 
     static PropTypes = {
@@ -37,24 +39,26 @@ export default class Template extends React.Component {
 
     componentWillMount() {
 
-        var {offerStore} = this.props.route.businessStore;
-        const offerId = this.props.params.offerId;
-        const templateId = this.props.params.templateId;
-        var {businessStore} = this.props.route;
+        let {offerStore} = this.props.route.businessStore,
+            offerId = this.props.params.offerId,
+            paramsTemplateId = this.props.params.templateId,
+            {businessStore} = this.props.route;
+
         this.state.business = businessStore.business;
 
         if (offerId) {
             var offer = offerStore.offers.find((it) => it.id == offerId);
             this.state.offer = offer;
-            this.state.imageToEdit = offer.imageUrl;
-        } else if (templateId) {
+            !this.state.offer.templateId && (this.state.offer.templateId = 0);
+        } else if (paramsTemplateId) {
             let offer = new OfferModel({store: this.props.route.businessStore.offerStore});
-            this.state.offer = merge(offer,templates[templateId]);
+            this.state.offer = merge(offer, templates[paramsTemplateId]);
         } else {
             hashHistory.push('/offers');
         }
 
-        console.log(this.state.offer)
+        this.state.offer.templateId === 2 && (this.state.isCallingCard = true);
+
     }
 
 
@@ -97,7 +101,7 @@ export default class Template extends React.Component {
     };
 
     @autobind
-    updateHeight(el){
+    updateHeight(el) {
         el.style.height = el.scrollHeight;
     }
 
@@ -121,20 +125,37 @@ export default class Template extends React.Component {
         this.state.offer.imageUrl = src;
     }
 
+    setCallingCardTitle() {
+        let {offer, isCallingCard, business} = this.state;
+        if (isCallingCard) {
+            return business.title;
+        } else if (offer.title) {
+            return offer.title;
+        } else return null;
+    }
 
+    setCallingCardDesc() {
+        let {offer, isCallingCard, business} = this.state;
+        if (isCallingCard) {
+            return business.description;
+        } else if (offer.description) {
+            return offer.description;
+        } else return null;
+    }
 
 
     render() {
-        let {offer, business} = this.state,
+        let {offer, business, isCallingCard} = this.state,
             {route} = this.props,
-            {templateId} = this.props.params;
+            {couponsStore, businessStore} = route,
+            templateId = this.props.params.templateId || offer.templateId || 0;
 
         if (!firebase.storage || !route.businessStore.isInitialized) {
             return null;
         }
 
-        let templateType = offer.templateId || templateId || "0",
-            templateClass = classNames('Template', 'template-' + templateType),
+
+        let templateClass = classNames('Template', 'template-' + templateId.toString()),
 
             isOVerDue = offer && moment(offer.endingDate).isBefore(new Date()),
             telLink = 'tel:' + business.phone,
@@ -148,87 +169,96 @@ export default class Template extends React.Component {
             termsDefaultValue = offer.terms ? ('*' + offer.terms) : null;
 
 
-
         return (
 
-            <div className={templateClass}>
-
-                <div className="Coupon-img">
-
-                    <ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}  />
-
-                    <div className="business-title">
-                        <p>{business.title}</p>
-                        <p>{business.description}</p>
-                    </div>
-                </div>
-                <div className="Coupon-title">
-                    {/*h1*/}
-                    <div className="row h1">
-                                <textarea type="text" name="title" defaultValue={offer.title}
-                                          onChange={this.onChange}/>
-                        <label htmlFor="title">כותרת</label>
-                    </div>
-                    {/*h2*/}
-                    <div className="row h2">
-							<textarea name="description" defaultValue={offer.description}
-                                      onChange={this.onChange}/>
-                        <label htmlFor="description">תיאור</label>
-                    </div>
-                </div>
-                <Paper className="Coupon-inner-details">
-                    {/*p*/}
-                    <div className="row"><FontIcon className="material-icons"
-                                                   style={iconStyles}>date_range</FontIcon>
-                        <span className="betokef">בתוקף עד:</span>
-
-                        <DatePicker autoOk name="endingDate"
-                                    value={offer.endingDate || (moment().add(2, 'M')).toDate()}
-                                    onChange={this.onChangeDate}
-                                    formatDate={this.formatDate}/>
-                    </div>
-                </Paper>
-                <div className="row terms">
-                            <textarea name="terms"
-                                      defaultValue={termsDefaultValue}
-                                      onChange={this.onChange}/>
-                    <label htmlFor="terms">תנאים והגבלות</label>
+            <div className="Template-page">
+                <div className="Template-top">
+                    <Share offer={offer} businessStore={businessStore} couponsStore={couponsStore}/>
+                    <p><b>כך יראה הקופון:</b></p>
+                    <p>לחץ על השדות לעריכה</p>
                 </div>
 
-                <Paper className="business-details">
-                    <div className="details-row">
-                        <p><FontIcon className="material-icons" style={iconStyles}>smartphone</FontIcon>
-                            <a href={telLink}>{business.phone}</a></p>
-                        {business.address && <p><FontIcon className="material-icons"
-                                                          style={iconStyles}>location_on</FontIcon>
-                            <a href={mapLink} target="_blank">
-                                {business.address}</a></p>}
-                        {business.website &&
-                        <p><FontIcon className="material-icons" style={iconStyles}>link</FontIcon>
-                            <a href={business.website} target="_blank">{business.website}</a></p>}
-                    </div>
-                </Paper>
-
-                <div className="Coupon-realization">
-                    <p>מעדיפים שנחזור אליכם? השאירו פרטים כאן:</p>
-                    <form>
-                        <TextField name="clientName" hintText="שם"/>
-                        <TextField name="phoneNumber" hintText="מספר טלפון"/>
-                        <div className="form-button">
-                            <RaisedButton secondary>שלח</RaisedButton>
+                <div className={templateClass}>
+                    <div className="Coupon-img">
+                        <ImageEditor src={offer.imageUrl} onUpload={this.setImageSrc}/>
+                        {!isCallingCard &&
+                        <div className="business-title">
+                            <p>{business.title}</p>
+                            <p>{business.description}</p>
                         </div>
-                    </form>
+                        }
+                    </div>
+                    <div className="Coupon-title fadeInAnimation">
+                        {/*h1*/}
+                        <div className="row h1">
+                                <textarea type="text" name="title" defaultValue={this.setCallingCardTitle()}
+                                          onChange={this.onChange}/>
+                            <label htmlFor="title">כותרת</label>
+                        </div>
+                        {/*h2*/}
+                        <div className="row h2">
+							<textarea name="description" defaultValue={this.setCallingCardDesc()}
+                                      onChange={this.onChange}/>
+                            <label htmlFor="description">תיאור</label>
+                        </div>
+                    </div>
+                    {!isCallingCard &&
+                    <div className="fadeInAnimation">
+                        <Paper className="Coupon-inner-details">
+                            {/*p*/}
+                            <div className="row"><FontIcon className="material-icons"
+                                                           style={iconStyles}>date_range</FontIcon>
+                                <span className="betokef">בתוקף עד:</span>
 
-                    <a to="/terms" target="_blank" className="terms-link">כפוף לתנאי השימוש</a>
-                </div>
+                                <DatePicker autoOk name="endingDate"
+                                            value={offer.endingDate || (moment().add(2, 'M')).toDate()}
+                                            onChange={this.onChangeDate}
+                                            formatDate={this.formatDate}/>
+                            </div>
+                        </Paper>
+                        < div className="row terms">
+                        <textarea name="terms"
+                                  defaultValue={termsDefaultValue}
+                                  onChange={this.onChange}/>
+                            <label htmlFor="terms">תנאים והגבלות</label>
+                        </div>
+                    </div>
+                    }
 
-                <div className="saveButtonHolder">
+                    <Paper className="business-details fadeInAnimation">
+                        <div className="details-row">
+                            <p><FontIcon className="material-icons" style={iconStyles}>smartphone</FontIcon>
+                                <a href={telLink}>{business.phone}</a></p>
+                            {business.address && <p><FontIcon className="material-icons"
+                                                              style={iconStyles}>location_on</FontIcon>
+                                <a href={mapLink} target="_blank">
+                                    {business.address}</a></p>}
+                            {business.website &&
+                            <p><FontIcon className="material-icons" style={iconStyles}>link</FontIcon>
+                                <a href={business.website} target="_blank">{business.website}</a></p>}
+                        </div>
+                    </Paper>
 
-                <RaisedButton primary={true} label="שמור" onTouchTap={(e) => this.handleNewOfferKeyDown(e)}
-                              style={{width: '95%', maxWidth: 320, margin: '10px auto', display: 'block'}}/>
+                    <div className="Coupon-realization fadeInAnimation">
+                        <p>מעדיפים שנחזור אליכם? השאירו פרטים כאן:</p>
+                        <form>
+                            <TextField name="clientName" hintText="שם"/>
+                            <TextField name="phoneNumber" hintText="מספר טלפון"/>
+                            <div className="form-button">
+                                <RaisedButton secondary>שלח</RaisedButton>
+                            </div>
+                        </form>
+
+                        <a to="/terms" target="_blank" className="terms-link">כפוף לתנאי השימוש</a>
+                    </div>
+
+                    <div className="saveButtonHolder">
+
+                        <RaisedButton primary={true} label="שמור" onTouchTap={(e) => this.handleNewOfferKeyDown(e)}
+                                      style={{width: '95%', maxWidth: 320, margin: '10px auto', display: 'block'}}/>
+                    </div>
                 </div>
             </div>
-
         )
     }
 }

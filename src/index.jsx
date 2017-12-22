@@ -61,6 +61,6 @@ stores.couponStore = couponStore;
 
 
 ReactDOM.render((
-<Router history={hashHistory} routes={routes(stores)}>
+<Router history={hashHistory} routes={routes(stores)} onUpdate={() => window.scrollTo(0, 0)}>
   </Router>
 ), document.querySelector("#root"))

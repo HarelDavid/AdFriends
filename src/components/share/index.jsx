@@ -165,7 +165,7 @@ export default class Share extends Component {
         return (
 
             <div className="shareDialog">
-                    <p style={{marginTop: 0}}>שלח קופון:</p>
+                    <p><b>שלח קופון:</b></p>
                 <div className="choose-client">
                     <div>
                         <Creatable

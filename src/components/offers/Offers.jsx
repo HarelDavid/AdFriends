@@ -65,7 +65,7 @@ export default class Offers extends React.Component {
                 </Dialog>
 
                 <div className="offers-list">
-                    {sortBy(offerStore.offers, 'endingDate').reverse().map((offer, idx) => (
+                    {offerStore.offers.map((offer, idx) => (
                             <Offer couponsStore={couponsStore} businessStore={businessStore} className="offer"
                                    key={offer.id} offer={offer}/>
                         )

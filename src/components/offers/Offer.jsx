@@ -85,7 +85,9 @@ export default class Offer extends React.Component {
                 <CardHeader title={offer.title} style={{fontWeight: 'bold'}}/>
                 <CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
                     <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                        {offer.endingDate &&
                         <p style={offerBoxDateStyle}>{isOVerDue ? 'פג תוקף ' : 'בתוקף עד: '}{moment(offer.endingDate).format('DD/MM/YY')}</p>
+                        }
                         <Link to={`/offer/${offer.id}`} style={{textDecoration: 'none', marginLeft: 10}}>
                             <RaisedButton secondary label="ערוך"
                                           icon={<FontIcon className="material-icons" style={{fontSize: '1.2rem'}}>mode_edit</FontIcon>}/>
