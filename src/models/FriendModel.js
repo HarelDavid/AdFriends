@@ -10,7 +10,6 @@ export default class OfferModel {
 
 
 
-
 	constructor(data) {
 		if (data) {
 			this.name = data.name || "";

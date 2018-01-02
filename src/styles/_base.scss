@@ -16,22 +16,24 @@ body,html {
 
 
 
-input[type="text"], input[type="date"], input[type="text"], textarea {
-  border: 1px solid $grey-light;
-  padding: 7px 10px;
+textarea {
+  border: 1px solid transparent;
+  padding: 7px 0;
   border-radius: 5px;
   width: 100%;
-  max-width: 300px;
   @media #{$media-higher-than-mobile} {
     min-width: 300px;
   }
+
 
 }
 
 
 :global {
 
-
+  .Select-option {
+    padding: 3px 8px !important;
+  }
 
   .button {
     border:0;
@@ -60,9 +62,7 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
   }
 
 
-  .card {
-    @include card();
-  }
+
 
 
   .addItemForm {
@@ -132,15 +132,7 @@ input[type="text"], input[type="date"], input[type="text"], textarea {
     }
   }
 
-  .shareDialog {
-    display: flex;
-    .Select {
-      flex:1;
-    }
-    button {
-      color: #fff !important;
-    }
-  }
+
 
   .preview {
     padding: 10px;

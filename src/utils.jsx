@@ -57,3 +57,62 @@ export function dataURItoFile(data, filename) {
 	return file;
 }
 
+
+export function copyTextToClipboard(text) {
+    var textArea = document.createElement("textarea");
+
+    textArea.style.position = 'fixed';
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = '2em';
+    textArea.style.height = '2em';
+    textArea.style.padding = 0;
+    textArea.style.border = 'none';
+    textArea.style.outline = 'none';
+    textArea.style.boxShadow = 'none';
+    textArea.style.background = 'transparent';
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    return new Promise((resolve, reject)=> {
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            document.body.removeChild(textArea);
+            window.open('http://web.whatsapp.com', '_blank');
+            console.log('Copying text command was ' + msg);
+            resolve('לינק לקופון הועתק');
+
+        } catch (err) {
+            console.log('Oops, unable to copy');
+            reject('ארעה שגיאה, אנא נסה מאוחר יותר');
+
+        }
+    });
+
+}
+
+function getFileCheckSum(file) {
+    return new Promise((resolve, reject)=> {
+        try {
+            var reader = new FileReader();
+            reader.readAsBinaryString(file);
+            reader.onloadend = function () {
+                var hash = CryptoJS.MD5(reader.result).toString();
+                resolve(hash);
+            };
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+
+
+export function isMobile() {
+    let mql = window.matchMedia('(max-width: 920px)');
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && mql.matches) {
+        return true;
+    }
+    return false;
+}

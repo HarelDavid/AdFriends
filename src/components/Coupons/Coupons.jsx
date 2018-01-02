@@ -29,11 +29,9 @@ export default class Coupons extends React.Component {
 
         return (
 
-            <div className="offers-wrapper">
+            <div className="Coupons-wrapper">
                 <h1>קופונים</h1>
-
-
-                <table className="offers-list">
+                <table className="Coupons-list">
 					<tr>
 						<th>נשלח אל</th>
 						<th>מס׳ צפיות</th>

@@ -1,0 +1,360 @@
+@import '../../styles/globals.scss';
+
+:global {
+  .preview-img {
+    position: relative;
+    img {
+      width: 100%;
+      height: auto;
+    }
+    .edit-button {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+      z-index: 1;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .shareDialogActions {
+    > * {
+      margin-right: 15px;
+    }
+  }
+
+  .Select-option  {
+    padding: 1px 10px !important;
+  }
+  .Select-clear-zone {
+    display: none;
+    pointer-events: none;
+  }
+}
+
+//Template
+:global {
+
+  .Template-page {
+    background: white;
+    padding-bottom: 26px;
+    .shareDialog {
+      margin: 0 auto 20px;
+      padding: 15px 0 20px;
+      //border-bottom: 1px solid $grey-light;
+      max-width: 300px;
+    }
+    .Template-top {
+      padding: 15px 15px 0;
+      p {
+        margin: 5px 0;
+      }
+    }
+  }
+
+
+
+  .Template {
+    width: 100%;
+    min-height: 100vh;
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    position: relative;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 4px 4px 11px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    border: 8px solid $grey-light;
+    .row {
+      display: flex;
+      flex-direction: column-reverse;
+      label {
+        opacity: 0;
+        transition: opacity ease 0.2s;
+        color: $secondary;
+        font-size: 16px;
+        font-weight: 400;
+      }
+      textarea {
+        &:focus {
+          outline-color: $secondary;
+          border: 1px solid $grey-light;
+          + label {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+
+
+    &.Coupon-expired {
+      display: flex;
+      justify-content: flex-start;
+      align-content: center;
+      padding-top: 170px;
+
+    }
+
+    .Coupon-img {
+      width: 100%;
+      position: relative;
+
+      img {
+        width: 100%;
+
+      }
+
+      .business-title {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 15px;
+        z-index: 3;
+        p {
+          color: #fff;
+          font-size: 18px;
+          margin: 0;
+          &:last-of-type {
+            font-size: 15px;
+          }
+        }
+      }
+      &:after {
+        content: "";
+        background: linear-gradient(rgba(0,0,0,.8) -30%,rgba(0,0,0,0) 80%);
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        position: absolute;
+      }
+    }
+
+    .Coupon-inner-details {
+      text-align: right;
+      padding: 0 15px;
+      width: calc(100% - 30px);
+      margin: 0 auto;
+      .row {
+        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+        .betokef {
+          white-space: nowrap;
+          padding-left: 5px;
+        }
+      }
+    }
+
+
+    .Coupon-title {
+      width: 100%;
+      padding: 15px;
+      .h1 {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: right;
+        textarea {
+          height: 40px;
+        }
+      }
+      .h2 {
+        text-align: right;
+        color: #555;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+
+    form {
+      > div {
+        width: 100% !important;
+      }
+    }
+    .Coupon-realization {
+      width: 100%;
+      padding: 10px 20px;
+      text-align: left;
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: rgba(255,255,255,0.5);
+        z-index: 1;
+      }
+    }
+    .form-button {
+      text-align: left;
+    }
+    button {
+      color: #fff;
+    }
+    p {
+      margin: 10px 0;
+      font-size: 14px;
+      text-align: right;
+    }
+    .business-details {
+      font-size: 14px;
+      line-height: 1;
+      width: calc(100% - 30px);
+      margin: 0 auto;
+      padding: 5px 10px;
+      p {
+        margin: 8px 0;
+        a {
+          color: #50BAB4;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .saveButtonHolder {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      background: white;
+      z-index: 9;
+      width: 100%;
+      box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .terms-link {
+      color: #555;
+      text-align: left;
+      float: right;
+      font-size: 10px;
+    }
+
+    .terms {
+      font-size: 10px;
+      text-align: right;
+      padding: 20px 17px 20px 15px;
+      width: 100%;
+    }
+
+    .fadeInAnimation {
+      opacity: 0;
+      transform: translate3d(0, -7px, 0);
+      :local {
+        animation: fadeIn 0.6s ease-in 0.6s forwards;
+      }
+      //@include listAnimationDelay(60);
+
+    }
+  }
+
+
+  //templates types
+  .Template {
+
+    &.template-0 {
+      .Coupon-img {
+        overflow: hidden;
+        max-height: 0;
+        :local {
+          animation: slideIn 0.8s cubic-bezier(0.18, 0.89, 0.32, 1.28) 0.5s forwards;
+        }
+        img, .no-image, canvas {
+          clip-path: circle(169% at 34% -118%);
+          @media #{$media-higher-than-mobile} {
+            clip-path: circle(164% at 34% -118%);
+          }
+        }
+      }
+    }
+
+    &.template-1 {
+      .business-title {
+        opacity: 0;
+        :local {
+          animation: fadeFromBottom 0.6s cubic-bezier(0.65, 0.05, 0.36, 1) 0.2s both
+        }
+      }
+      .Coupon-img {
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          right:0;
+          width: 100%;
+          height: 100%;
+          background: white;
+          transform: scaleX(1);
+          transform-origin: left;
+          :local {
+            animation: scaleDownX 0.5s cubic-bezier(.645, .045, .355, 1) 0.5s both
+          }
+        }
+      }
+
+    }
+    //Business card
+    &.template-2 {
+      .Coupon-img {
+        max-height: 180px;
+        overflow: hidden;
+      }
+    }
+
+    &.template-3 {
+
+    }
+
+  }
+
+
+
+}
+//End global
+
+
+@keyframes slideIn {
+  from { max-height: 0; overflow: hidden;  }
+  to {max-height: 240px; overflow: visible; }
+}
+
+@keyframes fadeIn {
+  from {  opacity: 0;  }
+  to { opacity: 1; transform: translate3d(0,0,0);  }
+}
+
+@mixin listAnimationDelay($value) {
+  @for $i from 1 through 50 {
+    &:nth-of-type(#{$i}) {
+      animation-delay: #{$value * $i}ms;
+    }
+  }
+}
+
+
+@keyframes fadeFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleDownX {
+  from {
+    transform: scaleX(1)
+  }
+
+  to {
+    transform: scaleX(0)
+  }
+}
+
