@@ -68,7 +68,6 @@ export default class Settings extends React.Component {
 		let prefix = website.substr(0, 4);
 
 		if (website && (prefix !== 'http')) {
-		    debugger
 			this.updateProperty(e.target.name, 'http://' + website)
 		}
 	}
