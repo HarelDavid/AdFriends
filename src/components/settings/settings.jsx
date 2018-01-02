@@ -64,11 +64,12 @@ export default class Settings extends React.Component {
 
     @autobind
 	checkUrlPrefix(e) {
-		let prefix = 'http://' || 'https://';
 		let website = e.target.value.trim();
+		let prefix = website.substr(0, 4);
 
-		if (website && website.substr(0, prefix.length) !== prefix) {
-			this.updateProperty(e.target.name, prefix + website)
+		if (website && (prefix !== 'http')) {
+		    debugger
+			this.updateProperty(e.target.name, 'http://' + website)
 		}
 	}
 
