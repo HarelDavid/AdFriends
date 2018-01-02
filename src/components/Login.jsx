@@ -74,7 +74,7 @@ export default class Login extends Component {
 
 
 		let buttonStyles = {
-			width: 360,
+			width: '100%',
 			margin: '15px auto',
 			display: 'block',
 			borderRadius: 30,
