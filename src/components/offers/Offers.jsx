@@ -56,10 +56,8 @@ export default class Offers extends React.Component {
                     onRequestClose={this.handleClose}
                 >
                     <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                        <a href="/#/offer/new/0">1</a>
-                        <a href="/#/offer/new/1">2</a>
-                        <a href="/#/offer/new/2">3</a>
-                        <a href="/#/offer/new/3">4</a>
+                        <a href="/#/offer/new/0">מבצע</a>
+                        <a href="/#/offer/new/1">כרטיס ביקור</a>
                     </div>
 
                 </Dialog>

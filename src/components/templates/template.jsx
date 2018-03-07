@@ -44,6 +44,7 @@ export default class Template extends React.Component {
             paramsTemplateId = this.props.params.templateId,
             {businessStore} = this.props.route;
 
+
         this.state.business = businessStore.business;
 
         if (offerId) {
@@ -57,7 +58,7 @@ export default class Template extends React.Component {
             hashHistory.push('/offers');
         }
 
-        this.state.offer.templateId === 2 && (this.state.isCallingCard = true);
+        this.state.offer.templateId === 1 && (this.state.isCallingCard = true);
 
     }
 
@@ -127,19 +128,19 @@ export default class Template extends React.Component {
 
     setCallingCardTitle() {
         let {offer, isCallingCard, business} = this.state;
-        if (isCallingCard) {
-            return business.title;
-        } else if (offer.title) {
+        if (offer.title) {
             return offer.title;
+        } else if (isCallingCard) {
+            return business.title;
         } else return null;
     }
 
     setCallingCardDesc() {
         let {offer, isCallingCard, business} = this.state;
-        if (isCallingCard) {
-            return business.description;
-        } else if (offer.description) {
+        if (offer.description) {
             return offer.description;
+        } else if (isCallingCard) {
+            return business.description;
         } else return null;
     }
 
@@ -169,13 +170,14 @@ export default class Template extends React.Component {
             termsDefaultValue = offer.terms ? ('*' + offer.terms) : null;
 
 
+
         return (
 
             <div className="Template-page">
                 <div className="Template-top">
                     <Share offer={offer} businessStore={businessStore} couponsStore={couponsStore}/>
-                    <p><b>כך יראה הקופון:</b></p>
-                    <p>לחץ על השדות לעריכה</p>
+                    <p style={{fontSize: 18}}><b>כך יראה הקופון:</b></p>
+                    <p style={{fontSize: 18}}>לחץ על השדות לעריכה</p>
                 </div>
 
                 <div className={templateClass}>

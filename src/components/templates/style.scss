@@ -22,7 +22,7 @@
     }
   }
 
-  .Select-option  {
+  .Select-option {
     padding: 1px 10px !important;
   }
   .Select-clear-zone {
@@ -50,8 +50,6 @@
       }
     }
   }
-
-
 
   .Template {
     width: 100%;
@@ -89,8 +87,6 @@
       }
     }
 
-
-
     &.Coupon-expired {
       display: flex;
       justify-content: flex-start;
@@ -125,7 +121,7 @@
       }
       &:after {
         content: "";
-        background: linear-gradient(rgba(0,0,0,.8) -30%,rgba(0,0,0,0) 80%);
+        background: linear-gradient(rgba(0,0,0,.8) -30%, rgba(0, 0, 0, 0) 80%);
         width: 100%;
         height: 100%;
         left: 0;
@@ -150,10 +146,9 @@
       }
     }
 
-
     .Coupon-title {
       width: 100%;
-      padding: 15px;
+      padding: 0 15px;
       .h1 {
         font-size: 24px;
         font-weight: bold;
@@ -187,7 +182,7 @@
         height: 100%;
         top: 0;
         left: 0;
-        background: rgba(255,255,255,0.5);
+        background: rgba(255, 255, 255, 0.5);
         z-index: 1;
       }
     }
@@ -252,7 +247,6 @@
     }
   }
 
-
   //templates types
   .Template {
 
@@ -280,11 +274,13 @@
         }
       }
       .Coupon-img {
+        max-height: 180px;
+        overflow: hidden;
         &:before {
           content: '';
           position: absolute;
           top: 0;
-          right:0;
+          right: 0;
           width: 100%;
           height: 100%;
           background: white;
@@ -297,34 +293,32 @@
       }
 
     }
-    //Business card
-    &.template-2 {
-      .Coupon-img {
-        max-height: 180px;
-        overflow: hidden;
-      }
-    }
-
-    &.template-3 {
-
-    }
 
   }
 
-
-
 }
+
 //End global
 
-
 @keyframes slideIn {
-  from { max-height: 0; overflow: hidden;  }
-  to {max-height: 240px; overflow: visible; }
+  from {
+    max-height: 0;
+    overflow: hidden;
+  }
+  to {
+    max-height: 240px;
+    overflow: visible;
+  }
 }
 
 @keyframes fadeIn {
-  from {  opacity: 0;  }
-  to { opacity: 1; transform: translate3d(0,0,0);  }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @mixin listAnimationDelay($value) {
@@ -334,7 +328,6 @@
     }
   }
 }
-
 
 @keyframes fadeFromBottom {
   from {

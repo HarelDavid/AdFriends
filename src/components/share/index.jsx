@@ -165,7 +165,7 @@ export default class Share extends Component {
         return (
 
             <div className="shareDialog">
-                    <p><b>שלח קופון:</b></p>
+                    <p><b>שלח לינק:</b></p>
                 <div className="choose-client">
                     <div>
                         <Creatable
@@ -178,7 +178,7 @@ export default class Share extends Component {
                         />
                         <div style={{color: 'red'}}>{clientError}</div>
                     </div>
-                    <RaisedButton secondary onClick={this.openDialog} label="שלח קופון"/>
+                    <RaisedButton secondary onClick={this.openDialog} label="שלח לינק"/>
                 </div>
                 {dialogOpen &&
                 <Dialog
