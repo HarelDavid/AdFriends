@@ -35,7 +35,12 @@ module.exports = {
 			{
 				test: /\.(eot|svg|ttf|woff)$/,
 				loader: 'file?name=src/fonts/[name].[ext]'
-			}
+			},
+            {
+                test: /\.(jpg|png|svg)$/,
+                loader: 'file',
+                include: './src/images'
+            }
 		])
 	},
 	devServer: {

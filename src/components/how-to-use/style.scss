@@ -1,0 +1,22 @@
+@import '../../styles/globals.scss';
+
+:global {
+
+  .HowToUse {
+    .stages {
+      max-width: 264px;
+      margin: 0 auto;
+      .stage-item {
+        font-size: 15px;
+        text-align: center;
+        img {
+          width: 65px;
+          display: block;
+          margin: 10px auto;
+        }
+
+      }
+    }
+  }
+
+}

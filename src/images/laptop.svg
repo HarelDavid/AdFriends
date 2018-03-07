@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>laptop</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="laptop" fill-rule="nonzero">
+            <path d="M512,256 C512,397.433663 397.433663,512 256,512 C114.566337,512 0,397.433663 0,256 C0,114.667723 114.566337,0 256,0 C367.626139,0 462.523564,71.4772277 497.603168,171.038416 C505.105743,192.329505 509.870891,214.938614 511.493069,238.460198 C511.797228,244.239208 512,250.119604 512,256 Z" id="Shape" fill="#FF7058"></path>
+            <path d="M39,392 C84.3478261,464.060811 164.492754,512 256,512 C347.507246,512 427.652174,464.060811 473,392 L39,392 Z" id="Shape" fill="#F1543F"></path>
+            <path d="M451.873997,359 L61.1675597,359 C58.0232452,359 55.9946552,362.310345 57.5160977,365.018809 L63.7032972,376.454545 C68.5719133,385.482759 78.0048568,391 88.3506659,391 L424.69089,391 C435.036699,391 444.469643,385.382445 449.338259,376.454545 L455.525459,365.018809 C456.945472,362.310345 455.018311,359 451.873997,359 Z" id="Shape" fill="#324A5E"></path>
+            <path d="M423.360843,360 L91.6391566,360 C90.2180723,360 89,358.883441 89,357.36086 L89,126.63914 C89,125.218065 90.1165663,124 91.6391566,124 L423.360843,124 C424.781928,124 426,125.116559 426,126.63914 L426,357.36086 C425.898494,358.781935 424.781928,360 423.360843,360 Z" id="Shape" fill="#2B3B4E"></path>
+            <rect id="Rectangle-path" fill="#FFFFFF" x="105" y="149" width="305" height="190"></rect>
+            <circle id="Oval" fill="#324A5E" cx="258" cy="136" r="6"></circle>
+            <rect id="Rectangle-path" fill="#FFD05B" x="140" y="165" width="26" height="26"></rect>
+            <g id="Group" transform="translate(180.000000, 165.000000)" fill="#E6E9EE">
+                <rect id="Rectangle-path" x="0.914516129" y="0.2" width="61.1709677" height="8.6"></rect>
+                <rect id="Rectangle-path" x="0.914516129" y="17" width="33.633871" height="8.6"></rect>
+            </g>
+            <rect id="Rectangle-path" fill="#54C0EB" x="272" y="165" width="26" height="26"></rect>
+            <g id="Group" transform="translate(147.000000, 165.000000)" fill="#E6E9EE">
+                <rect id="Rectangle-path" x="166.186667" y="0.202758621" width="61.0026667" height="8.71862069"></rect>
+                <rect id="Rectangle-path" x="166.186667" y="17.2344828" width="33.5413333" height="8.71862069"></rect>
+                <rect id="Rectangle-path" x="0.810666667" y="65.5924138" width="26.5493333" height="80.7993103"></rect>
+                <rect id="Rectangle-path" x="48.8426667" y="65.5924138" width="26.5493333" height="80.7993103"></rect>
+                <rect id="Rectangle-path" x="96.976" y="65.5924138" width="26.5493333" height="80.7993103"></rect>
+                <rect id="Rectangle-path" x="145.008" y="65.5924138" width="26.5493333" height="80.7993103"></rect>
+                <rect id="Rectangle-path" x="193.141333" y="65.5924138" width="26.5493333" height="80.7993103"></rect>
+            </g>
+            <g id="Group" transform="translate(147.000000, 245.000000)" fill="#4CDBC4">
+                <rect id="Rectangle-path" x="0.811059908" y="18.9833333" width="26.562212" height="47.4075758"></rect>
+                <rect id="Rectangle-path" x="48.8663594" y="36.7484848" width="26.562212" height="29.6424242"></rect>
+                <rect id="Rectangle-path" x="97.0230415" y="0.913636364" width="26.562212" height="65.4772727"></rect>
+                <rect id="Rectangle-path" x="145.078341" y="23.2469697" width="26.562212" height="43.2454545"></rect>
+                <rect id="Rectangle-path" x="193.235023" y="7.71515152" width="26.562212" height="58.6757576"></rect>
+            </g>
+            <polygon id="Shape" fill="#ACB3BA" points="299.627723 366 212.372277 366 205 359 307 359"></polygon>
+        </g>
+    </g>
+</svg>
