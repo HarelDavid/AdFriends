@@ -75,14 +75,15 @@ export function copyTextToClipboard(text) {
     document.body.appendChild(textArea);
     textArea.select();
 
+
     return new Promise((resolve, reject)=> {
         try {
             var successful = document.execCommand('copy');
             var msg = successful ? 'successful' : 'unsuccessful';
             document.body.removeChild(textArea);
-            window.open('http://web.whatsapp.com', '_blank');
+            // window.open('http://web.whatsapp.com', '_blank');
             console.log('Copying text command was ' + msg);
-            resolve('לינק לקופון הועתק');
+            resolve(msg);
 
         } catch (err) {
             console.log('Oops, unable to copy');
