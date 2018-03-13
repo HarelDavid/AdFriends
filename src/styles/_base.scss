@@ -31,6 +31,10 @@ textarea {
 
 :global {
 
+  a {
+    color: $secondary;
+  }
+
   .Select-option {
     padding: 3px 8px !important;
   }
