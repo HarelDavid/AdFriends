@@ -8,6 +8,7 @@ export default class CouponModel {
 	@observable businessId;
 	@observable watches;
 	@observable link;
+	@observable name;
 	@observable realized;
 	@observable message;
 
@@ -19,7 +20,8 @@ export default class CouponModel {
 			this.offerId = data.offer ? data.offer.id :  "";
 			this.clientId = data.clientId || "";
 			this.businessId = data.businessId || "";
-			this.link = data.link || [];
+			this.link = data.link || "";
+			this.name = data.name || "";
 			this.store = data.store || {};
 			this.realized = data.realized || 0;
 			this.message = data.message || "";
@@ -35,6 +37,7 @@ export default class CouponModel {
 		this.offerId = couponDB.offerId;
 		this.businessId = couponDB.businessId;
 		this.link = couponDB.link;
+		this.name = couponDB.name;
 		this.watches = couponDB.watches || 0;
 		this.realized = couponDB.realized || 0;
 		this.id = couponDB.id;
@@ -52,6 +55,7 @@ export default class CouponModel {
 		couponDB.clientId = this.clientId || "";
 		couponDB.businessId = this.businessId || "";
 		couponDB.link = this.link || "";
+		couponDB.name = this.name || "";
 		couponDB.id = this.id || "";
 		couponDB.watches = this.watches || 0;
 		couponDB.realized = this.realized || 0;
@@ -82,6 +86,6 @@ export default class CouponModel {
 	}
 
 	static fromJS(store, object) {
-		return new ClientModel({store:store, id:object.id, title:object.title, description:object.description,imageUrl:object.imageUrl,message:object.message});
+		return new CouponModel({store:store, id:object.id, title:object.title, description:object.description,imageUrl:object.imageUrl,message:object.message});
 	}
 }

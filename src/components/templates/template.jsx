@@ -18,6 +18,7 @@ import FontIcon from 'material-ui/FontIcon';
 import {merge} from 'lodash';
 import Share from '../share';
 
+
 import './style.scss';
 
 const templates = require('json!./info.json');
@@ -58,7 +59,17 @@ export default class Template extends React.Component {
             hashHistory.push('/offers');
         }
 
-        this.state.offer.templateId === 1 && (this.state.isCallingCard = true);
+        this.setCallingCard();
+    }
+
+    setCallingCard(){
+        var {business} = this.state;
+
+        if(this.state.offer.templateId === 1) {
+            this.state.isCallingCard = true;
+            this.state.offer.title = business.title;
+            this.state.offer.description = business.description;
+        }
 
     }
 
@@ -87,6 +98,11 @@ export default class Template extends React.Component {
         this.updateProperty('endingDate', date)
     }
 
+    @autobind
+    updateHeight(el) {
+        el.style.height = el.scrollHeight;
+    }
+
 
     @autobind
     handleNewOfferKeyDown(e) {
@@ -101,10 +117,6 @@ export default class Template extends React.Component {
 
     };
 
-    @autobind
-    updateHeight(el) {
-        el.style.height = el.scrollHeight;
-    }
 
     clearForm() {
         this.setState({description: ""});

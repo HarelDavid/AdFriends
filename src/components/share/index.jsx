@@ -12,13 +12,10 @@ import {Creatable} from 'react-select';
 import CouponModel from '../../models/CouponModel';
 import ClientModel from '../../models/ClientModel'
 import jsonpP from 'jsonp-p';
-
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {copyTextToClipboard, isMobile} from '../../utils';
 
 import './style.scss';
-
-import Facebook from '../../images/facebook_icon.svg';
-import Whatsapp from '../../images/whatsapp_icon.svg';
 
 
 @observer
@@ -38,7 +35,12 @@ export default class Share extends Component {
         dialogOpen: false,
         chosenClient: {},
         clientError: '',
-        client: {}
+        client: {},
+        link: '',
+        linkName: '',
+        tabs: {
+            value: 'a'
+        }
     }
 
     componentWillMount() {
@@ -48,16 +50,21 @@ export default class Share extends Component {
 
 
     @autobind
-    updatePreMessage(event) {
-        this.state.message = event.target.value;
+    onChangeValue(event) {
+        this.updateProperty(event.target.name, event.target.value);
+        this.updateHeight(event.target);
     }
 
-
-    onClickCopy(str) {
-        copyTextToClipboard(str).then(res => {
-            console.log(res);
-        })
+    @autobind
+    updateHeight(el) {
+        el.style.height = el.scrollHeight;
     }
+
+    updateProperty(key, value) {
+
+        this.state[key] = value;
+    }
+
 
     @autobind
     openDialog() {
@@ -108,17 +115,23 @@ export default class Share extends Component {
         })
     }
 
+    @autobind
+    handleTabChange(value) {
+        this.state.tabs.value = value;
+    };
+
 
     @autobind
     createLink() {
         const {offer} = this.props;
-        var {chosenClient, client} = this.state;
+        var {chosenClient, client, link, linkName} = this.state;
         var {businessStore, couponsStore} = this.props;
         var coupon = new CouponModel({store: couponsStore});
         coupon.businessId = businessStore.business.id;
         coupon.offer = offer.convertToDB();
-        chosenClient.id ? coupon.clientId = chosenClient.id : coupon.clientId = client.id;
-        coupon.message = this.state.message || offer.preMessage;
+        // chosenClient.id ? coupon.clientId = chosenClient.id : coupon.clientId = client.id;
+        coupon.name = linkName || '';
+        coupon.message = this.state.message || '';
         coupon.bussineData = businessStore.business.convertToDB()
 
         if (!coupon.id) {
@@ -133,7 +146,7 @@ export default class Share extends Component {
             .then((res) => {
                 this.state.link = coupon.shortLink = res.data.url;
                 coupon.save();
-                offer.couponLinks.push(coupon.link);
+                offer.couponLinks.push({'url': coupon.link, 'name': this.state.linkName});
                 offer.save();
                 // client.couponLinks.push(coupon.link);
                 client.save();
@@ -151,40 +164,71 @@ export default class Share extends Component {
             });
     }
 
+    copyLink() {
+        var {link} = this.state;
+        copyTextToClipboard(link).then(res => {
+            if (res === 'ok') {
+                alert('text copied to clipboard')
+            } else {
+                alert(res);
+            }
+        })
+    }
+
+    openWebWhatsapp() {
+        let {offer, link} = this.props,
+            {message} = this.state;
+        copyTextToClipboard(message ? message + "  " + link : offer.preMessage + "  " + link).then(res => {
+            window.open('http://web.whatsapp.com', '_blank');
+        })
+    }
+
+    @autobind
+    onClickLink(el) {
+        this.state.link = el.url;
+        this.state.linkName = el.name;
+    }
+
 
     render() {
-        let {offer, link} = this.props,
-            {message, dialogOpen, clientError} = this.state;
+        let {offer} = this.props,
+            {message, dialogOpen, clientError, linkName, link} = this.state;
         let shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
-
-        let actions = [<FlatButton
-            label="ביטול"
-            primary={true}
-            onTouchTap={this.handleClose}
-        />, <a target="_blank" href={`${this.state.link}?preview=true`}>
-            <RaisedButton label="תצוגה מקדימה" style={{marginTop: 20}} secondary/>
-        </a>];
-
-        console.log(link)
 
         return (
 
             <div className="shareDialog">
-                <p><b>שלח לינק:</b></p>
+                <div className="choose-link-wrapper">
+                    <p style={{color: 'rgba(66, 66, 66, 0.87)', display: 'block', fontSize: 15, fontWeight: 700}}>בחר קישור לשליחה:</p>
+                    {link &&
+                    <a href={`${link}?preview=true`} target="_blank">{linkName} <span style={{fontSize: 11}}>(לחץ לתצוגה מקדימה)</span></a>
+                    }
+                </div>
+                <ul>
+                    {offer.couponLinks.map(link => {
+                        return <li onClick={()=> this.onClickLink(link)}>{link.name}</li>
+                    })}
+                </ul>
+                <div className="link-buttons">
+                    <TextField label="שם הקידום" multiLine={true} name="linkName"
+                               defaultValue={linkName} hintText="הזן שם "
+                               onChange={this.onChangeValue} style={{width: '100%', maxWidth: '300px'}}/>
 
-                <div>
-                    <TextField label="שם הקידום" multiLine={true} name="message"
-                               defaultValue={offer.preMessage} hintText="שם ייחודי ללינק שנוצר, למטרות מעקב וסטטיסטיקה."
-                               onChange={this.updatePreMessage}/>
-                    <TextField label="טקסט לשלוח עם הלינק" multiLine={true} name="message"
-                               defaultValue={offer.preMessage} hintText="הזן טקסט שיופיע בהודעת הווטסאפ או בפייסבוק"
-                               onChange={this.updatePreMessage}/>
-
+                    <div className="button" style={{flex: '1 0 auto', alignSelf: 'center', padding: '8px 15px'}}
+                         onClick={this.createLink}>צור לינק חדש
+                    </div>
                 </div>
 
-                <div className="share-social-buttons">
-                    {isMobile() ?
 
+                <br/>
+                <br/>
+                <TextField label="טקסט לשלוח עם הלינק" multiLine={true} name="message"
+                           defaultValue={message} hintText="הזן טקסט שיופיע בהודעת הווטסאפ או בפייסבוק"
+                           onChange={this.onChangeValue} style={{width: '100%', maxWidth: '300px'}}/>
+
+                <div className={link ? "share-social-buttons" : "share-social-buttons disabled"}>
+
+                    {isMobile() ?
                         <a className="whatsapp" href={shareUrl} style={{textDecoration: 'none'}}>
                             <svg width="22px" height="41px" viewBox="0 0 45 41">
                                 <g id="whatsapp_icon" fill="#FFFFFF" fillRule="nonzero">
@@ -192,10 +236,10 @@ export default class Share extends Component {
                                         d="M44.129,30.344 C43.856,29.897 43.135,29.627 42.053,29.09 C40.969,28.553 35.643,25.952 34.653,25.596 C33.66,25.237 32.936,25.057 32.215,26.132 C31.494,27.208 29.418,29.627 28.785,30.344 C28.153,31.063 27.522,31.153 26.438,30.615 C25.356,30.078 21.867,28.942 17.73,25.281 C14.511,22.434 12.337,18.917 11.705,17.841 C11.074,16.766 11.639,16.185 12.18,15.65 C12.668,15.168 13.264,14.395 13.805,13.768 C14.348,13.14 14.528,12.693 14.887,11.975 C15.25,11.258 15.069,10.631 14.797,10.092 C14.527,9.555 12.359,4.267 11.457,2.116 C10.555,-0.035 9.654,0.323 9.021,0.323 C8.39,0.323 7.667,0.233 6.945,0.233 C6.223,0.233 5.049,0.502 4.056,1.577 C3.064,2.653 0.267,5.253 0.267,10.54 C0.267,15.828 4.146,20.937 4.689,21.654 C5.23,22.37 12.179,33.574 23.189,37.877 C34.2,42.177 34.2,40.742 36.186,40.562 C38.17,40.383 42.592,37.963 43.498,35.455 C44.398,32.943 44.398,30.792 44.129,30.344"/>
                                 </g>
                             </svg>
-                            </a>
+                        </a>
                         :
                         <div className="whatsapp"
-                             onClick={() => copyTextToClipboard(message ? message + "  " + link : offer.preMessage + "  " + link)}>
+                             onClick={() => this.openWebWhatsapp()}>
                             <svg width="22px" height="41px" viewBox="0 0 45 41">
                                 <g id="whatsapp_icon" fill="#FFFFFF" fillRule="nonzero">
                                     <path
@@ -212,58 +256,13 @@ export default class Share extends Component {
                             </g>
                         </svg>
                     </div>
-                    <div className="copy" onClick={() => copyTextToClipboard(link)}><FontIcon className="material-icons" style={{color: '#fff'}}>content_copy</FontIcon></div>
+                    <div className="copy" onClick={() => this.copyLink()}><FontIcon className="material-icons"
+                                                                                    style={{color: '#fff'}}>content_copy</FontIcon>
+                    </div>
                 </div>
 
 
-                <div className="choose-client">
-                    <div>
-                        <Creatable
-                            name="client-select"
-                            value={this.state.chosenClient}
-                            options={this.getClientOption()}
-                            onChange={this.handleClientChoose}
-                            placeholder="הקלד שם לקוח"
-                            onNewOptionClick={this.onNewOptionClick}
-                        />
-                        <div style={{color: 'red'}}>{clientError}</div>
-                    </div>
-                    <RaisedButton secondary onClick={this.openDialog} label="שלח לינק"/>
-                </div>
-                {dialogOpen &&
-                <Dialog
-                    title="שלח קופון ללקוח"
-                    actions={actions}
-                    modal={false}
-                    open={this.state.dialogOpen}
-                    onRequestClose={this.handleClose}
-                    contentStyle={{width: '90%', maxWidth: 500}}
-                    actionsContainerClassName="shareDialogActions">
 
-                    <div className="Share">
-
-                        <TextField label="הודעה ללקוח" multiLine={true} name="message"
-                                   defaultValue={offer.preMessage} hintText="שלח הודעה ללקוח"
-                                   onChange={this.updatePreMessage}/>
-
-                        <RaisedButton backgroundColor="#25D366">
-                            {isMobile() ?
-                                <a href={shareUrl} style={{color: '#fff', textDecoration: 'none'}}
-                                   className="whatsup-share-button">
-                                    <FontIcon className="material-icons">share</FontIcon>
-                                    שתף</a>
-                                :
-                                <span style={{color: '#fff'}}
-                                      onClick={() => copyTextToClipboard(message ? message + "  " + link : offer.preMessage + "  " + link)}><FontIcon
-                                    className="material-icons"
-                                    >share</FontIcon> שתף</span>
-                            }
-                        </RaisedButton>
-
-
-                    </div>
-                </Dialog>
-                }
 
 
             </div>
