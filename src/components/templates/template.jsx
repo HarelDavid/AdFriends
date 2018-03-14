@@ -17,6 +17,7 @@ import ImageEditor from '../imageEditor/image-editor';
 import FontIcon from 'material-ui/FontIcon';
 import {merge} from 'lodash';
 import Share from '../share';
+import Toggle from 'material-ui/Toggle';
 
 
 import './style.scss';
@@ -31,7 +32,8 @@ export default class Template extends React.Component {
     state = {
         offer: {},
         business: null,
-        isCallingCard: false
+        isCallingCard: false,
+        showContactForm: true
     }
 
     static PropTypes = {
@@ -62,10 +64,10 @@ export default class Template extends React.Component {
         this.setCallingCard();
     }
 
-    setCallingCard(){
+    setCallingCard() {
         var {business} = this.state;
 
-        if(this.state.offer.templateId === 1) {
+        if (this.state.offer.templateId === 1) {
             this.state.isCallingCard = true;
             this.state.offer.title = business.title;
             this.state.offer.description = business.description;
@@ -156,9 +158,14 @@ export default class Template extends React.Component {
         } else return null;
     }
 
+    @autobind
+    onToggleSwitch() {
+        this.state.showContactForm = !this.state.showContactForm;
+    }
+
 
     render() {
-        let {offer, business, isCallingCard} = this.state,
+        let {offer, business, isCallingCard, showContactForm} = this.state,
             {route} = this.props,
             {couponsStore, businessStore} = route,
             templateId = this.props.params.templateId || offer.templateId || 0;
@@ -180,7 +187,6 @@ export default class Template extends React.Component {
             },
             mapLink = 'https://maps.google.com/?q=' + business.address,
             termsDefaultValue = offer.terms ? ('*' + offer.terms) : null;
-
 
 
         return (
@@ -253,6 +259,14 @@ export default class Template extends React.Component {
                         </div>
                     </Paper>
 
+
+                    <Toggle labelPosition="right" style={{padding: '25px 15px 10px'}} labelStyle={{color: '#555'}}
+                            label="הצג טופס צור קשר"
+                            defaultToggled={true}
+                            onToggle={this.onToggleSwitch}
+                    />
+
+                    {showContactForm &&
                     <div className="Coupon-realization fadeInAnimation">
                         <p>מעדיפים שנחזור אליכם? השאירו פרטים כאן:</p>
                         <form>
@@ -265,6 +279,7 @@ export default class Template extends React.Component {
 
                         <a to="/terms" target="_blank" className="terms-link">כפוף לתנאי השימוש</a>
                     </div>
+                    }
 
                     <div className="saveButtonHolder">
 

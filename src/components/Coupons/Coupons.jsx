@@ -35,7 +35,7 @@ export default class Coupons extends React.Component {
 					<tr>
 						<th>נשלח אל</th>
 						<th>מס׳ צפיות</th>
-						<th>מס׳ מימושים</th>
+						<th>מס׳ פניות</th>
 						<th>קישור</th>
 					</tr>
                     {sortBy(couponsStore.coupons, 'offerId').map((coupon) => (
