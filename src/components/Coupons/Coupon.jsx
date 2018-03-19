@@ -15,7 +15,7 @@ export default class Coupon extends React.Component {
 
 	render() {
 		const {businessStore, coupon} = this.props;
-		let client = businessStore.clientStore.clients.find(it=> (it.id == coupon.clientId));
+		let client = businessStore.clientStore.clients.find(it=> (it.id === coupon.clientId));
 
 		if(!client) {
 			return null;

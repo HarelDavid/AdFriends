@@ -4,17 +4,19 @@ import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import autobind from 'autobind-decorator'
 import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import {Creatable} from 'react-select';
 import CouponModel from '../../models/CouponModel';
 import ClientModel from '../../models/ClientModel'
 import jsonpP from 'jsonp-p';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {
+    Step,
+    Stepper,
+    StepLabel,
+    StepContent,
+} from 'material-ui/Stepper';
 import {copyTextToClipboard, isMobile} from '../../utils';
-
+import RaisedButton from 'material-ui/RaisedButton'
 import './style.scss';
 
 
@@ -38,9 +40,8 @@ export default class Share extends Component {
         client: {},
         link: '',
         linkName: '',
-        tabs: {
-            value: 'a'
-        }
+        stepIndex: 0,
+        stepsFinished: false,
     }
 
     componentWillMount() {
@@ -150,6 +151,8 @@ export default class Share extends Component {
                 offer.save();
                 // client.couponLinks.push(coupon.link);
                 client.save();
+            }).then(() => {
+                this.handleNext();
             })
     }
 
@@ -187,82 +190,202 @@ export default class Share extends Component {
     onClickLink(el) {
         this.state.link = el.url;
         this.state.linkName = el.name;
+        this.handleNext();
+    }
+
+    handleNext = () => {
+        const {stepIndex} = this.state;
+        this.setState({
+            stepIndex: stepIndex + 1,
+            finished: stepIndex >= 2,
+        });
+    };
+
+    handlePrev = () => {
+        const {stepIndex} = this.state;
+        if (stepIndex > 0) {
+            this.setState({stepIndex: stepIndex - 1});
+        }
+    };
+
+    renderStepActions(step) {
+        const {stepIndex} = this.state;
+
+        return (
+            <div style={{margin: '12px 0'}}>
+                <RaisedButton
+                    label={stepIndex === 2 ? 'Finish' : 'Next'}
+                    disableTouchRipple={true}
+                    disableFocusRipple={true}
+                    primary={true}
+                    onClick={this.handleNext}
+                    style={{marginRight: 12}}
+                />
+                {step > 0 && (
+                    <FlatButton
+                        label="Back"
+                        disabled={stepIndex === 0}
+                        disableTouchRipple={true}
+                        disableFocusRipple={true}
+                        onClick={this.handlePrev}
+                    />
+                )}
+            </div>
+        );
     }
 
 
     render() {
         let {offer} = this.props,
-            {message, dialogOpen, clientError, linkName, link} = this.state;
+            {message, stepIndex, clientError, linkName, link} = this.state;
         let shareUrl = "whatsapp://send?text=" + (message || offer.preMessage) + " " + link;
 
         return (
 
             <div className="shareDialog">
-                <div className="choose-link-wrapper">
-                    <p style={{color: 'rgba(66, 66, 66, 0.87)', display: 'block', fontSize: 15, fontWeight: 700}}>בחר
-                        קישור לשליחה:</p>
-                </div>
-                <ul className="links-list">
-                    {offer.couponLinks.map(link => {
-                        return <li onClick={() => this.onClickLink(link)}>{link.name}</li>
-                    })}
-                </ul>
-                <div className="link-new">
-                    <TextField label="שם הקידום" multiLine={true} name="linkName"
-                               defaultValue={linkName} hintText="הזן שם "
-                               onChange={this.onChangeValue} style={{width: '100%', maxWidth: '300px'}}/>
-
-                    <div className="button" style={{flex: '1 0 auto', alignSelf: 'center', padding: '8px 15px'}}
-                         onClick={this.createLink}>צור לינק חדש
-                    </div>
-                </div>
 
 
-                <br/>
-                <br/>
-
-                {link &&
-                <div>
-                    <a href={`${link}?preview=true`} target="_blank">{linkName} <span style={{fontSize: 11}}>(לחץ לתצוגה מקדימה)</span></a>
-                    <TextField label="טקסט לשלוח עם הלינק" multiLine={true} name="message"
-                               defaultValue={message} hintText="הזן טקסט שיופיע בהודעת הווטסאפ או בפייסבוק"
-                               onChange={this.onChangeValue} style={{width: '100%', maxWidth: '300px'}}/>
-
-                    <div className="share-social-buttons">
-                        {isMobile() ?
-                            <a className="whatsapp" href={shareUrl} style={{textDecoration: 'none'}}>
-                                <svg width="22px" height="41px" viewBox="0 0 45 41">
-                                    <g id="whatsapp_icon" fill="#FFFFFF" fillRule="nonzero">
-                                        <path
-                                            d="M44.129,30.344 C43.856,29.897 43.135,29.627 42.053,29.09 C40.969,28.553 35.643,25.952 34.653,25.596 C33.66,25.237 32.936,25.057 32.215,26.132 C31.494,27.208 29.418,29.627 28.785,30.344 C28.153,31.063 27.522,31.153 26.438,30.615 C25.356,30.078 21.867,28.942 17.73,25.281 C14.511,22.434 12.337,18.917 11.705,17.841 C11.074,16.766 11.639,16.185 12.18,15.65 C12.668,15.168 13.264,14.395 13.805,13.768 C14.348,13.14 14.528,12.693 14.887,11.975 C15.25,11.258 15.069,10.631 14.797,10.092 C14.527,9.555 12.359,4.267 11.457,2.116 C10.555,-0.035 9.654,0.323 9.021,0.323 C8.39,0.323 7.667,0.233 6.945,0.233 C6.223,0.233 5.049,0.502 4.056,1.577 C3.064,2.653 0.267,5.253 0.267,10.54 C0.267,15.828 4.146,20.937 4.689,21.654 C5.23,22.37 12.179,33.574 23.189,37.877 C34.2,42.177 34.2,40.742 36.186,40.562 C38.17,40.383 42.592,37.963 43.498,35.455 C44.398,32.943 44.398,30.792 44.129,30.344"/>
-                                    </g>
-                                </svg>
-                            </a>
-                            :
-                            <div className="whatsapp"
-                                 onClick={() => this.openWebWhatsapp()}>
-                                <svg width="22px" height="41px" viewBox="0 0 45 41">
-                                    <g id="whatsapp_icon" fill="#FFFFFF" fillRule="nonzero">
-                                        <path
-                                            d="M44.129,30.344 C43.856,29.897 43.135,29.627 42.053,29.09 C40.969,28.553 35.643,25.952 34.653,25.596 C33.66,25.237 32.936,25.057 32.215,26.132 C31.494,27.208 29.418,29.627 28.785,30.344 C28.153,31.063 27.522,31.153 26.438,30.615 C25.356,30.078 21.867,28.942 17.73,25.281 C14.511,22.434 12.337,18.917 11.705,17.841 C11.074,16.766 11.639,16.185 12.18,15.65 C12.668,15.168 13.264,14.395 13.805,13.768 C14.348,13.14 14.528,12.693 14.887,11.975 C15.25,11.258 15.069,10.631 14.797,10.092 C14.527,9.555 12.359,4.267 11.457,2.116 C10.555,-0.035 9.654,0.323 9.021,0.323 C8.39,0.323 7.667,0.233 6.945,0.233 C6.223,0.233 5.049,0.502 4.056,1.577 C3.064,2.653 0.267,5.253 0.267,10.54 C0.267,15.828 4.146,20.937 4.689,21.654 C5.23,22.37 12.179,33.574 23.189,37.877 C34.2,42.177 34.2,40.742 36.186,40.562 C38.17,40.383 42.592,37.963 43.498,35.455 C44.398,32.943 44.398,30.792 44.129,30.344"/>
-                                    </g>
-                                </svg>
+                <Stepper activeStep={stepIndex} orientation="vertical">
+                    <Step>
+                        <StepLabel style={{color: 'rgba(66, 66, 66, 0.87)', fontSize: 14, fontWeight: 600}}>צור קישור
+                            חדש או בחר קישור קיים:</StepLabel>
+                        <StepContent>
+                            {offer.couponLinks.length > 0 && <p>קישור שנשלחו:</p>}
+                            <ul className="links-list">
+                                {offer.couponLinks.map(link => {
+                                    return <li key={linkName} onClick={() => this.onClickLink(link)}>{link.name}</li>
+                                })}
+                            </ul>
+                            <div className="link-new">
+                                <input type="text" name="linkName"
+                                       defaultValue={linkName} placeholder="הזן שם "
+                                       onChange={this.onChangeValue}/>
+                                <RaisedButton label="צור לינק חדש" style={{flex: '1 0 auto', alignSelf: 'center'}}
+                                              onClick={this.createLink}/>
                             </div>
-                        }
-                        <div className="facebook">
-                            <svg width="12px" viewBox="0 0 192 384">
-                                <g id="facebook_icon" fill="#FFFFFF" fillRule="nonzero">
-                                    <path
-                                        d="M128,128 L128,89.9 C128,72.7 131.8,64 158.5,64 L192,64 L192,0 L136.1,0 C67.6,0 45,31.4 45,85.3 L45,128 L2.84217094e-14,128 L2.84217094e-14,192 L45,192 L45,384 L128,384 L128,192 L184.4,192 L192,128 L128,128 Z"/>
-                                </g>
-                            </svg>
-                        </div>
-                        <div className="copy" onClick={() => this.copyLink()}><FontIcon className="material-icons"
-                                                                                        style={{color: '#fff'}}>content_copy</FontIcon>
-                        </div>
-                    </div>
-                </div>
-                }
+                        </StepContent>
+                    </Step>
+                    <Step>
+                        <StepLabel
+                            style={{color: 'rgba(66, 66, 66, 0.87)', fontSize: 14, fontWeight: 600}}>שלח:</StepLabel>
+                        <StepContent>
+                            <div style={{textAlign: 'center'}}>
+                                <a href={`${link}?preview=true`} target="_blank">{linkName} <span
+                                    style={{fontSize: 11}}>(לחץ לתצוגה מקדימה)</span></a>
+                                <TextField label="טקסט לשלוח עם הלינק" multiLine={true} name="message"
+                                           defaultValue={message} hintText="הזן טקסט שיופיע בהודעת הווטסאפ או בפייסבוק"
+                                           onChange={this.onChangeValue} style={{width: '100%', maxWidth: '300px'}}/>
+
+                                <div className="share-social-buttons">
+                                    {isMobile() ?
+                                        <a className="whatsapp" href={shareUrl} style={{textDecoration: 'none'}}>
+                                            <svg width="22px" height="41px" viewBox="0 0 45 41">
+                                                <g id="whatsapp_icon" fill="#FFFFFF" fillRule="nonzero">
+                                                    <path
+                                                        d="M44.129,30.344 C43.856,29.897 43.135,29.627 42.053,29.09 C40.969,28.553 35.643,25.952 34.653,25.596 C33.66,25.237 32.936,25.057 32.215,26.132 C31.494,27.208 29.418,29.627 28.785,30.344 C28.153,31.063 27.522,31.153 26.438,30.615 C25.356,30.078 21.867,28.942 17.73,25.281 C14.511,22.434 12.337,18.917 11.705,17.841 C11.074,16.766 11.639,16.185 12.18,15.65 C12.668,15.168 13.264,14.395 13.805,13.768 C14.348,13.14 14.528,12.693 14.887,11.975 C15.25,11.258 15.069,10.631 14.797,10.092 C14.527,9.555 12.359,4.267 11.457,2.116 C10.555,-0.035 9.654,0.323 9.021,0.323 C8.39,0.323 7.667,0.233 6.945,0.233 C6.223,0.233 5.049,0.502 4.056,1.577 C3.064,2.653 0.267,5.253 0.267,10.54 C0.267,15.828 4.146,20.937 4.689,21.654 C5.23,22.37 12.179,33.574 23.189,37.877 C34.2,42.177 34.2,40.742 36.186,40.562 C38.17,40.383 42.592,37.963 43.498,35.455 C44.398,32.943 44.398,30.792 44.129,30.344"/>
+                                                </g>
+                                            </svg>
+                                        </a>
+                                        :
+                                        <div className="whatsapp" onClick={() => this.openWebWhatsapp()}>
+                                            <svg width="22px" height="41px" viewBox="0 0 45 41">
+                                                <g id="whatsapp_icon" fill="#FFFFFF" fillRule="nonzero">
+                                                    <path
+                                                        d="M44.129,30.344 C43.856,29.897 43.135,29.627 42.053,29.09 C40.969,28.553 35.643,25.952 34.653,25.596 C33.66,25.237 32.936,25.057 32.215,26.132 C31.494,27.208 29.418,29.627 28.785,30.344 C28.153,31.063 27.522,31.153 26.438,30.615 C25.356,30.078 21.867,28.942 17.73,25.281 C14.511,22.434 12.337,18.917 11.705,17.841 C11.074,16.766 11.639,16.185 12.18,15.65 C12.668,15.168 13.264,14.395 13.805,13.768 C14.348,13.14 14.528,12.693 14.887,11.975 C15.25,11.258 15.069,10.631 14.797,10.092 C14.527,9.555 12.359,4.267 11.457,2.116 C10.555,-0.035 9.654,0.323 9.021,0.323 C8.39,0.323 7.667,0.233 6.945,0.233 C6.223,0.233 5.049,0.502 4.056,1.577 C3.064,2.653 0.267,5.253 0.267,10.54 C0.267,15.828 4.146,20.937 4.689,21.654 C5.23,22.37 12.179,33.574 23.189,37.877 C34.2,42.177 34.2,40.742 36.186,40.562 C38.17,40.383 42.592,37.963 43.498,35.455 C44.398,32.943 44.398,30.792 44.129,30.344"/>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                    }
+                                    <div className="facebook">
+                                        <svg width="12px" viewBox="0 0 192 384">
+                                            <g id="facebook_icon" fill="#FFFFFF" fillRule="nonzero">
+                                                <path
+                                                    d="M128,128 L128,89.9 C128,72.7 131.8,64 158.5,64 L192,64 L192,0 L136.1,0 C67.6,0 45,31.4 45,85.3 L45,128 L2.84217094e-14,128 L2.84217094e-14,192 L45,192 L45,384 L128,384 L128,192 L184.4,192 L192,128 L128,128 Z"/>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div className="copy" onClick={() => this.copyLink()}><FontIcon
+                                        className="material-icons"
+                                        style={{color: '#fff'}}>content_copy</FontIcon>
+                                    </div>
+                                </div>
+                            </div>
+                            <RaisedButton label="חזרה" onClick={this.handlePrev}/>
+                        </StepContent>
+                    </Step>
+                </Stepper>
+
+
+                {/*<Card>*/}
+                {/*<CardHeader titleStyle={{color: 'rgba(66, 66, 66, 0.87)', display: 'block', fontSize: 15, fontWeight: 700}}*/}
+                {/*title="שלח קישור"*/}
+                {/*actAsExpander={true}*/}
+                {/*showExpandableButton={true}*/}
+                {/*/>*/}
+                {/*<CardText expandable>*/}
+
+                {/*<div className="choose-link-wrapper">*/}
+                {/*<p>*/}
+                {/*קישור קיים:</p>*/}
+                {/*</div>*/}
+                {/*<ul className="links-list">*/}
+                {/*{offer.couponLinks.map(link => {*/}
+                {/*return <li key={linkName} onClick={() => this.onClickLink(link)}>{link.name}</li>*/}
+                {/*})}*/}
+                {/*</ul>*/}
+                {/*<div className="link-new">*/}
+                {/*<input type="text" name="linkName"*/}
+                {/*defaultValue={linkName} placeholder="הזן שם "*/}
+                {/*onChange={this.onChangeValue} />*/}
+                {/*<RaisedButton label="צור לינק חדש" style={{flex: '1 0 auto', alignSelf: 'center'}}*/}
+                {/*onClick={this.createLink}/>*/}
+                {/*</div>*/}
+                {/*</CardText>*/}
+
+                {/*</Card>*/}
+
+
+                {/*{link &&*/}
+                {/*<div>*/}
+                {/*<a href={`${link}?preview=true`} target="_blank">{linkName} <span style={{fontSize: 11}}>(לחץ לתצוגה מקדימה)</span></a>*/}
+                {/*<TextField label="טקסט לשלוח עם הלינק" multiLine={true} name="message"*/}
+                {/*defaultValue={message} hintText="הזן טקסט שיופיע בהודעת הווטסאפ או בפייסבוק"*/}
+                {/*onChange={this.onChangeValue} style={{width: '100%', maxWidth: '300px'}}/>*/}
+
+                {/*<div className="share-social-buttons">*/}
+                {/*{isMobile() ?*/}
+                {/*<a className="whatsapp" href={shareUrl} style={{textDecoration: 'none'}}>*/}
+                {/*<svg width="22px" height="41px" viewBox="0 0 45 41">*/}
+                {/*<g id="whatsapp_icon" fill="#FFFFFF" fillRule="nonzero">*/}
+                {/*<path*/}
+                {/*d="M44.129,30.344 C43.856,29.897 43.135,29.627 42.053,29.09 C40.969,28.553 35.643,25.952 34.653,25.596 C33.66,25.237 32.936,25.057 32.215,26.132 C31.494,27.208 29.418,29.627 28.785,30.344 C28.153,31.063 27.522,31.153 26.438,30.615 C25.356,30.078 21.867,28.942 17.73,25.281 C14.511,22.434 12.337,18.917 11.705,17.841 C11.074,16.766 11.639,16.185 12.18,15.65 C12.668,15.168 13.264,14.395 13.805,13.768 C14.348,13.14 14.528,12.693 14.887,11.975 C15.25,11.258 15.069,10.631 14.797,10.092 C14.527,9.555 12.359,4.267 11.457,2.116 C10.555,-0.035 9.654,0.323 9.021,0.323 C8.39,0.323 7.667,0.233 6.945,0.233 C6.223,0.233 5.049,0.502 4.056,1.577 C3.064,2.653 0.267,5.253 0.267,10.54 C0.267,15.828 4.146,20.937 4.689,21.654 C5.23,22.37 12.179,33.574 23.189,37.877 C34.2,42.177 34.2,40.742 36.186,40.562 C38.17,40.383 42.592,37.963 43.498,35.455 C44.398,32.943 44.398,30.792 44.129,30.344"/>*/}
+                {/*</g>*/}
+                {/*</svg>*/}
+                {/*</a>*/}
+                {/*:*/}
+                {/*<div className="whatsapp" onClick={() => this.openWebWhatsapp()}>*/}
+                {/*<svg width="22px" height="41px" viewBox="0 0 45 41">*/}
+                {/*<g id="whatsapp_icon" fill="#FFFFFF" fillRule="nonzero">*/}
+                {/*<path*/}
+                {/*d="M44.129,30.344 C43.856,29.897 43.135,29.627 42.053,29.09 C40.969,28.553 35.643,25.952 34.653,25.596 C33.66,25.237 32.936,25.057 32.215,26.132 C31.494,27.208 29.418,29.627 28.785,30.344 C28.153,31.063 27.522,31.153 26.438,30.615 C25.356,30.078 21.867,28.942 17.73,25.281 C14.511,22.434 12.337,18.917 11.705,17.841 C11.074,16.766 11.639,16.185 12.18,15.65 C12.668,15.168 13.264,14.395 13.805,13.768 C14.348,13.14 14.528,12.693 14.887,11.975 C15.25,11.258 15.069,10.631 14.797,10.092 C14.527,9.555 12.359,4.267 11.457,2.116 C10.555,-0.035 9.654,0.323 9.021,0.323 C8.39,0.323 7.667,0.233 6.945,0.233 C6.223,0.233 5.049,0.502 4.056,1.577 C3.064,2.653 0.267,5.253 0.267,10.54 C0.267,15.828 4.146,20.937 4.689,21.654 C5.23,22.37 12.179,33.574 23.189,37.877 C34.2,42.177 34.2,40.742 36.186,40.562 C38.17,40.383 42.592,37.963 43.498,35.455 C44.398,32.943 44.398,30.792 44.129,30.344"/>*/}
+                {/*</g>*/}
+                {/*</svg>*/}
+                {/*</div>*/}
+                {/*}*/}
+                {/*<div className="facebook">*/}
+                {/*<svg width="12px" viewBox="0 0 192 384">*/}
+                {/*<g id="facebook_icon" fill="#FFFFFF" fillRule="nonzero">*/}
+                {/*<path*/}
+                {/*d="M128,128 L128,89.9 C128,72.7 131.8,64 158.5,64 L192,64 L192,0 L136.1,0 C67.6,0 45,31.4 45,85.3 L45,128 L2.84217094e-14,128 L2.84217094e-14,192 L45,192 L45,384 L128,384 L128,192 L184.4,192 L192,128 L128,128 Z"/>*/}
+                {/*</g>*/}
+                {/*</svg>*/}
+                {/*</div>*/}
+                {/*<div className="copy" onClick={() => this.copyLink()}><FontIcon className="material-icons"*/}
+                {/*style={{color: '#fff'}}>content_copy</FontIcon>*/}
+                {/*</div>*/}
+                {/*</div>*/}
+                {/*</div>*/}
+                {/*}*/}
 
 
             </div>
