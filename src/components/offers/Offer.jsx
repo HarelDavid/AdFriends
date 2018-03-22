@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import moment from 'moment';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Share from '../share';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 import './style.scss';
 
@@ -79,10 +80,12 @@ export default class Offer extends React.Component {
 
         }
 
+        console.log(offer)
+
         return (
 
             <Card style={offerBoxStyle}>
-                <CardHeader title={offer.title} style={{fontWeight: 'bold'}}/>
+                <CardHeader title={offer.title} style={{fontWeight: 'bold', fontSize: 16}}/>
                 <CardActions style={{display: 'flex', justifyContent: 'space-between'}}>
                     <div style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
 
@@ -92,9 +95,10 @@ export default class Offer extends React.Component {
                             }
                         </p>
 
-                        <Link to={`/offer/${offer.id}`} style={{textDecoration: 'none', marginLeft: 10}}>
-                            <RaisedButton secondary label="ערוך"
-                                          icon={<FontIcon className="material-icons" style={{fontSize: '1.2rem'}}>mode_edit</FontIcon>}/>
+                        <Link to={`/offer/${offer.id}`} style={{textDecoration: 'none', position: 'absolute',left: 15,bottom: 15}}>
+                            <FloatingActionButton secondary>
+                                <FontIcon className="material-icons" style={{fontSize: '1.2rem'}}>mode_edit</FontIcon>
+                            </FloatingActionButton>
                         </Link>
                     </div>
 
