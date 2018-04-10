@@ -13,14 +13,6 @@
     }
 
     .ImageEditor-upload {
-      width: 50px;
-      height: 50px;
-      background: $secondary;
-      border-radius: 100%;
-      position: absolute;
-      bottom: 30px;
-      left: 15px;
-      box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
       input {
         opacity: 0;
         width: 50px !important;
@@ -28,12 +20,7 @@
         position: absolute;
         z-index: 9;
       }
-      .material-icons {
-        position: absolute !important;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+
     }
 
     .ImageEditor-actions {
@@ -43,21 +30,24 @@
       padding: 10px;
       max-width: 320px;
       margin: 0 auto;
-
-      .material-icons {
-        color: white !important;
-        border-radius: 100%;
+      position: absolute;
+      bottom: 30px;
+      left: 15px;
+      z-index: 9;
+      > div {
+        width: 50px;
+        height: 50px;
         background: $secondary;
-        width: 30px;
-        height: 30px;
-        display: flex !important;
-        @include flex-column-center;
+        border-radius: 100%;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
+        @include flex-center;
+        margin-right: 10px;
+      }
+      .material-icons {
+
       }
     }
-    .Slider {
-      max-width: 320px;
-      margin: 0 auto;
-    }
+
   }
 
 }

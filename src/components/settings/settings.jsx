@@ -99,20 +99,9 @@ export default class Settings extends React.Component {
                             <TextField name="website" defaultValue={business.website} onChange={this.onChange} onBlur={this.checkUrlPrefix} hintText="לינק (אתר, דף פייסבוק)"/>
 
 
-                            {/*<ImageEditor src={business.imageUrl} onUpload={this.setImageSrc}  />*/}
+                            {/*<ImageEditor src={business.imageUrl} onUpload={this.setImageSrc} border={100}  />*/}
 
-                            {/*<ImageUploader*/}
-                                {/*name="avatar"*/}
-                                {/*storageRef={firebase.storage().ref('images')}*/}
-                                {/*onUploadStart={this.handleUploadStart}*/}
-                                {/*onUploadError={this.handleUploadError}*/}
-                                {/*onUploadSuccess={this.handleUploadSuccess}*/}
-                                {/*onProgress={this.handleProgress}*/}
-                            {/*/>*/}
 
-                            {/*<Avatar style={{margin: '20px auto', display: 'block'}} size={100}*/}
-                                    {/*backgroundColor={pinkA200}*/}
-                                    {/*src={business.imageUrl}/>*/}
                         </form>
 
                     </div>

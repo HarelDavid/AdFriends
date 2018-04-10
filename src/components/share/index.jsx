@@ -210,7 +210,15 @@ export default class Share extends Component {
         }
     };
 
-
+    @autobind
+    openFBdialog(){
+        FB.ui({
+            method: 'share',
+            href: this.state.link,
+        }, function(response){
+            console.log(response)
+        });
+    }
 
 
     render() {
@@ -231,7 +239,7 @@ export default class Share extends Component {
                             {/*{offer.couponLinks.length > 0 && <p style={{fontWeight: 500, textDecoration: 'underline'}}>רשימת קישורים קיימים:</p>}*/}
                             <ul className="links-list">
                                 {offer.couponLinks.map(link => {
-                                    return <li key={linkName} onClick={() => this.onClickLink(link)}>{link.name}</li>
+                                    return <li onClick={() => this.onClickLink(link)}>{link.name}</li>
                                 })}
                             </ul>
                             <div className="link-new">
@@ -273,7 +281,7 @@ export default class Share extends Component {
                                             </svg>
                                         </div>
                                     }
-                                    <div className="facebook">
+                                    <div className="facebook" onClick={this.openFBdialog}>
                                         <svg width="12px" viewBox="0 0 192 384">
                                             <g id="facebook_icon" fill="#FFFFFF" fillRule="nonzero">
                                                 <path

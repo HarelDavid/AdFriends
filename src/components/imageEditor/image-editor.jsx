@@ -16,127 +16,138 @@ import './style.scss';
 @observer
 class ImageEditor extends React.Component {
 
-	static PropTypes = {
-		src: PropTypes.string,
-		onUpload: PropTypes.func
-	}
+    static PropTypes = {
+        src: PropTypes.string,
+        onUpload: PropTypes.func,
+        border: PropTypes.number
+    }
 
-	@observable state = {
-		// scale: 1,
-		// degrees: 0,
-		src: '',
-		filename: '',
-		loading: false
-	}
+    @observable state = {
+        // scale: 1,
+        degrees: 0,
+        src: '',
+        filename: '',
+        loading: false
+    }
 
-	componentWillMount() {
-		this.state.src = this.props.src;
-	}
-
-
-	// @autobind
-	// @action
-	// zoom(value) {
-	// 	this.state.scale = value * 2 * 0.01;
-	// }
-	//
-	//
-	// @autobind
-	// @action
-	// rotate() {
-	// 	this.state.degrees = (this.state.degrees + 90) % 360;
-	// }
+    componentWillMount() {
+        this.state.src = this.props.src;
+    }
 
 
-	@autobind
-	handleBeforeUpload(e) {
-		e.persist();
-		this.state.loading = true;
-
-		let file = e.target.files[0],
-			reader = new FileReader();
-
-		if (!file.type.match('image.*')) {
-			alert('Please upload an image');
-		}
-
-		this.state.filename = file.name;
-
-		return convertToImage(file)
-			.then(image => {
-				this.state.src = image.src;
-			})
-			.then(() => {
-				setTimeout(() => {
-					this.uploadImage();
-					this.state.loading = false;
-					console.log('Uploaded successfully')
-				}, 500)
-			})
-
-	};
+    // @autobind
+    // @action
+    // zoom(value) {
+    // 	this.state.scale = value * 2 * 0.01;
+    // }
+    //
+    //
+    @autobind
+    @action
+    rotate() {
+        this.state.degrees = (this.state.degrees + 90) % 360;
+    }
 
 
-	saveThumbnail(file) {
-		// this.setState({avatar: filename, progress: 100, isUploading: false});
-		var storageRef = firebase.storage().ref('images').child(file.name);
+    @autobind
+    handleBeforeUpload(e) {
+        e.persist();
+        this.state.loading = true;
 
-		storageRef.child(file.name).put(file).then((snapshot) => {
-			return this.props.onUpload(snapshot.downloadURL);
-		})
+        let file = e.target.files[0],
+            reader = new FileReader();
 
-	}
+        if (!file.type.match('image.*')) {
+            alert('Please upload an image');
+        }
 
-	uploadImage() {
-		var canvas = this.editor.getImageScaledToCanvas(),
-			data = canvas.toDataURL(),
-			resultFile = dataURItoFile(data, this.state.filename);
+        this.state.filename = file.name;
 
-		console.log(resultFile);
-		this.saveThumbnail(resultFile);
-	}
+        return convertToImage(file)
+            .then(image => {
+                this.state.src = image.src;
+            })
+            .then(() => {
+                setTimeout(() => {
+                    this.uploadImage();
+                    this.state.loading = false;
+                    console.log('Uploaded successfully')
+                }, 500)
+            })
 
-
-	render() {
-		let {scale, src} = this.state;
-
-		return (
-			<div className="ImageEditor">
-				{src ? <AvatarEditor ref={(ref) => this.editor = ref}
-							  image={src}
-							  width={360}
-							  height={250}
-							  border={0}
-							  color={[255, 255, 255, 0.6]}
-							  scale={scale}/>
-				:
-					<div className="no-image"></div>
-				}
-				{this.state.loading && <RefreshIndicator
-					size={40}
-					left={10}
-					top={0}
-					status="loading"
-
-				/> }
-				{/*<p>הקטן/הגדל את התמונה:</p>*/}
-				{/*<Slider center initPercentPosition={50} onChange={this.zoom}/>*/}
-
-				{/*<div className="ImageEditor-actions">*/}
-
-					{/*<RaisedButton secondary onTouchTap={()=>this.uploadImage()}><span style={{color: '#fff'}}>שמור תמונה</span></RaisedButton>*/}
-				{/*</div>*/}
-
-				<div className="ImageEditor-upload">
-					<input type="file" onChange={this.handleBeforeUpload}/>
-					<FontIcon className="material-icons" color="white">edit</FontIcon>
-				</div>
-
-			</div>
-		);
+    };
 
 
-	}
+    checkImgRotation() {
+
+    }
+
+
+    saveThumbnail(file) {
+        // this.setState({avatar: filename, progress: 100, isUploading: false});
+        var storageRef = firebase.storage().ref('images').child(file.name);
+
+        storageRef.child(file.name).put(file).then((snapshot) => {
+            return this.props.onUpload(snapshot.downloadURL);
+        })
+
+    }
+
+    uploadImage() {
+        var canvas = this.editor.getImageScaledToCanvas(),
+            data = canvas.toDataURL(),
+            resultFile = dataURItoFile(data, this.state.filename);
+
+        console.log(resultFile);
+        this.saveThumbnail(resultFile);
+    }
+
+
+    render() {
+        let {degrees, src} = this.state;
+console.log(this.props.border)
+        return (
+            <div className="ImageEditor">
+                {src ? <AvatarEditor ref={(ref) => this.editor = ref}
+                                     image={src}
+                                     width={360}
+                                     height={250}
+                                     border={this.props.border || 0}
+                                     color={[255, 255, 255, 0.6]}
+                                     rotate={degrees}/>
+                    :
+                    <div className="no-image"></div>
+                }
+                {this.state.loading && <RefreshIndicator
+                    size={40}
+                    left={10}
+                    top={0}
+                    status="loading"
+
+                />}
+                {/*<p>הקטן/הגדל את התמונה:</p>*/}
+                {/*<Slider center initPercentPosition={50} onChange={this.zoom}/>*/}
+
+                {/*<div className="ImageEditor-actions">*/}
+
+                {/*<RaisedButton secondary onTouchTap={()=>this.uploadImage()}><span style={{color: '#fff'}}>שמור תמונה</span></RaisedButton>*/}
+                {/*</div>*/}
+
+                <div className="ImageEditor-actions">
+                    <div className="ImageEditor-rotate" onClick={this.rotate}>
+                        <FontIcon className="material-icons" color="white">rotate_left</FontIcon>
+                    </div>
+                    <div className="ImageEditor-upload">
+                        <input type="file" onChange={this.handleBeforeUpload}/>
+                        <FontIcon className="material-icons" color="white">edit</FontIcon>
+                    </div>
+
+                </div>
+            </div>
+        );
+
+
+    }
 
 
 }
