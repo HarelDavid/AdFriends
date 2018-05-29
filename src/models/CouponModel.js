@@ -8,6 +8,8 @@ export default class CouponModel {
 	@observable businessId;
 	@observable watches;
 	@observable link;
+	@observable linkName;
+	@observable linkId;
 	@observable name;
 	@observable realized;
 	@observable message;
@@ -21,6 +23,8 @@ export default class CouponModel {
 			this.clientId = data.clientId || "";
 			this.businessId = data.businessId || "";
 			this.link = data.link || "";
+			this.linkName = data.linkName || "";
+			this.linkId = data.linkId || "";
 			this.name = data.name || "";
 			this.store = data.store || {};
 			this.realized = data.realized || 0;
@@ -37,6 +41,8 @@ export default class CouponModel {
 		this.offerId = couponDB.offerId;
 		this.businessId = couponDB.businessId;
 		this.link = couponDB.link;
+		this.linkName = couponDB.linkName;
+		this.linkId = couponDB.linkId;
 		this.name = couponDB.name;
 		this.watches = couponDB.watches || 0;
 		this.realized = couponDB.realized || 0;
@@ -55,6 +61,8 @@ export default class CouponModel {
 		couponDB.clientId = this.clientId || "";
 		couponDB.businessId = this.businessId || "";
 		couponDB.link = this.link || "";
+		couponDB.linkName = this.linkName || "";
+		couponDB.linkId = this.linkId || "";
 		couponDB.name = this.name || "";
 		couponDB.id = this.id || "";
 		couponDB.watches = this.watches || 0;

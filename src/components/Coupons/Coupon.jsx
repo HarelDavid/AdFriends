@@ -21,6 +21,8 @@ export default class Coupon extends React.Component {
 			return null;
 		}
 
+		console.log()
+
 		return (
 
 			<tr style={{borderBottom: '1px solid #cbcbcb'}}>
