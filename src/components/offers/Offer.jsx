@@ -80,7 +80,6 @@ export default class Offer extends React.Component {
 
         }
 
-        console.log(offer.couponLinks, offer.couponLinks.length)
 
         return (
 

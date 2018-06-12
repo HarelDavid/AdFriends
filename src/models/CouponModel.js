@@ -27,6 +27,7 @@ export default class CouponModel {
 			this.linkId = data.linkId || "";
 			this.name = data.name || "";
 			this.store = data.store || {};
+			this.watches = data.watches || 0;
 			this.realized = data.realized || 0;
 			this.message = data.message || "";
 			this.shortLink = data.shortLink || "";

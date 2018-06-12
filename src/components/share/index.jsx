@@ -48,7 +48,6 @@ export default class Share extends Component {
     componentWillMount() {
         this.clientStore = this.props.businessStore.clientStore;
         this.state.client = new ClientModel({store: this.props.businessStore.clientStore})
-        console.log(this.state.client)
     }
 
 
@@ -130,10 +129,10 @@ export default class Share extends Component {
         var {chosenClient, client, link, linkName} = this.state;
         var {businessStore, couponsStore} = this.props;
         var coupon = new CouponModel({store: couponsStore});
-        console.log(client);
         coupon.businessId = businessStore.business.id;
         coupon.offer = offer.convertToDB();
         // chosenClient.id ? coupon.clientId = chosenClient.id : coupon.clientId = client.id;
+        client.save();
         coupon.clientId = client.id;
         client.title = linkName || '';
         // coupon.name = linkName || '';
